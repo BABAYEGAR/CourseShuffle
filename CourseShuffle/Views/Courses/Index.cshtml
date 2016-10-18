@@ -49,7 +49,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.CoursesId },new {@class = "btn btn-primary"}) |
             @Html.ActionLink("Details", "Details", new { id=item.CoursesId },new {@class = "btn btn-default"}) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CoursesId },new {@class = "btn btn-danger"})
+            @Html.ActionLink("Delete", "Delete", new { id=item.CoursesId },new {@class = "btn btn-danger"})|
+            @Html.ActionLink("Manage Content", "Create","Contents", new { id=item.CoursesId },new {@class = "btn btn-success"})
         </td>
     </tr>
 }

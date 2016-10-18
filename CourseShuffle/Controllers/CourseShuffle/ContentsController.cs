@@ -13,7 +13,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
 {
     public class ContentsController : Controller
     {
-        private ContentDataContext _db = new ContentDataContext();
+        private readonly ContentDataContext _db = new ContentDataContext();
 
         // GET: Contents
         public ActionResult Index()
@@ -38,9 +38,9 @@ namespace CourseShuffle.Controllers.CourseShuffle
         }
 
         // GET: Contents/Create
-        public ActionResult Create()
+        public ActionResult Create(long id)
         {
-            ViewBag.CourseId = new SelectList(_db.Courseses, "CoursesId", "CourseName");
+            ViewBag.CourseId = id;
             return View();
         }
 
@@ -57,8 +57,6 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CourseId = new SelectList(_db.Courseses, "CoursesId", "CourseName", contents.CourseId);
             return View(contents);
         }
 
@@ -75,6 +73,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 return HttpNotFound();
             }
             ViewBag.CourseId = new SelectList(_db.Courseses, "CoursesId", "CourseName", contents.CourseId);
+            ViewBag.ContentType = new SelectList(_db.Courseses, "CoursesId", "CourseName", contents.CourseId);
             return View(contents);
         }
 

@@ -1183,6 +1183,10 @@
       <Project>{4f789efe-e7ce-4d97-bb59-9758003ebd3f}</Project>
       <Name>CoureShuffle.Data.DataContext</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CourseShuffle.Data.Factory\CourseShuffle.Data.Factory.csproj">
+      <Project>{D710F23F-12A4-49FD-B2AB-25D0883D723E}</Project>
+      <Name>CourseShuffle.Data.Factory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CourseShuffle.Data.Objects\CourseShuffle.Data.Objects.csproj">
       <Project>{da9f4c0d-b1c2-4da8-9d27-fafc6107b013}</Project>
       <Name>CourseShuffle.Data.Objects</Name>
