@@ -12,7 +12,6 @@ namespace CoureShuffle.Data.DataContext.DataContext
         public FacultyDataContext()
             : base("name=CourseShuffle")
         {
-
         }
 
         public virtual DbSet<Faculty> Faculties { get; set; }
