@@ -83,10 +83,11 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FacultyId,Name,Description")] Faculty faculty)
+        public ActionResult Edit([Bind(Include = "FacultyId,Name,Description")] Faculty faculty,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
+                faculty.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
                 faculty.DateLastModified = DateTime.Now;
                 _db.Entry(faculty).State = EntityState.Modified;
                 _db.SaveChanges();

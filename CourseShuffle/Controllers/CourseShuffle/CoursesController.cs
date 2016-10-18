@@ -50,10 +50,14 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,LevelId,DepartmentId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] Courses courses)
+        public ActionResult Create([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,LevelId,DepartmentId")] Courses courses)
         {
             if (ModelState.IsValid)
             {
+                courses.DateCreated  = DateTime.Now;
+                courses.DateLastModified = DateTime.Now;
+                courses.LastModifiedBy = 1;
+                courses.CreatedBy = 1;
                 _db.Courses.Add(courses);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -76,8 +80,6 @@ namespace CourseShuffle.Controllers.CourseShuffle
             {
                 return HttpNotFound();
             }
-            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", courses.DepartmentId);
-            ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name", courses.LevelId);
             return View(courses);
         }
 
@@ -86,16 +88,19 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,LevelId,DepartmentId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] Courses courses)
+        public ActionResult Edit([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,LevelId,DepartmentId,CreatedBy")] Courses courses,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
+                courses.DateLastModified = DateTime.Now;
+                courses.LastModifiedBy = 1;
+                courses.DateCreated =Convert.ToDateTime(collectedValues["DateCreated"]);
                 _db.Entry(courses).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", courses.DepartmentId);
-            ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name", courses.LevelId);
+            //ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", courses.DepartmentId);
+            //ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name", courses.LevelId);
             return View(courses);
         }
 
