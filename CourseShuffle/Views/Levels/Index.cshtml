@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
 </p>
 <table class="table">
     <tr>
@@ -47,9 +47,8 @@
             @Html.DisplayFor(modelItem => item.LastModifiedBy)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LevelId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LevelId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LevelId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.LevelId },new {@class = "btn btn-primary"}) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LevelId },new {@class = "btn btn-danger"})
         </td>
     </tr>
 }

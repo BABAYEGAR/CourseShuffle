@@ -10,7 +10,7 @@ namespace CourseShuffle.Data.Objects.Entities
 {
     public class Contents:TransportObjects
     {
-        public long ContentId { get; set; }
+        public long ContentsId { get; set; }
         public string Name { get; set; }
         public string ContentType { get; set; }
         public string Author { get; set; }

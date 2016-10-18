@@ -5,30 +5,39 @@
 }
 
 <h2>Details</h2>
+<div class="container">
+    <div class="row">
+        <div class="panel panel-flat">
 
-<div>
-    <h4>Faculty</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3 detailsDiv">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.Name)
+                        </div>
+                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3 detailsDiv">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+                        <div class="col-md-9 ">
+                            @Html.DisplayFor(model => model.Description)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    </dl>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.FacultyId },new {@class = "btn btn-primary"}) |
+        @Html.ActionLink("Back to List", "Index",null,new {@class = "btn btn-default"})
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.FacultyId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

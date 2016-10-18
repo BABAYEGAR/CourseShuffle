@@ -4,37 +4,63 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2></h2>
 
 <p>
-    @Html.ActionLink("Add", "Create",null,new {@class = "btn btn-success"})
+    @Html.ActionLink("Add Faculty", "Create", null, new {@class = "btn btn-success"})
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
-    </tr>
+<div class="table-responsive">
+    <table class="table table-condensed table-hover" id="faculty">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FacultyId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FacultyId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FacultyId }) |
-            @Html.ActionLink("Add Department", "Create", new { id=item.FacultyId })
-        </td>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.FacultyId}, new {@class = "btn btn-default"}) |
+                    @*@Html.ActionLink("Details", "Details", new { id=item.FacultyId }, new { @class = "btn btn-default" }) |*@
+                    @Html.ActionLink("Delete", "Delete", new {id = item.FacultyId}, new {@class = "btn btn-danger"}) |
+                    @Html.ActionLink("View Departments", "Create","Departments", new {id = item.FacultyId}, new {@class = "btn btn-primary"})
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#faculty').DataTable();
+            });
+
+    </script>
 }
-
-</table>

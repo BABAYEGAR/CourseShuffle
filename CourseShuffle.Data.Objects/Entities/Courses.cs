@@ -11,14 +11,17 @@ namespace CourseShuffle.Data.Objects.Entities
     public class Courses : TransportObjects
     {
         public long CoursesId { get; set; }
+        [DisplayName("Course Name")]
         public string CourseName { get; set; }
+        [DisplayName("Course Code")]
         public int CourseCode { get; set; }
+        [DisplayName("Course Unit")]
         public int CreditUnit { get; set; }
-        [DisplayName("Level:")]
+        [DisplayName("Level")]
         public long LevelId { get; set; }
         [ForeignKey("LevelId")]
         public Level Level { get; set; }
-        [DisplayName("Department:")]
+        [DisplayName("Department")]
         public long DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public virtual  Department Department { get; set; }
