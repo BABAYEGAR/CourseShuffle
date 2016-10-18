@@ -21,5 +21,9 @@ namespace CoureShuffle.Data.DataContext.DataContext
         {
 
         }
+
+        public System.Data.Entity.DbSet<CourseShuffle.Data.Objects.Entities.Courses> Courses { get; set; }
+
+        public System.Data.Entity.DbSet<CourseShuffle.Data.Objects.Entities.Level> Levels { get; set; }
     }
 }
