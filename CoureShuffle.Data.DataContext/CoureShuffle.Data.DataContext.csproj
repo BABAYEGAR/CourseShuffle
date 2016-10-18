@@ -51,7 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext\Faculty.cs" />
+    <Compile Include="DataContext\ContentDataContext.cs" />
+    <Compile Include="DataContext\CourseDataContext.cs" />
+    <Compile Include="DataContext\LevelDataContext - Copy.cs" />
+    <Compile Include="DataContext\DepartmentDataContext.cs" />
+    <Compile Include="DataContext\FacultyDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
