@@ -8,12 +8,12 @@ namespace CourseShuffle.Data.Objects.Entities
 {
     public class TransportObjects
     {
-        public virtual AppUser CreatedBy { get; set; }
+        public virtual long CreatedBy { get; set; }
 
         public virtual DateTime DateCreated { get; set; }
 
         public virtual DateTime DateLastModified { get; set; }
 
-        public virtual AppUser LastModifiedBy { get; set; }
+        public virtual long LastModifiedBy { get; set; }
     }
 }

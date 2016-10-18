@@ -1,6 +1,6 @@
 ﻿namespace CourseShuffle.Data.Objects.Entities
 {
-    public class AppUser
+    public class AppUser: TransportObjects
     {
         public virtual string Firstname { get; set; }
         public virtual string Lastname { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CourseShuffle.Data.Objects.Entities
 {
-    public class Department
+    public class Department : TransportObjects
     {
         public long DepartmentId { get; set; }
         public string Name { get; set; }

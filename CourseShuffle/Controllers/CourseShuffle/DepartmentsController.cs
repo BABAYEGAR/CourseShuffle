@@ -11,111 +11,117 @@ using CourseShuffle.Data.Objects.Entities;
 
 namespace CourseShuffle.Controllers.CourseShuffle
 {
-    public class FacultiesController : Controller
+    public class DepartmentsController : Controller
     {
-        private readonly FacultyDataContext _db = new FacultyDataContext();
+        private DepartmentDataContext _db = new DepartmentDataContext();
 
-        // GET: Faculties
+        // GET: Departments
         public ActionResult Index()
         {
-            return View(_db.Faculties.ToList());
+            var departments = _db.Departments.Include(d => d.Faculty);
+            return View(departments.ToList());
         }
 
-        // GET: Faculties/Details/5
+        // GET: Departments/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Faculty faculty = _db.Faculties.Find(id);
-            if (faculty == null)
+            Department department = _db.Departments.Find(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(faculty);
+            return View(department);
         }
 
-        // GET: Faculties/Create
+        // GET: Departments/Create
         public ActionResult Create()
         {
+            ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name");
             return View();
         }
 
-        // POST: Faculties/Create
+        // POST: Departments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FacultyId,Name,Description")] Faculty faculty)
+        public ActionResult Create([Bind(Include = "DepartmentId,Name,Description")] Department department,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
-                faculty.DateCreated = DateTime.Now;
-                faculty.DateLastModified = DateTime.Now;
-                faculty.CreatedBy = 1;
-                faculty.LastModifiedBy = 1;
-                _db.Faculties.Add(faculty);
+                department.FacultyId = Convert.ToInt64(collectedValues["FacultyId"]);
+                department.DateCreated = DateTime.Now;
+                department.DateLastModified = DateTime.Now;
+                department.CreatedBy = 1;
+                department.LastModifiedBy = 1;
+                _db.Departments.Add(department);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(faculty);
+            ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name", department.FacultyId);
+            return View(department);
         }
 
-        // GET: Faculties/Edit/5
+        // GET: Departments/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Faculty faculty = _db.Faculties.Find(id);
-            if (faculty == null)
+            Department department = _db.Departments.Find(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(faculty);
+            ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name", department.FacultyId);
+            return View(department);
         }
 
-        // POST: Faculties/Edit/5
+        // POST: Departments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FacultyId,Name,Description")] Faculty faculty)
+        public ActionResult Edit([Bind(Include = "DepartmentId,Name,Description,FacultyId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] Department department)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(faculty).State = EntityState.Modified;
+                _db.Entry(department).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(faculty);
+            ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name", department.FacultyId);
+            return View(department);
         }
 
-        // GET: Faculties/Delete/5
+        // GET: Departments/Delete/5
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Faculty faculty = _db.Faculties.Find(id);
-            if (faculty == null)
+            Department department = _db.Departments.Find(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(faculty);
+            return View(department);
         }
 
-        // POST: Faculties/Delete/5
+        // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Faculty faculty = _db.Faculties.Find(id);
-            _db.Faculties.Remove(faculty);
+            Department department = _db.Departments.Find(id);
+            _db.Departments.Remove(department);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
