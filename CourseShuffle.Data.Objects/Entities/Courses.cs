@@ -19,5 +19,6 @@ namespace CourseShuffle.Data.Objects.Entities
         public long DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public virtual  Department Department { get; set; }
+        public IEnumerable<Contents> Contents { get; set; }
     }
 }

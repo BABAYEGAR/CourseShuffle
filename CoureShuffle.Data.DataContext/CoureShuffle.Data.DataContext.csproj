@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="DataContext\ContentDataContext.cs" />
     <Compile Include="DataContext\CourseDataContext.cs" />
-    <Compile Include="DataContext\LevelDataContext - Copy.cs" />
+    <Compile Include="DataContext\LevelDataContext.cs" />
     <Compile Include="DataContext\DepartmentDataContext.cs" />
     <Compile Include="DataContext\FacultyDataContext.cs" />
     <Compile Include="Migrations\201610181320218_InitialCreate.cs" />

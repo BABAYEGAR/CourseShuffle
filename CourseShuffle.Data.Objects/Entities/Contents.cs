@@ -10,5 +10,7 @@ namespace CourseShuffle.Data.Objects.Entities
     {
         public long ContentId { get; set; }
         public string Name { get; set; }
+        public long CourseId { get; set; }
+        public virtual Courses Courses { get; set; }
     }
 }

@@ -87,6 +87,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
+                faculty.DateLastModified = DateTime.Now;
                 _db.Entry(faculty).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
