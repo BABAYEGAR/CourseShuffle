@@ -11,6 +11,6 @@ namespace CourseShuffle.Data.Objects.Entities
         public long DepartmentId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public IEnumerable<Level> Level { get; set; }
+        public IEnumerable<Courses> Courses { get; set; }
     }
 }

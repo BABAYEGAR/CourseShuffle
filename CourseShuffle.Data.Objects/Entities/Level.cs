@@ -10,6 +10,7 @@ namespace CourseShuffle.Data.Objects.Entities
     {
         public long LevelId { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Courses> Courses { get; set; }
+        public virtual IEnumerable<Courses> Courseses { get; set; }
+
     }
 }
