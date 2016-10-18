@@ -41,11 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Contents.cs" />
     <Compile Include="Entities\Courses.cs" />
     <Compile Include="Entities\Department.cs" />
     <Compile Include="Entities\Faculty.cs" />
     <Compile Include="Entities\Level.cs" />
+    <Compile Include="Entities\TransportObjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
