@@ -13,11 +13,16 @@
 }
 
 @section css{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
 }
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create","Contents",FormMethod.Post, new { enctype = "multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
+    {
+        courseId = ViewBag.CourseId;
+        @Html.Hidden("CourseId",courseId)
+    }
     <div class="row">
         <div class="form-horizontal">
             <h4>Contents</h4>
@@ -49,8 +54,23 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.Year, new {@class = "control-label col-md-3"})
                 <div class="col-sm-6 col-md-9">
-                    @Html.EditorFor(model => model.Year, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.EditorFor(model => model.Year, new {htmlAttributes = new {@class = "form-control datepicker"}})
                     @Html.ValidationMessageFor(model => model.Year, "", new {@class = "text-danger"})
+                </div>
+            </div>
+            <div class="form-group col-md-12" id="file">
+                @Html.LabelFor(model => model.File, new {@class = "control-label col-md-3"})
+                <div class="col-sm-6 col-md-9">
+                    <input type="file" name="file" id="file" style="width: 100%;"/>
+                    @Html.ValidationMessageFor(model => model.File, "", new {@class = "text-danger"})
+                </div>
+
+            </div>
+            <div class="form-group col-md-12" id="linkText">
+                @Html.LabelFor(model => model.LinkText, new {@class = "control-label col-md-3"})
+                <div class="col-sm-6 col-md-9">
+                    @Html.EditorFor(model => model.LinkText, new {htmlAttributes = new {@class = "form-control datepicker"}})
+                    @Html.ValidationMessageFor(model => model.LinkText, "", new {@class = "text-danger"})
                 </div>
             </div>
             <div class="row">
@@ -112,7 +132,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            @Html.ActionLink("View", "Details", new {id = item.ContentsId}, new {@class = "btn btn-default"}) |
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
                     </tr>
@@ -150,7 +170,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            @Html.ActionLink("View", "Details", new {id = item.ContentsId}, new {@class = "btn btn-default"}) |
+                            <a href="../../UploadedFiles/@ContentType.WordDocuments.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
                     </tr>
@@ -189,7 +209,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            @Html.ActionLink("View", "Details", new {id = item.ContentsId}, new {@class = "btn btn-default"}) |
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
                     </tr>
@@ -229,7 +249,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            @Html.ActionLink("View", "Details", new {id = item.ContentsId}, new {@class = "btn btn-default"}) |
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
                     </tr>
@@ -268,7 +288,7 @@
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            @Html.ActionLink("View", "Details", new {id = item.ContentsId}, new {@class = "btn btn-default"}) |
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
                     </tr>
@@ -283,13 +303,40 @@
 }
 @section scripts{
     <script src="~/Scripts/plugins/Form/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document)
             .ready(function() {
 
                 // Init select2 for dropdown select
                 $('.select-dropdown').select2();
-
+                $(function() {
+                    $('.datepicker')
+                        .datepicker({
+                            format: 'yyyy',
+                            viewMode: 'years',
+                            minViewMode: 'years',
+                            endDate: new Date()
+                        });
+                });
+                $("#file").hide(0);
+                $("#linkText").hide(0);
+                var type = $("#contentType");
+                type.change(function() {
+                    var sel = $(this).val(),
+                        contentType = $("#linkText"),
+                        file = $("#file");
+                    if (sel === "0" || sel === "1" || sel === "2") {
+                        file.show(100);
+                        contentType.hide(0);
+                    } else if (sel === "3" || sel === "4" || sel === "5") {
+                        file.hide(0);
+                        contentType.show(100);
+                    } else {
+                        file.hide(0);
+                        contentType.hide(0);
+                    }
+                });
             })
     </script>
 }

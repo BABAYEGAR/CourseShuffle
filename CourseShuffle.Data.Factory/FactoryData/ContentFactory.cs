@@ -18,7 +18,7 @@ namespace CourseShuffle.Data.Factory.FactoryData
         public IEnumerable<Contents> GetCourseContentsByContentType(long courseId,string contentType)
         {
             var allCourseContents = _db.Contents;
-            var courseContents = allCourseContents.Where(n => n.CourseId == courseId);
+            var courseContents = allCourseContents.Where(n => n.CoursesId == courseId);
             var contentsByType = courseContents.Where(n => n.ContentType == contentType);
             return contentsByType.ToList();
         } 

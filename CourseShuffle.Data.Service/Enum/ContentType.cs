@@ -9,6 +9,7 @@ namespace CourseShuffle.Data.Service.Enum
     public enum ContentType
     {
         Pdf,
+        Images,
         WordDocuments,
         Video,
         Audio,

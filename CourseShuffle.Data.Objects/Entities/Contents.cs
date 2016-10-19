@@ -14,10 +14,12 @@ namespace CourseShuffle.Data.Objects.Entities
         public string Name { get; set; }
         public string ContentType { get; set; }
         public string Author { get; set; }
+        public string File { get; set; }
+        public string LinkText { get; set; }
         public DateTime Year { get; set; }
         [DisplayName("Course")]
-        public long CourseId { get; set; }
-        [ForeignKey("CourseId")]
+        public long CoursesId { get; set; }
+        [ForeignKey("CoursesId")]
         public virtual Courses Courses { get; set; }
     }
 }

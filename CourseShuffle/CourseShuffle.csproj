@@ -640,6 +640,7 @@
     <Content Include="Scripts\plugins\dataTables\css\jquery.dataTables.css" />
     <Content Include="Scripts\plugins\dataTables\css\jquery.dataTables.min.css" />
     <Content Include="Scripts\plugins\dataTables\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Scripts\plugins\dataTables\datatables.min.js" />
     <Content Include="Scripts\plugins\dataTables\js\dataTables.bootstrap.js" />
     <Content Include="Scripts\plugins\dataTables\js\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\plugins\dataTables\js\dataTables.bootstrap4.js" />
@@ -1074,14 +1075,24 @@
     <Content Include="Scripts\plugins\moment\test\moment\zones.js" />
     <Content Include="Scripts\plugins\moment\test\moment\zone_switching.js" />
     <Content Include="Scripts\plugins\moment\test\qunit.js" />
+    <Content Include="Scripts\plugins\pickers\anytime.min.js" />
+    <Content Include="Scripts\plugins\pickers\datepicker.js" />
+    <Content Include="Scripts\plugins\pickers\daterangepicker.js" />
     <Content Include="Scripts\plugins\scriptcam\scriptcam.min.js" />
     <Content Include="Scripts\plugins\scriptcam\scriptcam.swf" />
     <Content Include="Scripts\plugins\scriptcam\upload.gif" />
+    <Content Include="Scripts\plugins\ui\drilldown.js" />
+    <Content Include="Scripts\plugins\ui\moment\moment.min.js" />
+    <Content Include="Scripts\plugins\ui\moment\moment_locales.min.js" />
+    <Content Include="Scripts\plugins\ui\nicescroll.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UploadedFiles\Pdf\131213482667502324.jpg" />
+    <Content Include="UploadedFiles\Pdf\131213679887110766.jpg" />
+    <Content Include="UploadedFiles\WordDocuments\131213689500449763.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1168,9 +1179,16 @@
     <Content Include="Views\Contents\Details.cshtml" />
     <Content Include="Views\Contents\Edit.cshtml" />
     <Content Include="Views\Contents\Index.cshtml" />
+    <Content Include="Scripts\plugins\dataTables\.DS_Store" />
+    <Content Include="Scripts\plugins\dataTables\._.DS_Store" />
+    <Content Include="Scripts\plugins\ui\moment\.DS_Store" />
+    <Content Include="Scripts\plugins\ui\moment\._.DS_Store" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\plugins\dataTables\extensions\" />
+    <Folder Include="Scripts\plugins\forms\" />
+    <Folder Include="Scripts\plugins\loaders\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

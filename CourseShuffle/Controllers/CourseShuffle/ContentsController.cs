@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using CoureShuffle.Data.DataContext.DataContext;
 using CourseShuffle.Data.Objects.Entities;
+using CourseShuffle.Data.Service.Enum;
+using CourseShuffle.Data.Service.FileUploader;
 
 namespace CourseShuffle.Controllers.CourseShuffle
 {
@@ -49,13 +51,29 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ContentsId,Name,ContentType,Author,Year,CourseId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] Contents contents)
+        public ActionResult Create([Bind(Include = "ContentsId,Name,Author,Year")] Contents contents,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
+                HttpPostedFileBase file = Request.Files["file"];
+                contents.DateCreated = DateTime.Now;
+                contents.DateLastModified = DateTime.Now;
+                contents.CreatedBy = 1;
+                contents.LastModifiedBy = 1;
+                contents.CoursesId = Convert.ToInt64(collectedValues["CourseId"]);
+                contents.ContentType = typeof(ContentType).GetEnumName(int.Parse(collectedValues["ContentType"]));
+               var type = typeof(ContentType).GetEnumName(int.Parse(collectedValues["ContentType"]));
+                if (file != null && file.FileName != "")
+                {
+                    contents.File = new FileUploader().UploadFile(file, type);
+                }
+                else
+                {
+                    contents.LinkText = collectedValues["LinkText"];
+                }
                 _db.Contents.Add(contents);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create","Contents",new {id = contents.CoursesId});
             }
             return View(contents);
         }
@@ -72,8 +90,6 @@ namespace CourseShuffle.Controllers.CourseShuffle
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseId = new SelectList(_db.Courseses, "CoursesId", "CourseName", contents.CourseId);
-            ViewBag.ContentType = new SelectList(_db.Courseses, "CoursesId", "CourseName", contents.CourseId);
             return View(contents);
         }
 
@@ -82,15 +98,16 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ContentsId,Name,ContentType,Author,Year,CourseId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] Contents contents)
+        public ActionResult Edit([Bind(Include = "ContentsId,Name,ContentType,Author,Year,CourseId,CreatedBy,DateCreated,File,LinkText")] Contents contents)
         {
             if (ModelState.IsValid)
             {
+                contents.DateLastModified = DateTime.Now;
+                contents.LastModifiedBy = 1;
                 _db.Entry(contents).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CourseId = new SelectList(_db.Courseses, "CoursesId", "CourseName", contents.CourseId);
             return View(contents);
         }
 
