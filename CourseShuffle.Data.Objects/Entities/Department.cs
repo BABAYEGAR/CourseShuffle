@@ -18,5 +18,6 @@ namespace CourseShuffle.Data.Objects.Entities
         [ForeignKey("FacultyId")]
         public virtual Faculty Faculty { get; set; }
         public IEnumerable<Courses> Courses { get; set; }
+        public IEnumerable<AppUser> AppUsers { get; set; }
     }
 }

@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\AppUserDataContext.cs" />
     <Compile Include="DataContext\ContentDataContext.cs" />
     <Compile Include="DataContext\CourseDataContext.cs" />
     <Compile Include="DataContext\LevelDataContext.cs" />

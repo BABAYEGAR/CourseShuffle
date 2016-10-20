@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FactoryData\AppUserFactory.cs" />
+    <Compile Include="FactoryData\AuthenticationFactory.cs" />
     <Compile Include="FactoryData\ContentFactory.cs" />
     <Compile Include="FactoryData\CourseFactory.cs" />
     <Compile Include="FactoryData\DepartmentFactory.cs" />
@@ -64,6 +66,10 @@
     <ProjectReference Include="..\CourseShuffle.Data.Objects\CourseShuffle.Data.Objects.csproj">
       <Project>{DA9F4C0D-B1C2-4DA8-9D27-FAFC6107B013}</Project>
       <Name>CourseShuffle.Data.Objects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CourseShuffle.Data.Service\CourseShuffle.Data.Service.csproj">
+      <Project>{6EADD583-B7F4-47A2-8D52-B1BAD5BEE6B3}</Project>
+      <Name>CourseShuffle.Data.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
