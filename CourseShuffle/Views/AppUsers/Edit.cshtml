@@ -7,19 +7,19 @@
     <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
     <link href="~/AppTheme/fileinput.css" rel="stylesheet"/>
 }
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "AppUsers", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.AppUserId)
-    @Html.HiddenFor(model => model.DateCreated)
-    @Html.HiddenFor(model => model.CreatedBy)
-    @Html.HiddenFor(model => model.Password)
-    @Html.HiddenFor(model => model.ProfilePicture)
+
 
     <div class="form-horizontal">
         <div class="col-md-8">
             @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             @Html.HiddenFor(model => model.AppUserId)
+            @Html.HiddenFor(model => model.DateCreated)
+            @Html.HiddenFor(model => model.CreatedBy)
+            @Html.HiddenFor(model => model.Password)
+            @Html.HiddenFor(model => model.ProfilePicture)
 
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.Firstname, new {@class = "control-label col-md-3"})
@@ -70,14 +70,14 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.DepartmentId, "Department", new {@class = "control-label col-md-3"})
                 <div class="col-sm-6 col-md-9">
-                    @Html.DropDownList("DepartmentId", null, new {@class = "form-control select-dropdown"})
+                    @Html.DropDownListFor(model=>model.DepartmentId,(SelectList)ViewBag.Departments, null, new {@class = "form-control select-dropdown"})
                     @Html.ValidationMessageFor(model => model.DepartmentId, "", new {@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.LevelId, "Level", new {@class = "control-label col-md-3"})
                 <div class="col-sm-6 col-md-9">
-                    @Html.DropDownList("LevelId", null, new {@class = "form-control select-dropdown"})
+                    @Html.DropDownListFor(model => model.LevelId,(SelectList)ViewBag.Levels, null, new {@class = "form-control select-dropdown"})
                     @Html.ValidationMessageFor(model => model.LevelId, "", new {@class = "text-danger"})
                 </div>
             </div>

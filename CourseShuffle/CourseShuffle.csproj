@@ -1154,6 +1154,9 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="UploadedFiles\Pdf\131213482667502324.jpg" />
     <Content Include="UploadedFiles\Pdf\131213679887110766.jpg" />
+    <Content Include="UploadedFiles\ProfileImage\131213965160928941.jpg" />
+    <Content Include="UploadedFiles\ProfileImage\131213967644318056.jpg" />
+    <Content Include="UploadedFiles\ProfileImage\131213968495771653.jpg" />
     <Content Include="UploadedFiles\WordDocuments\131213689500449763.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
