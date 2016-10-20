@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
 </p>
 <table class="table">
     <tr>
@@ -38,7 +38,7 @@
         <th>
             @Html.DisplayNameFor(model => model.LastModifiedBy)
         </th>
-        <th></th>
+        <th>Action</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -56,7 +56,7 @@
             @Html.DisplayFor(modelItem => item.Author)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Year)
+            @Html.DisplayFor(modelItem => item.Year.Year)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedBy)
@@ -71,9 +71,9 @@
             @Html.DisplayFor(modelItem => item.LastModifiedBy)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ContentsId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ContentsId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ContentsId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.ContentsId },new {@class = "btn btn-primary"}) |
+            @Html.ActionLink("Details", "Details", new { id=item.ContentsId }, new { @class = "btn btn-default" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ContentsId }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

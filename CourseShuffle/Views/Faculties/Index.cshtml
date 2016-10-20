@@ -46,7 +46,7 @@
                     @Html.ActionLink("Edit", "Edit", new {id = item.FacultyId}, new {@class = "btn btn-default"}) |
                     @*@Html.ActionLink("Details", "Details", new { id=item.FacultyId }, new { @class = "btn btn-default" }) |*@
                     @Html.ActionLink("Delete", "Delete", new {id = item.FacultyId}, new {@class = "btn btn-danger"}) |
-                    @Html.ActionLink("View Departments", "Create","Departments", new {id = item.FacultyId}, new {@class = "btn btn-primary"})
+                    @Html.ActionLink("View Departments", "ViewDepartmentForFaculty","Faculties", new {id = item.FacultyId}, new {@class = "btn btn-primary"})
                 </td>
             </tr>
         }
