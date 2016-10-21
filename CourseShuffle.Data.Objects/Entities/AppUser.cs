@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CourseShuffle.Data.Objects.Entities
@@ -26,6 +27,7 @@ namespace CourseShuffle.Data.Objects.Entities
         public long DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public  Department Department { get; set; }
+        public IEnumerable<Courses> Courses { get; set; }
         public  string DisplayName
             => Firstname + " " + (string.IsNullOrEmpty(Othername) ? "" : Othername) + " " + Lastname;
     }

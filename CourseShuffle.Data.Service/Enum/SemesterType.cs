@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CourseShuffle.Data.Service.Enum
 {
-    public enum UserType
+    public enum SemesterType
     {
-        Administrator,
-        Facilitator,
-        Lecturer
+        FirstSemester,
+        SecondSemester
     }
 }
