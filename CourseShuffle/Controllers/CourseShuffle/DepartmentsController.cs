@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CoureShuffle.Data.DataContext.DataContext;
+using CourseShuffle.Data.Factory.FactoryData;
 using CourseShuffle.Data.Objects.Entities;
 
 namespace CourseShuffle.Controllers.CourseShuffle
@@ -35,6 +36,11 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 return HttpNotFound();
             }
             return View(department);
+        }
+        public ActionResult ViewDepartmentForFaculty(long id)
+        {
+            var departments = new DepartmentFactory().GetAllDepartmentsForAFaculty(id);
+            return View("FacultyDepartments", departments);
         }
 
         // GET: Departments/Create

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using BhuInfo.Data.Service.Encryption;
 using CoureShuffle.Data.DataContext.DataContext;
+using CourseShuffle.Data.Factory.FactoryData;
 using CourseShuffle.Data.Objects.Entities;
 using CourseShuffle.Data.Service.Encryption;
 
@@ -23,6 +24,11 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             var courses = _db.Courses.Include(c => c.Department).Include(c => c.Level);
             return View(courses.ToList());
+        }
+        public ActionResult ViewCoursesForDepartment(long id)
+        {
+            var courses = new CourseFactory().GetAllCoursesForADepartment(id);
+            return View("DeparmentCourses", courses);
         }
 
         // GET: Courses/Details/5

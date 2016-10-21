@@ -36,12 +36,6 @@ namespace CourseShuffle.Controllers.CourseShuffle
             }
             return View(faculty);
         }
-        public ActionResult ViewDepartmentForFaculty(long id)
-        {
-            var departments = _dbc.Departments.Where(n => n.DepartmentId == id);
-            return RedirectToAction("Index","Departments",departments);
-        }
-
 
         // GET: Faculties/Create
         public ActionResult Create()

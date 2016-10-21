@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CourseShuffle.Data.Factory.FactoryData
 {
-    class FacultyFactory
+    public class FacultyFactory
     {
+
     }
 }

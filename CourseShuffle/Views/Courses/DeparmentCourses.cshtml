@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CourseShuffle.Data.Objects.Entities.Courses>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreditUnit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Level.Name)
+        </th>
+        <th>Action</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
+                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-success"})
+            </td>
+        </tr>
+    }
+
+</table>
