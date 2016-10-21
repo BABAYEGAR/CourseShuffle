@@ -7,7 +7,6 @@ namespace CourseShuffle.Data.Objects.Entities
         public long LevelId { get; set; }
         public string Name { get; set; }
         public virtual IEnumerable<Courses> Courseses { get; set; }
-        public virtual IEnumerable<AppUser> AppUsers { get; set; }
 
     }
 }

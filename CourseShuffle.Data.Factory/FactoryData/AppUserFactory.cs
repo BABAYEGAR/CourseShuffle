@@ -14,37 +14,15 @@ namespace CourseShuffle.Data.Factory.FactoryData
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
-        /// <param name="role"></param>
         /// <returns></returns>
         public AppUser GetAppUserByLogin(string email, string password)
         {
             email = email.Trim();
             var appUser =
-                _db.AppUsers.FirstOrDefault(n => (n.Email == email || n.MatricNumber == email) && (n.Password == password));
+                _db.AppUsers.FirstOrDefault(n => (n.Email == email) && (n.Password == password));
             return appUser;
         }
 
-        /// <summary>
-        ///     This method checks if a user exist
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="matricNumber"></param>
-        /// <returns></returns>
-        public bool CheckIfStudentUserExist(string email, string matricNumber)
-        {
-            var userExist = false;
-            try
-            {
-                var allUsers = _db.AppUsers;
-                if (allUsers.Any(n => n.Email == email || n.MatricNumber == matricNumber))
-                    userExist = true;
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            return userExist;
-        }
         /// <summary>
         ///     This method checks if a user exist
         /// </summary>

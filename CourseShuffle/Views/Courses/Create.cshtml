@@ -1,4 +1,5 @@
-﻿@model CourseShuffle.Data.Objects.Entities.Courses
+﻿@using CourseShuffle.Data.Service.Enum
+@model CourseShuffle.Data.Objects.Entities.Courses
 
 @{
     ViewBag.Title = "Create";
@@ -56,7 +57,12 @@
                 @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.Semester, new { @class = "control-label col-md-3" })
+            <div class="col-sm-6 col-md-9">
+                @Html.DropDownList("Semester", EnumHelper.GetSelectList(typeof(SemesterType)), "select the course semester", new { @class = "form-control select-dropdown", id = "semester" })
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <a href="@Url.Action("Index", "Courses")" class="btn btn-default pull-left">Cancel</a>

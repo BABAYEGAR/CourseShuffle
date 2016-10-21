@@ -13,15 +13,9 @@ namespace CourseShuffle.Data.Objects.Entities
         public  string Othername { get; set; }
         public  string Email { get; set; }
         public  string Password { get; set; }
-        [DisplayName("Matric Number")]
-        public  string MatricNumber { get; set; }
         [DisplayName("Mobile Number")]
         public  string MobileNumber { get; set; }
         public  string ProfilePicture { get; set; }
-        [DisplayName("Level")]
-        public  long LevelId { get; set; }
-        [ForeignKey("LevelId")]
-        public  Level Level { get; set; }
         public  string Role { get; set; }
         [DisplayName("Department")]
         public long DepartmentId { get; set; }

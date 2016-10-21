@@ -40,7 +40,6 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Create()
         {
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
-            ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name");
             return View();
         }
 
@@ -51,7 +50,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         [ValidateAntiForgeryToken]
         public ActionResult Create(
             [Bind(
-                 Include = "AppUserId,Firstname,Lastname,Othername,Email,MatricNumber,MobileNumber,LevelId,DepartmentId"
+                 Include = "AppUserId,Firstname,Lastname,Othername,Email,MobileNumber,DepartmentId"
              )] AppUser appUser, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
@@ -76,7 +75,6 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 return RedirectToAction("Index");
             }
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
-            ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name");
             return View(appUser);
         }
 
@@ -103,7 +101,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "AppUserId,Firstname,Lastname,Othername,Email,Password,MatricNumber,MobileNumber,LevelId,DepartmentId,Role,CreatedBy,DateCreated"
+                     "AppUserId,Firstname,Lastname,Othername,Email,Password,MobileNumber,DepartmentId,Role,CreatedBy,DateCreated"
              )] AppUser appUser, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
