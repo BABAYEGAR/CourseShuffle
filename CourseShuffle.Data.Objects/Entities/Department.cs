@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,9 @@ namespace CourseShuffle.Data.Objects.Entities
     public class Department : TransportObjects
     {
         public long DepartmentId { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
         [DisplayName("Faculty")]
         public long FacultyId { get; set; }

@@ -44,9 +44,15 @@ namespace CourseShuffle.Controllers.CourseShuffle
         }
 
         // GET: Departments/Create
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
+            if (id <= 0)
+            {
+                id = 0;
+            }
             ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name");
+            ViewBag.Faculty = id ?? 0;
+
             return View();
         }
 
@@ -59,7 +65,14 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                department.FacultyId = Convert.ToInt64(collectedValues["FacultyId"]);
+                var facultyId= Convert.ToInt64(collectedValues["FacultyId"]);
+                if (collectedValues["FacultyId"] == null)
+                {
+                    facultyId = Convert.ToInt64(collectedValues["Faculty"]);
+                }
+
+                department.FacultyId = facultyId;
+                
                 department.DateCreated = DateTime.Now;
                 department.DateLastModified = DateTime.Now;
                 department.CreatedBy = 1;

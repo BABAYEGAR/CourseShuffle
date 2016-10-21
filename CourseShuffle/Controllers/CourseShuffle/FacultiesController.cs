@@ -38,7 +38,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         }
 
         // GET: Faculties/Create
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
             return View();
         }

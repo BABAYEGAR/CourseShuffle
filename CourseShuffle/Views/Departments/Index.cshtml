@@ -13,7 +13,18 @@
 <h2></h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+
+    @{
+        Department first = null;
+        foreach (var n in Model)
+        {
+
+                first = n;
+                break;
+            
+        }
+    }
+    @Html.ActionLink("Create New", "Create", new { id = first.FacultyId }, new { @class = "btn btn-success" })
 </p>
 <table class="table" id="department">
     <tr>

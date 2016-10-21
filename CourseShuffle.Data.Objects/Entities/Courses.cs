@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CourseShuffle.Data.Objects.Entities
@@ -9,11 +10,15 @@ namespace CourseShuffle.Data.Objects.Entities
     {
         public long CoursesId { get; set; }
         [DisplayName("Course Name")]
+        [Required]
         public string CourseName { get; set; }
         [DisplayName("Course Code")]
+        [Required]
         public string CourseCode { get; set; }
         [DisplayName("Course Unit")]
+        [Required]
         public int CreditUnit { get; set; }
+        [Required]
         public string Semester { get; set; }
         [DisplayName("Lecturer")]
         public long AppUserId { get; set; }

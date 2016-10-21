@@ -53,9 +53,14 @@ namespace CourseShuffle.Controllers.CourseShuffle
         }
 
         // GET: Courses/Create
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
+            if (id <= 0)
+            {
+                id = 0;
+            }
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
+            ViewBag.Level = id ?? 0;
             ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name");
             ViewBag.AppUserId = new SelectList(_db.AppUsers.Where(n=>n.Role == UserType.Lecturer.ToString()), "AppUserId", "DisplayName");
             return View();
@@ -66,12 +71,19 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,LevelId,AppUserId,DepartmentId")] Courses courses,FormCollection collectedValues)
+        public ActionResult Create([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,AppUserId,DepartmentId")] Courses courses,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
                 var levelId = Convert.ToInt64(collectedValues["levelId"]);
-                var departmentId = Convert.ToInt64(collectedValues["departmentId"]);
+                if (collectedValues["levelId"] == null)
+                {
+                    levelId = Convert.ToInt64(collectedValues["Level"]);
+                }
+
+                courses.LevelId = levelId;
+              
+                 var departmentId = Convert.ToInt64(collectedValues["departmentId"]);
                 courses.Semester = typeof(SemesterType).GetEnumName(int.Parse(collectedValues["Semester"]));
                 courses.DateCreated  = DateTime.Now;
                 courses.DateLastModified = DateTime.Now;
