@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201610211045167_FourthMigration.Designer.cs">
       <DependentUpon>201610211045167_FourthMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610211553226_FifthDataMigration.cs" />
+    <Compile Include="Migrations\201610211553226_FifthDataMigration.Designer.cs">
+      <DependentUpon>201610211553226_FifthDataMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610211045167_FourthMigration.resx">
       <DependentUpon>201610211045167_FourthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610211553226_FifthDataMigration.resx">
+      <DependentUpon>201610211553226_FifthDataMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

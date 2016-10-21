@@ -50,6 +50,7 @@
                 @Html.ActionLink("Edit", "Edit", new {id = item.DepartmentId}, new {@class = "btn btn-primary"}) |
                 @Html.ActionLink("Details", "Details", new {id = item.DepartmentId}, new {@class = "btn btn-default"}) |
                 @Html.ActionLink("Delete", "Delete", new {id = item.DepartmentId}, new {@class = "btn btn-danger"})|
+                @Html.ActionLink("View Courses", "Create", "Courses", new { id = item.DepartmentId }, new { @class = "btn btn-primary" })
                 <div class="btn-group">
                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-cogs"></i>
