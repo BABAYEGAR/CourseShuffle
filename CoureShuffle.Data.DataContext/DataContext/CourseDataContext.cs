@@ -17,6 +17,7 @@ namespace CoureShuffle.Data.DataContext.DataContext
 
         public virtual DbSet<Faculty> Faculties { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<AppUser> AppUsers { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 

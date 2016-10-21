@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FactoryData\LevelFactory.cs" />
     <Compile Include="FactoryData\AppUserFactory.cs" />
     <Compile Include="FactoryData\AuthenticationFactory.cs" />
     <Compile Include="FactoryData\ContentFactory.cs" />

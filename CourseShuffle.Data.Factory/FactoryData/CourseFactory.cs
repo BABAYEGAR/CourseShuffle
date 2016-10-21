@@ -23,5 +23,17 @@ namespace CourseShuffle.Data.Factory.FactoryData
             var orderedCourses = courses.OrderByDescending(n => n.DateCreated);
             return orderedCourses;
         }
+        /// <summary>
+        /// This method retrievs all courses for a level under a department
+        /// </summary>
+        /// <param name="levelId"></param>
+        /// <param name="departmentId"></param>
+        /// <returns></returns>
+        public IEnumerable<Courses> GetAllCoursesForALevel(long levelId,long departmentId)
+        {
+            var courses = _db.Courses.Where(n => n.LevelId == levelId && n.DepartmentId == departmentId);
+            var orderedCourses = courses.OrderByDescending(n => n.DateCreated);
+            return orderedCourses;
+        }
     }
 }

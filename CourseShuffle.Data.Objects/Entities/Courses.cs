@@ -16,9 +16,9 @@ namespace CourseShuffle.Data.Objects.Entities
         public int CreditUnit { get; set; }
         public string Semester { get; set; }
         [DisplayName("Lecturer")]
-        public long LecturerId { get; set; }
+        public long AppUserId { get; set; }
         [ForeignKey("AppUserId")]
-        public virtual AppUser Lecturer { get; set; }
+        public virtual AppUser AppUser { get; set; }
         [DisplayName("Level")]
         public long LevelId { get; set; }
         [ForeignKey("LevelId")]

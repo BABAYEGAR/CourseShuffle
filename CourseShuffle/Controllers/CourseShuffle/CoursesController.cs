@@ -12,6 +12,7 @@ using CoureShuffle.Data.DataContext.DataContext;
 using CourseShuffle.Data.Factory.FactoryData;
 using CourseShuffle.Data.Objects.Entities;
 using CourseShuffle.Data.Service.Encryption;
+using CourseShuffle.Data.Service.Enum;
 
 namespace CourseShuffle.Controllers.CourseShuffle
 {
@@ -29,6 +30,11 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             var courses = new CourseFactory().GetAllCoursesForADepartment(id);
             return View("DeparmentCourses", courses);
+        }
+        public ActionResult ViewCoursesForLevel(long levelId,long departmentId)
+        {
+            var courses = new CourseFactory().GetAllCoursesForALevel(levelId,departmentId);
+            return View("LevelCorses", courses);
         }
 
         // GET: Courses/Details/5
@@ -51,6 +57,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
             ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name");
+            ViewBag.AppUserId = new SelectList(_db.AppUsers.Where(n=>n.Role == UserType.Lecturer.ToString()), "AppUserId", "DisplayName");
             return View();
         }
 
@@ -59,21 +66,25 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,LevelId,DepartmentId")] Courses courses)
+        public ActionResult Create([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,LevelId,AppUserId,DepartmentId")] Courses courses,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
+                var levelId = Convert.ToInt64(collectedValues["levelId"]);
+                var departmentId = Convert.ToInt64(collectedValues["departmentId"]);
+                courses.Semester = typeof(SemesterType).GetEnumName(int.Parse(collectedValues["Semester"]));
                 courses.DateCreated  = DateTime.Now;
                 courses.DateLastModified = DateTime.Now;
                 courses.LastModifiedBy = 1;
                 courses.CreatedBy = 1;
                 _db.Courses.Add(courses);
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewCoursesForLevel",new {levelId, departmentId });
             }
 
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", courses.DepartmentId);
             ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name", courses.LevelId);
+            ViewBag.AppUserId = new SelectList(_db.AppUsers.Where(n => n.Role == UserType.Lecturer.ToString()), "AppUserId", "DisplayName");
             return View(courses);
         }
 
@@ -97,7 +108,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,LevelId,DepartmentId,CreatedBy")] Courses courses,FormCollection collectedValues)
+        public ActionResult Edit([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,AppUserId,LevelId,DepartmentId,CreatedBy")] Courses courses,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {

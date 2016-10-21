@@ -1,0 +1,147 @@
+﻿@using CourseShuffle.Data.Service.Enum
+@model IEnumerable<CourseShuffle.Data.Objects.Entities.Courses>
+
+@{
+    ViewBag.Title = "Index";
+    var firstSemesterCourses = Model.Where(n => n.Semester == SemesterType.FirstSemester.ToString());
+    var secondSemesterCourses = Model.Where(n => n.Semester == SemesterType.SecondSemester.ToString());
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+</p>
+<!-- Page content -->
+<div class="page-content">
+
+    <!-- Main content -->
+    <div class="content-wrapper">
+        <div class="row">
+            <!-- Simple panel -->
+            <!-- Table -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+
+                    <div class="heading-elements">
+                        <h3 style="font-weight: bold"></h3>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
+                            <li class="active">
+                                <a data-toggle="tab" href="#active">First Semester</a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#second">Second Semester</a>
+                            </li>
+
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="active" class="tab-pane fade in active">
+                                <table class="table">
+                                    <tr>
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CourseName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CourseCode)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CreditUnit)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Level.Name)
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+
+                                    @foreach (var item in firstSemesterCourses)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CourseName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CourseCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CreditUnit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Level.Name)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                                                @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+                                                @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
+                                                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-success"})
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+                            <div id="second" class="tab-pane fade">
+
+                                <table class="table">
+                                    <tr>
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CourseName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CourseCode)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CreditUnit)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Level.Name)
+                                        </th>
+                                        <th>Action</th>
+                                    </tr>
+
+                                    @foreach (var item in secondSemesterCourses)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CourseName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CourseCode)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CreditUnit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Level.Name)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                                                @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+                                                @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
+                                                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-success"})
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
