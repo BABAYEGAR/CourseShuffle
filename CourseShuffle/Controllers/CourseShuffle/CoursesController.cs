@@ -75,7 +75,11 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                var levelId = Convert.ToInt64(collectedValues["levelId"]);
+
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
+                {
+                    var levelId = Convert.ToInt64(collectedValues["levelId"]);
                 if (collectedValues["levelId"] == null)
                 {
                     levelId = Convert.ToInt64(collectedValues["Level"]);
@@ -90,7 +94,12 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 courses.CreatedBy = 1;
                 _db.Courses.Add(courses);
                 _db.SaveChanges();
-                return RedirectToAction("ViewCoursesForLevel",new {levelId, departmentId });
+                    TempData["course"] = "A new course has been created successfully!";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
+                    return RedirectToAction("ViewCoursesForLevel",new {levelId, departmentId });
+                }
+                TempData["course"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
             }
 
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", courses.DepartmentId);
@@ -123,13 +132,22 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                courses.DateLastModified = DateTime.Now;
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
+                {
+                    courses.DateLastModified = DateTime.Now;
                 courses.LastModifiedBy = 1;
                 courses.DateCreated =Convert.ToDateTime(collectedValues["DateCreated"]);
                 _db.Entry(courses).State = EntityState.Modified;
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                    TempData["course"] = "A new course has been modified successfully!";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
+                    return RedirectToAction("Index");
+                }
+                TempData["course"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
             }
+
             //ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", courses.DepartmentId);
             //ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name", courses.LevelId);
             return View(courses);
@@ -158,6 +176,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
             Courses courses = _db.Courses.Find(id);
             _db.Courses.Remove(courses);
             _db.SaveChanges();
+            TempData["course"] = "A  course has been deleted successfully!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using CoureShuffle.Data.DataContext.DataContext;
 using CourseShuffle.Data.Objects.Entities;
+using CourseShuffle.Data.Service.Enum;
 
 namespace CourseShuffle.Controllers.CourseShuffle
 {
@@ -26,14 +24,10 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Faculty faculty = _db.Faculties.Find(id);
+            var faculty = _db.Faculties.Find(id);
             if (faculty == null)
-            {
                 return HttpNotFound();
-            }
             return View(faculty);
         }
 
@@ -52,13 +46,19 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                faculty.DateCreated = DateTime.Now;
-                faculty.DateLastModified = DateTime.Now;
-                faculty.CreatedBy = 1;
-                faculty.LastModifiedBy = 1;
-                _db.Faculties.Add(faculty);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
+                {
+                    faculty.DateCreated = DateTime.Now;
+                    faculty.DateLastModified = DateTime.Now;
+                    faculty.CreatedBy = 1;
+                    faculty.LastModifiedBy = 1;
+                    _db.Faculties.Add(faculty);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                TempData["faculty"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
             }
 
             return View(faculty);
@@ -68,14 +68,10 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Faculty faculty = _db.Faculties.Find(id);
+            var faculty = _db.Faculties.Find(id);
             if (faculty == null)
-            {
                 return HttpNotFound();
-            }
             return View(faculty);
         }
 
@@ -84,15 +80,22 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FacultyId,Name,Description")] Faculty faculty,FormCollection collectedValues)
+        public ActionResult Edit([Bind(Include = "FacultyId,Name,Description")] Faculty faculty,
+            FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
-                faculty.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
-                faculty.DateLastModified = DateTime.Now;
-                _db.Entry(faculty).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
+                {
+                    faculty.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
+                    faculty.DateLastModified = DateTime.Now;
+                    _db.Entry(faculty).State = EntityState.Modified;
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                TempData["faculty"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
             }
             return View(faculty);
         }
@@ -101,34 +104,31 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Faculty faculty = _db.Faculties.Find(id);
+            var faculty = _db.Faculties.Find(id);
             if (faculty == null)
-            {
                 return HttpNotFound();
-            }
             return View(faculty);
         }
 
         // POST: Faculties/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Faculty faculty = _db.Faculties.Find(id);
+            var faculty = _db.Faculties.Find(id);
             _db.Faculties.Remove(faculty);
             _db.SaveChanges();
+            TempData["faculty"] = "A faculty has been deleted successfully!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 _db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

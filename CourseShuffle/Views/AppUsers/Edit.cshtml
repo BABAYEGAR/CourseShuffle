@@ -1,4 +1,5 @@
-﻿@model CourseShuffle.Data.Objects.Entities.AppUser
+﻿@using CourseShuffle.Data.Service.Enum
+@model CourseShuffle.Data.Objects.Entities.AppUser
 
 @{
     ViewBag.Title = "Edit";
@@ -7,7 +8,22 @@
     <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
     <link href="~/AppTheme/fileinput.css" rel="stylesheet"/>
 }
-@using (Html.BeginForm("Edit", "AppUsers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@if (TempData["user"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["user"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["user"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["user"]</div>
+    }
+}
+@using (Html.BeginForm("Edit", "AppUsers", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
 
@@ -62,14 +78,14 @@
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.DepartmentId, "Department", new {@class = "control-label col-md-3"})
                 <div class="col-sm-6 col-md-9">
-                    @Html.DropDownListFor(model=>model.DepartmentId,(SelectList)ViewBag.Departments, null, new {@class = "form-control select-dropdown"})
+                    @Html.DropDownListFor(model => model.DepartmentId, (SelectList) ViewBag.Departments, null, new {@class = "form-control select-dropdown"})
                     @Html.ValidationMessageFor(model => model.DepartmentId, "", new {@class = "text-danger"})
                 </div>
             </div>
             <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.Role, new { @class = "control-label col-md-3" })
+                @Html.LabelFor(model => model.Role, new {@class = "control-label col-md-3"})
                 <div class="col-sm-6 col-md-9">
-                    @Html.DropDownListFor(model => model.Role, (SelectList)ViewBag.roles, new { @class = "form-control select-dropdown" })
+                    @Html.DropDownListFor(model => model.Role, (SelectList) ViewBag.roles, new {@class = "form-control select-dropdown"})
                 </div>
             </div>
         </div>

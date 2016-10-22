@@ -1,5 +1,6 @@
 ﻿@using CourseShuffle.Data.Factory.FactoryData
 @using CourseShuffle.Data.Objects.Entities
+@using CourseShuffle.Data.Service.Enum
 @{
     ViewBag.Title = "Home Page";
 }
@@ -99,9 +100,21 @@
                             <li class="divider navbar-login-session-bg"></li>
                             <li><a href="#">Change Password <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+                            @if (loggedinuser.Role == UserType.Administrator.ToString())
+                            {
+                                <li><a href="@Url.Action("Index","AppUsers")">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+                            }
+                            @if (loggedinuser.Role == UserType.Facilitator.ToString())
+                            {
+                                <li><a href="@Url.Action("Index","Faculties")">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+                            }
+                            @if (loggedinuser.Role == UserType.Lecturer.ToString())
+                            {
+                                <li><a href="@Url.Action("Index","Departments")">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+                            }
+                         
                             <li class="divider"></li>
-                            <li><a href="#">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+                            <li><a href="@Url.Action("LogOut","Account")">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
                         </ul>
                     </li>
                 }
@@ -222,7 +235,7 @@
 
 <ul class="nav nav-inline navbar-fixed-bottom" style="height: 50px">
     <li style="color: #fff; font-family: Tw Cen Mt; margin-left: 40%; margin-top: 15px;">
-        &copy; All rights reserved Computer Science Dept| Set 2016/2017
+        &copy; All rights reserved Computer Science Dept| Set Of 2016/2017 |@DateTime.Now.Year
     </li>
 
 </ul>

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using CoureShuffle.Data.DataContext.DataContext;
 using CourseShuffle.Data.Factory.FactoryData;
 using CourseShuffle.Data.Objects.Entities;
+using CourseShuffle.Data.Service.Enum;
 
 namespace CourseShuffle.Controllers.CourseShuffle
 {
@@ -65,21 +66,29 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                var facultyId= Convert.ToInt64(collectedValues["FacultyId"]);
-                if (collectedValues["FacultyId"] == null)
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
                 {
-                    facultyId = Convert.ToInt64(collectedValues["Faculty"]);
-                }
+                    var facultyId = Convert.ToInt64(collectedValues["FacultyId"]);
+                    if (collectedValues["FacultyId"] == null)
+                    {
+                        facultyId = Convert.ToInt64(collectedValues["Faculty"]);
+                    }
 
-                department.FacultyId = facultyId;
-                
-                department.DateCreated = DateTime.Now;
-                department.DateLastModified = DateTime.Now;
-                department.CreatedBy = 1;
-                department.LastModifiedBy = 1;
-                _db.Departments.Add(department);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                    department.FacultyId = facultyId;
+
+                    department.DateCreated = DateTime.Now;
+                    department.DateLastModified = DateTime.Now;
+                    department.CreatedBy = 1;
+                    department.LastModifiedBy = 1;
+                    _db.Departments.Add(department);
+                    _db.SaveChanges();
+                    TempData["user"] = "A new department has been created successfully!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Index");
+                }
+                TempData["department"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
             }
 
             ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name", department.FacultyId);
@@ -111,11 +120,18 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                department.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
+
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
+                {
+                    department.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
                 department.DateLastModified = DateTime.Now;
                 _db.Entry(department).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");
+                }
+                TempData["department"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
             }
             ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name", department.FacultyId);
             return View(department);
@@ -144,6 +160,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
             Department department = _db.Departments.Find(id);
             _db.Departments.Remove(department);
             _db.SaveChanges();
+            TempData["department"] = "A department has been deleted successfully!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 

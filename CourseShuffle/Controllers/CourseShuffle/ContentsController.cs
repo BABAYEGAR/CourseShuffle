@@ -49,21 +49,34 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                var file = Request.Files["file"];
-                contents.DateCreated = DateTime.Now;
-                contents.DateLastModified = DateTime.Now;
-                contents.CreatedBy = 1;
-                contents.LastModifiedBy = 1;
-                contents.CoursesId = Convert.ToInt64(collectedValues["CourseId"]);
-                contents.ContentType = typeof(ContentType).GetEnumName(int.Parse(collectedValues["ContentType"]));
-                var type = typeof(ContentType).GetEnumName(int.Parse(collectedValues["ContentType"]));
-                if ((file != null) && (file.FileName != ""))
-                    contents.File = new FileUploader().UploadFile(file, type);
-                else
-                    contents.LinkText = collectedValues["LinkText"];
-                _db.Contents.Add(contents);
-                _db.SaveChanges();
-                return RedirectToAction("Create", "Contents", new {id = contents.CoursesId});
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
+                {
+                    var file = Request.Files["file"];
+                    contents.DateCreated = DateTime.Now;
+                    contents.DateLastModified = DateTime.Now;
+                    contents.CreatedBy = 1;
+                    contents.LastModifiedBy = 1;
+                    contents.CoursesId = Convert.ToInt64(collectedValues["CourseId"]);
+                    contents.ContentType = typeof(ContentType).GetEnumName(int.Parse(collectedValues["ContentType"]));
+                    var type = typeof(ContentType).GetEnumName(int.Parse(collectedValues["ContentType"]));
+                    if ((file != null) && (file.FileName != ""))
+                    {
+                        contents.File = new FileUploader().UploadFile(file, type);
+                    }
+                    else
+                    {
+                        contents.LinkText = collectedValues["LinkText"];
+                    }
+                    _db.Contents.Add(contents);
+                    _db.SaveChanges();
+                    TempData["content"] = "A new content has been added to " +
+                                       _db.Courseses.Find(contents.CoursesId).CourseName + "!";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
+                    return RedirectToAction("Create", "Contents", new {id = contents.CoursesId});
+                }
+                TempData["content"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
             }
             return View(contents);
         }
@@ -89,12 +102,19 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                contents.DateCreated =Convert.ToDateTime(collectedValues["DateCreated"]);
-                contents.DateLastModified = DateTime.Now;
-                contents.LastModifiedBy = 1;
-                _db.Entry(contents).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
+                {
+                    contents.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
+                    contents.DateLastModified = DateTime.Now;
+                    contents.LastModifiedBy = 1;
+                    _db.Entry(contents).State = EntityState.Modified;
+                    _db.SaveChanges();
+                    TempData["content"] = "The Course content has been modified successfully";
+                    return RedirectToAction("Index");
+                }
+                TempData["content"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
             }
             return View(contents);
         }
@@ -119,6 +139,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
             var contents = _db.Contents.Find(id);
             _db.Contents.Remove(contents);
             _db.SaveChanges();
+            TempData["content"] = "A course content has been deleted successfully!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 

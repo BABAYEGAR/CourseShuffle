@@ -11,6 +11,21 @@
 @section css{
     <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
 }
+@if (TempData["course"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["course"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["course"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["course"]</div>
+    }
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using CourseShuffle.Data.Factory.FactoryData;
 using CourseShuffle.Data.Objects.Entities;
 using CourseShuffle.Data.Service.Encryption;
@@ -144,7 +145,7 @@ namespace CourseShuffle.Controllers
             else
             {
                 TempData["password"] = "Make sure your the password and confirm password are the same!";
-                //TempData["notificationtype"] = NotificationType.Info.ToString();
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("ResetPassword", "Account", new {Id = userId});
             }
             return View("Login");
@@ -156,6 +157,13 @@ namespace CourseShuffle.Controllers
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
+        }
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session["courseshuffleloggedinuser"] = null;
+            FormsAuthentication.RedirectToLoginPage(null);
+            return RedirectToAction("Login", "Account");
         }
     }
 }

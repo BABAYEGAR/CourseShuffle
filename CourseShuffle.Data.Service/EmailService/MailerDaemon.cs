@@ -17,7 +17,7 @@ namespace CourseShuffle.Data.Service.EmailService
         {
             var message = new MailMessage
             {
-                From = new MailAddress(""),
+                From = new MailAddress("salxsaa@gmail.com"),
                 Subject = "New User Details",
                 Priority = MailPriority.High,
                 SubjectEncoding = Encoding.UTF8,
@@ -50,7 +50,7 @@ namespace CourseShuffle.Data.Service.EmailService
                     .Replace("PASSWORD", user.Password)
                     .Replace("URL", "http://localhost:51301/Account/Login")
                     .Replace("ROLE", user.Role)
-                    .Replace("FROM", "");
+                    .Replace("FROM", "CourseShuffleSupport");
         }
 
     }

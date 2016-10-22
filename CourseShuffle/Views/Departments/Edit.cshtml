@@ -1,4 +1,5 @@
-﻿@model CourseShuffle.Data.Objects.Entities.Department
+﻿@using CourseShuffle.Data.Service.Enum
+@model CourseShuffle.Data.Objects.Entities.Department
 
 @{
     ViewBag.Title = "Edit";
@@ -6,7 +7,21 @@
 
 <h2>Edit</h2>
 
-
+@if (TempData["department"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["department"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["department"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["department"]</div>
+    }
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

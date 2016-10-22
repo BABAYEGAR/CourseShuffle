@@ -11,7 +11,21 @@
 <div class="container">
     <div class="row">
         <div class="panel panel-flat">
-
+            @if (TempData["user"] != null)
+            {
+                if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+                {
+                    <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["user"]</div>
+                }
+                else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+                {
+                    <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["user"]</div>
+                }
+                else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+                {
+                    <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["user"]</div>
+                }
+            }
             <div class="panel-body">
                 <div class="col-md-12">
                   @using (Html.BeginForm("Create", "AppUsers", FormMethod.Post, new { enctype = "multipart/form-data" }))

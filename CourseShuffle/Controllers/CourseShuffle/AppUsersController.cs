@@ -55,23 +55,37 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                var profileImage = Request.Files["avatar-2"];
-                appUser.DateCreated = DateTime.Now;
-                appUser.DateLastModified = DateTime.Now;
-                appUser.LastModifiedBy = 1;
-                appUser.CreatedBy = 1;
-                appUser.Role = typeof(UserType).GetEnumName(int.Parse(collectedValues["Role"]));
-                var password = Membership.GeneratePassword(8, 1);
-                var hashPassword = new Md5Ecryption().ConvertStringToMd5Hash(password.Trim());
-                appUser.Password = new RemoveCharacters().RemoveSpecialCharacters(hashPassword);
-                appUser.ProfilePicture = new FileUploader().UploadFile(profileImage, UploadType.ProfileImage.ToString());
-                _db.AppUsers.Add(appUser);
-                var userExist = new AppUserFactory().CheckIfGeneralUserExist(appUser.Email.Trim());
-                if (userExist)
-                    return View(appUser);
-                _db.SaveChanges();
-                appUser.Password = password;
-                new MailerDaemon().NewUser(appUser);
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                {
+                    var profileImage = Request.Files["avatar-2"];
+                    appUser.DateCreated = DateTime.Now;
+                    appUser.DateLastModified = DateTime.Now;
+                    appUser.LastModifiedBy = 1;
+                    appUser.CreatedBy = 1;
+                    appUser.Role = typeof(UserType).GetEnumName(int.Parse(collectedValues["Role"]));
+                    var password = Membership.GeneratePassword(8, 1);
+                    var hashPassword = new Md5Ecryption().ConvertStringToMd5Hash(password.Trim());
+                    appUser.Password = new RemoveCharacters().RemoveSpecialCharacters(hashPassword);
+                    appUser.ProfilePicture = new FileUploader().UploadFile(profileImage,
+                        UploadType.ProfileImage.ToString());
+                    _db.AppUsers.Add(appUser);
+                    var userExist = new AppUserFactory().CheckIfGeneralUserExist(appUser.Email.Trim());
+                    if (userExist)
+                    {
+                        TempData["user"] = "This user email already exist,try a different email!";
+                        TempData["notificationtype"] = NotificationType.Danger.ToString();
+                        return View(appUser);
+                    }
+                    _db.SaveChanges();
+                    appUser.Password = password;
+                    new MailerDaemon().NewUser(appUser);
+                    TempData["user"] = "A new user has been created!";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
+                    return RedirectToAction("Index");
+                }
+                TempData["user"] = "Your session has expired,Login Again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index");
             }
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
@@ -106,20 +120,27 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                var profileImage = Request.Files["avatar-2"];
-                if ((profileImage != null) && (profileImage.FileName == ""))
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null)
                 {
-                    appUser.ProfilePicture = collectedValues["ProfilePicture"];
+                    var profileImage = Request.Files["avatar-2"];
+                    if ((profileImage != null) && (profileImage.FileName == ""))
+                        appUser.ProfilePicture = collectedValues["ProfilePicture"];
+                    else
+                        appUser.ProfilePicture = new FileUploader().UploadFile(profileImage,
+                            UploadType.ProfileImage.ToString());
+                    appUser.DateLastModified = DateTime.Now;
+                    appUser.LastModifiedBy = 1;
+                    _db.Entry(appUser).State = EntityState.Modified;
+                    _db.SaveChanges();
                 }
                 else
                 {
-                    appUser.ProfilePicture = new FileUploader().UploadFile(profileImage,
-                        UploadType.ProfileImage.ToString());
+                    TempData["user"] = "Your session has expired,Login Again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
                 }
-                appUser.DateLastModified = DateTime.Now;
-                appUser.LastModifiedBy = 1;
-                _db.Entry(appUser).State = EntityState.Modified;
-                _db.SaveChanges();
+                TempData["user"] = "The user details has been modified successfully!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index");
             }
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
@@ -147,6 +168,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
             var appUser = _db.AppUsers.Find(id);
             _db.AppUsers.Remove(appUser);
             _db.SaveChanges();
+            TempData["user"] = "A user has been deleted successfully!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 
