@@ -33,7 +33,8 @@
                 <div class="col-md-12">
                     @using (Html.BeginForm())
                     {
-                        @Html.AntiForgeryToken(){
+                        @Html.AntiForgeryToken()
+                        {
                             facultyId = ViewBag.Faculty;
                             @Html.Hidden("Faculty", facultyId)
                         }
@@ -56,7 +57,7 @@
                                     @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
                                 </div>
                             </div>
-                            @if (facultyId == null || facultyId <= 0)
+                            @if ((facultyId == null) || (facultyId <= 0))
                             {
                                 <div class="form-group col-md -12">
                                     @Html.LabelFor(model => model.FacultyId, "Faculty", new {@class = "control-label col-md-3"})
@@ -69,7 +70,15 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a href="@Url.Action("Index", "Departments")" class="btn btn-default pull-left">Cancel</a>
+                                    @if (ViewBag.Faculty != null)
+                                    {
+                                        <a href="@Url.Action("Index", "Faculties")" class="btn btn-default pull-left">Cancel</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("Index", "Departments")" class="btn btn-default pull-left">Cancel</a>
+                                    }
+
                                     <input type="submit" value="Create" class="btn btn-primary pull-right"/>
                                 </div>
                             </div>

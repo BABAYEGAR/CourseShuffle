@@ -9,9 +9,9 @@
 
 <h2></h2>
 @if (TempData["faculty"] != null)
-            {
-                if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
-                {
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
         <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["faculty"]</div>
     }
     else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
@@ -24,7 +24,7 @@
     }
 }
 <p>
-    @if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
+    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
     {
         @Html.ActionLink("Add Faculty", "Create", null, new {@class = "btn btn-success"})
     }
@@ -67,8 +67,8 @@
                     @Html.ActionLink("Edit", "Edit", new {id = item.FacultyId}, new {@class = "btn btn-default"}) |
                     @*@Html.ActionLink("Details", "Details", new { id=item.FacultyId }, new { @class = "btn btn-default" }) |*@
                     @Html.ActionLink("Delete", "Delete", new {id = item.FacultyId}, new {@class = "btn btn-danger"}) |
-                    @Html.ActionLink("Add Department", "Create","Departments", new { id = item.FacultyId }, new { @class = "btn btn-warning" }) |
-                    @Html.ActionLink("View Departments", "ViewDepartmentForFaculty","Departments", new {id = item.FacultyId}, new {@class = "btn btn-primary"})
+                    @Html.ActionLink("Add Department", "Create", "Departments", new {id = item.FacultyId}, new {@class = "btn btn-warning"}) |
+                    @Html.ActionLink("View Departments", "ViewDepartmentForFaculty", "Departments", new {id = item.FacultyId}, new {@class = "btn btn-primary"})
                 </td>
             </tr>
         }

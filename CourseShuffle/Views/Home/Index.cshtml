@@ -70,7 +70,7 @@
                 @if (loggedinuser != null)
                 {
 
-                    <li class="dropdown">
+                    <li style="margin-left: 40%;" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-user"></span>
                             <strong>@loggedinuser.Firstname</strong>
@@ -87,11 +87,11 @@
                                         </div>
                                         <div class="col-lg-8">
                                             <p class="text-left">
-                                                <strong>Salman Khan</strong>
+                                                <strong>@loggedinuser.DisplayName</strong>
                                             </p>
                                             <p class="text-left small">@loggedinuser.Email</p>
                                             <p class="text-left">
-                                                <a href="#" class="btn btn-primary btn-block btn-sm">Profile</a>
+                                                <a href="@Url.Action("ProfileDetails","Account",new {Id = loggedinuser.AppUserId})" class="btn btn-primary btn-block btn-sm">Profile</a>
                                             </p>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                 }
                 else
                 {
-                    <li>
+                    <li style="margin-left: 70%;">
                         <a href="@Url.Action("Login","Account")">
                             <span class="glyphicon glyphicon-log-in"></span>
                             <strong>Login</strong>

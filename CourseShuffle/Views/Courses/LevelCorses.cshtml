@@ -9,7 +9,7 @@
     var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
 
-<h2>Index</h2>
+<h2></h2>
 
 <p>
 
@@ -28,14 +28,14 @@
     {
         if (loggedinuser != null)
         {
-            @Html.ActionLink("Create New", "Create", new {id = first.LevelId}, new {@class = "btn btn-success"})
+            @Html.ActionLink("Create New", "Create", new {id = first.LevelId, departmentId = first.DepartmentId}, new {@class = "btn btn-success"})
         }
     }
     else
     {
         if (loggedinuser != null)
         {
-            @Html.ActionLink("Create New", "Create", new { id = first.LevelId }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-success" })
         }
     }
 </p>

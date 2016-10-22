@@ -1,5 +1,4 @@
 ﻿@using CourseShuffle.Data.Objects.Entities
-@using Microsoft.AspNet.Identity
 @{
     var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
@@ -27,33 +26,43 @@
                                 </p>
                                 <p class="text-left small">@loggedinuser.Email</p>
                                 <p class="text-left">
-                                    <a href="#" class="btn btn-primary btn-block btn-sm">Profile</a>
+                                    <a href="@Url.Action("ProfileDetails", "Account", new {Id = loggedinuser.AppUserId})" class="btn btn-primary btn-block btn-sm">Profile</a>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </li>
                 <li class="divider navbar-login-session-bg"></li>
-                <li><a href="#">Change Password <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                <li>
+                    <a href="#">Change Password <span class="glyphicon glyphicon-cog pull-right"></span></a>
+                </li>
                 <li class="divider"></li>
-                <li><a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+                <li>
+                    <a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a>
+                </li>
                 <li class="divider"></li>
-                <li><a href="#">Messages <span class="badge pull-right"> 42 </span></a></li>
+                <li>
+                    <a href="#">Messages <span class="badge pull-right"> 42 </span></a>
+                </li>
                 <li class="divider"></li>
-                <li><a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a></li>
+                <li>
+                    <a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a>
+                </li>
                 <li class="divider"></li>
-                <li><a href="@Url.Action("LogOut","Account")">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+                <li>
+                    <a href="@Url.Action("LogOut", "Account")">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a>
+                </li>
             </ul>
         </li>
     }
     else
     {
         <li>
-            <a href="@Url.Action("Login","Account")" >
+            <a href="@Url.Action("Login", "Account")">
                 <span class="glyphicon glyphicon-log-in"></span>
                 <strong>Login</strong>
             </a>
         </li>
     }
- 
+
 </ul>

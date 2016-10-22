@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using CoureShuffle.Data.DataContext.DataContext;
@@ -171,6 +172,54 @@ namespace CourseShuffle.Controllers.CourseShuffle
             TempData["user"] = "A user has been deleted successfully!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
+        }
+        // GET: AppUsers/EditProfle/5
+        public ActionResult EditProfile(long id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var appUser = _db.AppUsers.Find(id);
+            if (appUser == null)
+                return HttpNotFound();
+            var roles = new SelectList(typeof(UserType).GetEnumNames());
+            ViewBag.roles = roles;
+            return View(appUser);
+        }
+        // POST: AppUsers/EditProfile/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProfile(
+            [Bind(
+                 Include =
+                     "AppUserId,Firstname,Lastname,Email,MobileNumber,Password")
+            ] AppUser appUser, FormCollection collectedValues)
+        {
+            HttpPostedFileBase profileImage = Request.Files["avatar-2"];
+            if (ModelState.IsValid)
+            {
+                if (profileImage != null && profileImage.FileName == "")
+                {
+                    appUser.ProfilePicture = collectedValues["image"];
+                }
+                else
+                {
+                    appUser.ProfilePicture = new FileUploader().UploadFile(profileImage, UploadType.ProfileImage.ToString());
+                }
+                appUser.DateCreated = Convert.ToDateTime(collectedValues["date"]);
+                appUser.DateLastModified = DateTime.Now;
+                appUser.CreatedBy = long.Parse(collectedValues["createdby"]);
+                appUser.Password = collectedValues["password"];
+                appUser.LastModifiedBy = appUser.AppUserId;
+                appUser.Role = collectedValues["role"];
+                _db.Entry(appUser).State = EntityState.Modified;
+                _db.SaveChanges();
+                TempData["profile"] = "You have modified your profile details successfully!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
+                return RedirectToAction("ProfileDetails", "Account", new { Id = appUser.AppUserId });
+            }
+            return View(appUser);
         }
 
         protected override void Dispose(bool disposing)

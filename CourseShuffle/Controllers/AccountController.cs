@@ -24,6 +24,15 @@ namespace CourseShuffle.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult ProfileDetails(string Id)
+        {
+            var userId = Convert.ToInt64(Id);
+            var user = new AppUserFactory().GetAppUserById((int)userId);
+            Session["viewprofilebyotheruser"] = user;
+            return View("ProfileDetails", user);
+        }
+
         //
         // POST: /Account/Login
         [HttpPost]

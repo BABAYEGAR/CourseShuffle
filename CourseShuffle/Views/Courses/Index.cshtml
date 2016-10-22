@@ -1,11 +1,26 @@
-﻿@model IEnumerable<CourseShuffle.Data.Objects.Entities.Courses>
+﻿@using CourseShuffle.Data.Service.Enum
+@model IEnumerable<CourseShuffle.Data.Objects.Entities.Courses>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<h2></h2>
+@if (TempData["course"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["course"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["course"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["course"]</div>
+    }
+}
 <p>
     @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
 </p>

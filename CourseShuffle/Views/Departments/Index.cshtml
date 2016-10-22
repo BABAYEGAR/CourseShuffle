@@ -1,5 +1,6 @@
 ﻿@using CourseShuffle.Data.Factory.FactoryData
 @using CourseShuffle.Data.Objects.Entities
+@using CourseShuffle.Data.Service.Enum
 @model IEnumerable<CourseShuffle.Data.Objects.Entities.Department>
 
 @{
@@ -8,6 +9,7 @@
 }
 @{
     var levelList = levels as IList<Level> ?? levels.ToList();
+    var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
 
 <h2></h2>
@@ -24,7 +26,11 @@
             
         }
     }
-    @Html.ActionLink("Create New", "Create", new { id = first.FacultyId }, new { @class = "btn btn-success" })
+    @if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString() || loggedinuser?.Role == UserType.Facilitator.ToString())
+    {
+        @Html.ActionLink("Create New", "Create", new { id = first.FacultyId }, new { @class = "btn btn-success" })
+    }
+   
 </p>
 <table class="table" id="department">
     <tr>

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-using BhuInfo.Data.Service.Encryption;
 using CoureShuffle.Data.DataContext.DataContext;
 using CourseShuffle.Data.Factory.FactoryData;
 using CourseShuffle.Data.Objects.Entities;
-using CourseShuffle.Data.Service.Encryption;
 using CourseShuffle.Data.Service.Enum;
 
 namespace CourseShuffle.Controllers.CourseShuffle
@@ -26,14 +20,16 @@ namespace CourseShuffle.Controllers.CourseShuffle
             var courses = _db.Courses.Include(c => c.Department).Include(c => c.Level);
             return View(courses.ToList());
         }
+
         public ActionResult ViewCoursesForDepartment(long id)
         {
             var courses = new CourseFactory().GetAllCoursesForADepartment(id);
             return View("DeparmentCourses", courses);
         }
-        public ActionResult ViewCoursesForLevel(long levelId,long departmentId)
+
+        public ActionResult ViewCoursesForLevel(long levelId, long departmentId)
         {
-            var courses = new CourseFactory().GetAllCoursesForALevel(levelId,departmentId);
+            var courses = new CourseFactory().GetAllCoursesForALevel(levelId, departmentId);
             return View("LevelCorses", courses);
         }
 
@@ -41,28 +37,24 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Courses courses = _db.Courses.Find(id);
+            var courses = _db.Courses.Find(id);
             if (courses == null)
-            {
                 return HttpNotFound();
-            }
             return View(courses);
         }
 
         // GET: Courses/Create
-        public ActionResult Create(long? id)
+        public ActionResult Create(long? id, long? departmentId)
         {
             if (id <= 0)
-            {
                 id = 0;
-            }
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
             ViewBag.Level = id ?? 0;
+            ViewBag.Department = departmentId ?? 0;
             ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name");
-            ViewBag.AppUserId = new SelectList(_db.AppUsers.Where(n=>n.Role == UserType.Lecturer.ToString()), "AppUserId", "DisplayName");
+            ViewBag.AppUserId = new SelectList(_db.AppUsers.Where(n => n.Role == UserType.Lecturer.ToString()),
+                "AppUserId", "DisplayName");
             return View();
         }
 
@@ -71,32 +63,34 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,AppUserId,DepartmentId")] Courses courses,FormCollection collectedValues)
+        public ActionResult Create(
+            [Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,AppUserId,DepartmentId")] Courses courses,
+            FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
-
                 var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
                 if (loggedinuser != null)
                 {
                     var levelId = Convert.ToInt64(collectedValues["levelId"]);
-                if (collectedValues["levelId"] == null)
-                {
-                    levelId = Convert.ToInt64(collectedValues["Level"]);
-                }
+                    var departmentId = Convert.ToInt64(collectedValues["departmentId"]);
+                    if (collectedValues["levelId"] == null)
+                        levelId = Convert.ToInt64(collectedValues["Level"]);
+                    if (collectedValues["departmentId"] == null)
+                        departmentId = Convert.ToInt64(collectedValues["Department"]);
 
-                courses.LevelId = levelId;
-                 var departmentId = Convert.ToInt64(collectedValues["departmentId"]);
-                courses.Semester = typeof(SemesterType).GetEnumName(int.Parse(collectedValues["Semester"]));
-                courses.DateCreated  = DateTime.Now;
-                courses.DateLastModified = DateTime.Now;
-                courses.LastModifiedBy = loggedinuser.AppUserId;
-                courses.CreatedBy = loggedinuser.AppUserId;
-                _db.Courses.Add(courses);
-                _db.SaveChanges();
+                    courses.LevelId = levelId;
+                    courses.DepartmentId = departmentId;
+                    courses.Semester = typeof(SemesterType).GetEnumName(int.Parse(collectedValues["Semester"]));
+                    courses.DateCreated = DateTime.Now;
+                    courses.DateLastModified = DateTime.Now;
+                    courses.LastModifiedBy = loggedinuser.AppUserId;
+                    courses.CreatedBy = loggedinuser.AppUserId;
+                    _db.Courses.Add(courses);
+                    _db.SaveChanges();
                     TempData["course"] = "A new course has been created successfully!";
                     TempData["notificationtype"] = NotificationType.Success.ToString();
-                    return RedirectToAction("ViewCoursesForLevel",new {levelId, departmentId });
+                    return RedirectToAction("ViewCoursesForLevel", new {levelId, departmentId});
                 }
                 TempData["course"] = "Your session has expired,Login Again!";
                 TempData["notificationtype"] = NotificationType.Info.ToString();
@@ -104,7 +98,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
 
             ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", courses.DepartmentId);
             ViewBag.LevelId = new SelectList(_db.Levels, "LevelId", "Name", courses.LevelId);
-            ViewBag.AppUserId = new SelectList(_db.AppUsers.Where(n => n.Role == UserType.Lecturer.ToString()), "AppUserId", "DisplayName");
+            ViewBag.AppUserId = new SelectList(_db.AppUsers.Where(n => n.Role == UserType.Lecturer.ToString()),
+                "AppUserId", "DisplayName");
             return View(courses);
         }
 
@@ -112,14 +107,10 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Courses courses = _db.Courses.Find(id);
+            var courses = _db.Courses.Find(id);
             if (courses == null)
-            {
                 return HttpNotFound();
-            }
             return View(courses);
         }
 
@@ -128,7 +119,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,AppUserId,LevelId,DepartmentId,CreatedBy")] Courses courses,FormCollection collectedValues)
+        public ActionResult Edit(
+            [Bind(Include = "CoursesId,CourseName,CourseCode,CreditUnit,AppUserId,LevelId,DepartmentId,CreatedBy")] Courses courses, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
@@ -136,10 +128,10 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 if (loggedinuser != null)
                 {
                     courses.DateLastModified = DateTime.Now;
-                courses.LastModifiedBy = loggedinuser.AppUserId;
-                courses.DateCreated =Convert.ToDateTime(collectedValues["DateCreated"]);
-                _db.Entry(courses).State = EntityState.Modified;
-                _db.SaveChanges();
+                    courses.LastModifiedBy = loggedinuser.AppUserId;
+                    courses.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
+                    _db.Entry(courses).State = EntityState.Modified;
+                    _db.SaveChanges();
                     TempData["course"] = "A new course has been modified successfully!";
                     TempData["notificationtype"] = NotificationType.Success.ToString();
                     return RedirectToAction("Index");
@@ -157,23 +149,20 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Courses courses = _db.Courses.Find(id);
+            var courses = _db.Courses.Find(id);
             if (courses == null)
-            {
                 return HttpNotFound();
-            }
             return View(courses);
         }
 
         // POST: Courses/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Courses courses = _db.Courses.Find(id);
+            var courses = _db.Courses.Find(id);
             _db.Courses.Remove(courses);
             _db.SaveChanges();
             TempData["course"] = "A  course has been deleted successfully!";
@@ -184,9 +173,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 _db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }
