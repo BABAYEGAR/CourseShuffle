@@ -28,6 +28,10 @@ namespace CourseShuffle
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Scripts/Form/css/select2css.min.css"));
+
+            bundles.Add(new StyleBundle("~/Contents/css").Include(
+                   "~/Content/site.css",
+                   "~/Scripts/Form/css/select2css.min.css"));
         }
     }
 }

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../Content/bootstrap-theme.min.css" />
+    <link href="../../AppTheme/assets/css/front.css" type="text/css" rel="stylesheet" media="screen">
+    <title>@ViewBag.Title</title>
+    @*@Styles.Render("~/Content/css")*@
+    @RenderSection("css", false)
+    <style type="text/css">
+        .grad {
+            background-color: #1ea89c;
+            width: 200px;
+            height: 200px;
+            float: right;
+        }
+
+        .slim {
+            width: 200px;
+            text-align: center;
+        }
+
+        li > a:hover {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .d_icon {
+            margin-left: 30%;
+            margin-right: 30%;
+            margin-top: 5%;
+            font-size: 80px;
+            color: #2b3d51;
+        }
+
+        .da_icon {
+            margin-left: 20%;
+            margin-right: 35%;
+            color: #2b3d51;
+            text-align: center;
+        }
+
+        .myfont {
+            font-family: Tw Cen Mt;
+            font-size: 15px;
+        }
+
+        li > a:focus {
+            text-decoration: none;
+            color: #fff;
+        }
+    </style>
+
+
+</head>
+<body>
+@RenderBody()
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", false)
+</body>
+</html>

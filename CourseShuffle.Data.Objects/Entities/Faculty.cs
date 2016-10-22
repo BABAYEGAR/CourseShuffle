@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CourseShuffle.Data.Objects.Entities
 {
-    public class Faculty : TransportObjects
+    public class Faculty : TransportObjects, IEnumerable
     {
         public long FacultyId { get; set; }
         [Required]
@@ -16,5 +17,9 @@ namespace CourseShuffle.Data.Objects.Entities
         public string Description { get; set; }
 
         public IEnumerable<Department> Department;
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

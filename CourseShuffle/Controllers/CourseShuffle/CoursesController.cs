@@ -82,7 +82,6 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 }
 
                 courses.LevelId = levelId;
-              
                  var departmentId = Convert.ToInt64(collectedValues["departmentId"]);
                 courses.Semester = typeof(SemesterType).GetEnumName(int.Parse(collectedValues["Semester"]));
                 courses.DateCreated  = DateTime.Now;

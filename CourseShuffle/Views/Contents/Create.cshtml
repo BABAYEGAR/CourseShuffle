@@ -1,4 +1,5 @@
 ﻿@using CourseShuffle.Data.Factory.FactoryData
+@using CourseShuffle.Data.Objects.Entities
 @using CourseShuffle.Data.Service.Enum
 @model CourseShuffle.Data.Objects.Entities.Contents
 
@@ -10,75 +11,81 @@
     var webContent = new ContentFactory().GetCourseContentsByContentType(courseId, ContentType.Website.ToString());
     var audioContent = new ContentFactory().GetCourseContentsByContentType(courseId, ContentType.Audio.ToString());
     var videoContent = new ContentFactory().GetCourseContentsByContentType(courseId, ContentType.Video.ToString());
+
+    var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
 
 @section css{
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
 }
-@using (Html.BeginForm("Create","Contents",FormMethod.Post, new { enctype = "multipart/form-data"}))
+
+@using (Html.BeginForm("Create", "Contents", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
     {
         courseId = ViewBag.CourseId;
-        @Html.Hidden("CourseId",courseId)
+        @Html.Hidden("CourseId", courseId)
     }
-    <div class="row">
-        <div class="form-horizontal">
-            <h4>Contents</h4>
-            <hr/>
-            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-            <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.Name, new {@class = "control-label col-md-3"})
-                <div class="col-sm-6 col-md-9">
-                    @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+    if (loggedinuser != null)
+    {
+        <div class="row">
+            <div class="form-horizontal">
+                <h4>Contents</h4>
+                <hr/>
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Name, new {@class = "control-label col-md-3"})
+                    <div class="col-sm-6 col-md-9">
+                        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.ContentType, new {@class = "control-label col-md-3 col-sm-3"})
-                <div class="col-sm-6 col-md-9">
-                    @Html.DropDownList("ContentType", EnumHelper.GetSelectList(typeof(ContentType)), "select a content Type", new {@class = "form-control select-dropdown", id = "contentType"})
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.ContentType, new {@class = "control-label col-md-3 col-sm-3"})
+                    <div class="col-sm-6 col-md-9">
+                        @Html.DropDownList("ContentType", EnumHelper.GetSelectList(typeof(ContentType)), "select a content Type", new {@class = "form-control select-dropdown", id = "contentType"})
+                    </div>
+
+                </div>
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Author, new {@class = "control-label col-md-3"})
+                    <div class="col-sm-6 col-md-9">
+                        @Html.EditorFor(model => model.Author, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Author, "", new {@class = "text-danger"})
+                    </div>
                 </div>
 
-            </div>
-            <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.Author, new {@class = "control-label col-md-3"})
-                <div class="col-sm-6 col-md-9">
-                    @Html.EditorFor(model => model.Author, new {htmlAttributes = new {@class = "form-control"}})
-                    @Html.ValidationMessageFor(model => model.Author, "", new {@class = "text-danger"})
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.Year, new {@class = "control-label col-md-3"})
+                    <div class="col-sm-6 col-md-9">
+                        @Html.EditorFor(model => model.Year, new {htmlAttributes = new {@class = "form-control datepicker"}})
+                        @Html.ValidationMessageFor(model => model.Year, "", new {@class = "text-danger"})
+                    </div>
                 </div>
-            </div>
+                <div class="form-group col-md-12" id="file">
+                    @Html.LabelFor(model => model.File, new {@class = "control-label col-md-3"})
+                    <div class="col-sm-6 col-md-9">
+                        <input type="file" name="file" id="file" style="width: 100%;"/>
+                        @Html.ValidationMessageFor(model => model.File, "", new {@class = "text-danger"})
+                    </div>
 
-            <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.Year, new {@class = "control-label col-md-3"})
-                <div class="col-sm-6 col-md-9">
-                    @Html.EditorFor(model => model.Year, new {htmlAttributes = new {@class = "form-control datepicker"}})
-                    @Html.ValidationMessageFor(model => model.Year, "", new {@class = "text-danger"})
                 </div>
-            </div>
-            <div class="form-group col-md-12" id="file">
-                @Html.LabelFor(model => model.File, new {@class = "control-label col-md-3"})
-                <div class="col-sm-6 col-md-9">
-                    <input type="file" name="file" id="file" style="width: 100%;"/>
-                    @Html.ValidationMessageFor(model => model.File, "", new {@class = "text-danger"})
+                <div class="form-group col-md-12" id="linkText">
+                    @Html.LabelFor(model => model.LinkText, new {@class = "control-label col-md-3"})
+                    <div class="col-sm-6 col-md-9">
+                        @Html.EditorFor(model => model.LinkText, new {htmlAttributes = new {@class = "form-control datepicker"}})
+                        @Html.ValidationMessageFor(model => model.LinkText, "", new {@class = "text-danger"})
+                    </div>
                 </div>
-
-            </div>
-            <div class="form-group col-md-12" id="linkText">
-                @Html.LabelFor(model => model.LinkText, new {@class = "control-label col-md-3"})
-                <div class="col-sm-6 col-md-9">
-                    @Html.EditorFor(model => model.LinkText, new {htmlAttributes = new {@class = "form-control datepicker"}})
-                    @Html.ValidationMessageFor(model => model.LinkText, "", new {@class = "text-danger"})
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <input type="submit" value="Create" class="btn btn-primary pull-right"/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Create" class="btn btn-primary pull-right"/>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
     <div class="row">
     <div class="panel-body">
     <div class="tabbable">
@@ -101,200 +108,246 @@
     </ul>
 
     <div class="tab-content">
-        <div id="active" class="tab-pane fade in active">
-            <table class="table">
+    <div id="active" class="tab-pane fade in active">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in pdfContent)
+            {
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Author)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Year)
-                    </th>
-
-                    <th>Action</th>
-                </tr>
-
-                @foreach (var item in pdfContent)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Author)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Year)
-                        </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    @if (loggedinuser != null)
+                    {
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
                             <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
-                    </tr>
-                }
+                    }
+                    else
+                    {
+                        <td>
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                        </td>
+                    }
 
-            </table>
-        </div>
-        <div id="word" class="tab-pane fade">
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Author)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Year)
-                    </th>
-
-                    <th>Action</th>
                 </tr>
+            }
 
-                @foreach (var item in wordContent)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Author)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Year)
-                        </td>
+        </table>
+    </div>
+    <div id="word" class="tab-pane fade">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in wordContent)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    @if (loggedinuser != null)
+                    {
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            <a href="../../UploadedFiles/@ContentType.WordDocuments.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
-                    </tr>
-                }
-
-            </table>
-
-        </div>
-        <div id="audio" class="tab-pane fade">
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Author)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Year)
-                    </th>
-
-                    <th>Action</th>
+                    }
+                    else
+                    {
+                        <td>
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                        </td>
+                    }
                 </tr>
+            }
 
-                @foreach (var item in audioContent)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Author)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Year)
-                        </td>
+        </table>
+
+    </div>
+    <div id="audio" class="tab-pane fade">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in audioContent)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    @if (loggedinuser != null)
+                    {
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
-                    </tr>
-                }
-
-            </table>
-
-        </div>
-        <div id="video" class="tab-pane fade">
-
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Author)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Year)
-                    </th>
-
-                    <th>Action</th>
+                    }
+                    else
+                    {
+                        <td>
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                        </td>
+                    }
                 </tr>
+            }
 
-                @foreach (var item in videoContent)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Author)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Year)
-                        </td>
+        </table>
+
+    </div>
+    <div id="video" class="tab-pane fade">
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in videoContent)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    @if (loggedinuser != null)
+                    {
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
-                    </tr>
-                }
-
-            </table>
-        </div>
-        <div id="website" class="tab-pane fade">
-
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Author)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Year)
-                    </th>
-
-                    <th>Action</th>
+                    }
+                    else
+                    {
+                        <td>
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                        </td>
+                    }
                 </tr>
+            }
 
-                @foreach (var item in webContent)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Author)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Year)
-                        </td>
+        </table>
+    </div>
+    <div id="website" class="tab-pane fade">
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Year)
+                </th>
+
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in webContent)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Year)
+                    </td>
+                    @if (loggedinuser != null)
+                    {
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
-                    </tr>
-                }
+                    }
+                    else
+                    {
+                        <td>
+                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                        </td>
+                    }
+                </tr>
+            }
 
-            </table>
-        </div>
+        </table>
+    </div>
     </div>
     </div>
     </div>

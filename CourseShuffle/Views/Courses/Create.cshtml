@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Create";
-    long levelId = ViewBag.Level;
+    long levelId = 0;
 }
 
 <h2>Create</h2>
@@ -13,9 +13,13 @@
 }
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken(){
-        levelId = ViewBag.Level;
-        @Html.Hidden("Level", levelId)
+    @Html.AntiForgeryToken()
+    {
+        if (ViewBag.Level != null)
+        {
+            levelId = ViewBag.Level;
+            @Html.Hidden("Level", levelId)
+        }
     }
 
 
@@ -54,7 +58,7 @@
                 @Html.ValidationMessageFor(model => model.DepartmentId, "", new {@class = "text-danger"})
             </div>
         </div>
-        @if (levelId == null || levelId == 0)
+        @if ((levelId == null) || (levelId == 0))
         {
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.LevelId, "Level", new {@class = "control-label col-md-3"})
@@ -68,14 +72,14 @@
         <div class="form-group col-md-12">
             @Html.LabelFor(model => model.Semester, new {@class = "control-label col-md-3"})
             <div class="col-sm-6 col-md-9">
-                @Html.DropDownList("Semester", EnumHelper.GetSelectList(typeof(SemesterType)), "select the course semester", new {@class = "form-control select-dropdown", id = "semester"})
+                @Html.DropDownList("Semester", EnumHelper.GetSelectList(typeof(SemesterType)), "select the course semester", new {@class = "form-control select-dropdown"})
             </div>
         </div>
         <div class="form-group col-md-12">
-            @Html.LabelFor(model => model.AppUserId, "AppUser", new { @class = "control-label col-md-3" })
+            @Html.LabelFor(model => model.AppUserId, "AppUser", new {@class = "control-label col-md-3"})
             <div class="col-sm-6 col-md-9">
-                @Html.DropDownList("AppUserId", null, new { @class = "form-control select-dropdown" })
-                @Html.ValidationMessageFor(model => model.AppUserId, "", new { @class = "text-danger" })
+                @Html.DropDownList("AppUserId", null, new {@class = "form-control select-dropdown"})
+                @Html.ValidationMessageFor(model => model.AppUserId, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="row">

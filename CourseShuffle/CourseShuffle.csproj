@@ -215,6 +215,18 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppTheme\assets\css\bootstrap.css" />
+    <Content Include="AppTheme\assets\css\front.css" />
+    <Content Include="AppTheme\assets\css\main.css" />
+    <Content Include="AppTheme\assets\images\default.jpg" />
+    <Content Include="AppTheme\assets\images\logo2.png" />
+    <Content Include="AppTheme\assets\js\bsvalidator - Copy\bootstrapValidator.js" />
+    <Content Include="AppTheme\assets\js\custom-index.js" />
+    <Content Include="AppTheme\assets\js\custom.js" />
+    <Content Include="AppTheme\assets\js\jquery-ui-v1.10.3.js" />
+    <Content Include="AppTheme\assets\js\jquery.js" />
+    <Content Include="AppTheme\assets\js\jquery.ui.js" />
+    <Content Include="AppTheme\bootstrap.css" />
     <Content Include="AppTheme\css\._bootstrap.css" />
     <Content Include="AppTheme\css\._style.css" />
     <Content Include="AppTheme\css\AccountSnippet.css" />
@@ -224,6 +236,7 @@
     <Content Include="AppTheme\fileinput.min.css" />
     <Content Include="AppTheme\fileinput.min.js" />
     <Content Include="AppTheme\fonts\._SIL Open Font License.txt" />
+    <Content Include="AppTheme\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="AppTheme\fonts\SIL Open Font License.txt" />
     <Content Include="AppTheme\images\._a1.jpg" />
     <Content Include="AppTheme\images\._a2.jpg" />
@@ -263,6 +276,9 @@
     <Content Include="AppTheme\images\p5.jpg" />
     <Content Include="AppTheme\images\print.jpg" />
     <Content Include="AppTheme\images\printing.jpg" />
+    <Content Include="AppTheme\img\bg.png" />
+    <Content Include="AppTheme\img\book.jpg" />
+    <Content Include="AppTheme\img\fig.png" />
     <Content Include="AppTheme\team.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -296,6 +312,10 @@
     <Content Include="AppTheme\fonts\Antonio-Regular.ttf" />
     <Content Include="AppTheme\fonts\Georgia Italic.ttf" />
     <Content Include="AppTheme\fonts\Times-Italic.ttf" />
+    <Content Include="AppTheme\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="AppTheme\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="AppTheme\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="AppTheme\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1257,6 +1277,7 @@
     <Content Include="Views\Departments\FacultyDepartments.cshtml" />
     <Content Include="Views\Courses\DeparmentCourses.cshtml" />
     <Content Include="Views\Courses\LevelCorses.cshtml" />
+    <Content Include="Views\Shared\_LayoutMain.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

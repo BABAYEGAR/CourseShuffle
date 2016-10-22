@@ -18,7 +18,6 @@ namespace CourseShuffle.Data.Objects.Entities
         [DisplayName("Course Unit")]
         [Required]
         public int CreditUnit { get; set; }
-        [Required]
         public string Semester { get; set; }
         [DisplayName("Lecturer")]
         public long AppUserId { get; set; }

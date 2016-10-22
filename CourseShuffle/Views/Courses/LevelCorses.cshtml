@@ -6,6 +6,7 @@
     ViewBag.Title = "Index";
     var firstSemesterCourses = Model.Where(n => n.Semester == SemesterType.FirstSemester.ToString());
     var secondSemesterCourses = Model.Where(n => n.Semester == SemesterType.SecondSemester.ToString());
+    var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
 
 <h2>Index</h2>
@@ -16,7 +17,7 @@
         Courses first = null;
         foreach (var n in Model)
         {
-            if (n.Semester == SemesterType.SecondSemester.ToString() || n.Semester == SemesterType.FirstSemester.ToString())
+            if ((n.Semester == SemesterType.SecondSemester.ToString()) || (n.Semester == SemesterType.FirstSemester.ToString()))
             {
                 first = n;
                 break;
@@ -25,11 +26,17 @@
     }
     @if (first != null)
     {
-        @Html.ActionLink("Create New", "Create", new {id = first.LevelId}, new {@class = "btn btn-success"})
+        if (loggedinuser != null)
+        {
+            @Html.ActionLink("Create New", "Create", new {id = first.LevelId}, new {@class = "btn btn-success"})
+        }
     }
     else
     {
-        @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-success" })
+        if (loggedinuser != null)
+        {
+            @Html.ActionLink("Create New", "Create", new { id = first.LevelId }, new { @class = "btn btn-success" })
+        }
     }
 </p>
 <!-- Page content -->
@@ -74,9 +81,6 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.CreditUnit)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Level.Name)
-                                        </th>
                                         <th>Action</th>
                                     </tr>
 
@@ -93,15 +97,21 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.CreditUnit)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Level.Name)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
-                                                @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
-                                                @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
-                                                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-success"})
-                                            </td>
+                                            @if (loggedinuser != null)
+                                            {
+                                                <td>
+                                                    @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                                                    @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+                                                    @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
+                                                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning" })
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    @Html.ActionLink("View Course Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning" })
+                                                </td>
+                                            }
                                         </tr>
                                     }
 
@@ -121,9 +131,6 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.CreditUnit)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.Level.Name)
-                                        </th>
                                         <th>Action</th>
                                     </tr>
 
@@ -140,15 +147,22 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.CreditUnit)
                                             </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Level.Name)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
-                                                @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
-                                                @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
-                                                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-success"})
-                                            </td>
+                                            @if (loggedinuser != null)
+                                            {
+                                                <td>
+                                                    @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                                                    @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+                                                    @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
+                                                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning" })
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    @Html.ActionLink("View Course Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
+                                                </td>
+                                            }
+
                                         </tr>
                                     }
 
