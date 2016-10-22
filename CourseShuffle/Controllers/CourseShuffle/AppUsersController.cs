@@ -61,8 +61,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
                     var profileImage = Request.Files["avatar-2"];
                     appUser.DateCreated = DateTime.Now;
                     appUser.DateLastModified = DateTime.Now;
-                    appUser.LastModifiedBy = 1;
-                    appUser.CreatedBy = 1;
+                    appUser.LastModifiedBy = loggedinuser.AppUserId;
+                    appUser.CreatedBy = loggedinuser.AppUserId;
                     appUser.Role = typeof(UserType).GetEnumName(int.Parse(collectedValues["Role"]));
                     var password = Membership.GeneratePassword(8, 1);
                     var hashPassword = new Md5Ecryption().ConvertStringToMd5Hash(password.Trim());
@@ -130,7 +130,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                         appUser.ProfilePicture = new FileUploader().UploadFile(profileImage,
                             UploadType.ProfileImage.ToString());
                     appUser.DateLastModified = DateTime.Now;
-                    appUser.LastModifiedBy = 1;
+                    appUser.LastModifiedBy = loggedinuser.AppUserId;
                     _db.Entry(appUser).State = EntityState.Modified;
                     _db.SaveChanges();
                 }

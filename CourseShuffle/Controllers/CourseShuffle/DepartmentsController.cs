@@ -79,8 +79,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
 
                     department.DateCreated = DateTime.Now;
                     department.DateLastModified = DateTime.Now;
-                    department.CreatedBy = 1;
-                    department.LastModifiedBy = 1;
+                    department.CreatedBy = loggedinuser.AppUserId;
+                    department.LastModifiedBy = loggedinuser.AppUserId;
                     _db.Departments.Add(department);
                     _db.SaveChanges();
                     TempData["user"] = "A new department has been created successfully!";
@@ -126,6 +126,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 {
                     department.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
                 department.DateLastModified = DateTime.Now;
+                    department.LastModifiedBy = loggedinuser.AppUserId;
                 _db.Entry(department).State = EntityState.Modified;
                 _db.SaveChanges();
                 return RedirectToAction("Index");

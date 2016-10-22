@@ -55,8 +55,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
                     var file = Request.Files["file"];
                     contents.DateCreated = DateTime.Now;
                     contents.DateLastModified = DateTime.Now;
-                    contents.CreatedBy = 1;
-                    contents.LastModifiedBy = 1;
+                    contents.CreatedBy = loggedinuser.AppUserId;
+                    contents.LastModifiedBy = loggedinuser.AppUserId;
                     contents.CoursesId = Convert.ToInt64(collectedValues["CourseId"]);
                     contents.ContentType = typeof(ContentType).GetEnumName(int.Parse(collectedValues["ContentType"]));
                     var type = typeof(ContentType).GetEnumName(int.Parse(collectedValues["ContentType"]));
@@ -107,7 +107,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 {
                     contents.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
                     contents.DateLastModified = DateTime.Now;
-                    contents.LastModifiedBy = 1;
+                    contents.LastModifiedBy = loggedinuser.AppUserId;
                     _db.Entry(contents).State = EntityState.Modified;
                     _db.SaveChanges();
                     TempData["content"] = "The Course content has been modified successfully";

@@ -8,13 +8,28 @@
 }
 
 <h2></h2>
-
+@if (TempData["faculty"] != null)
+            {
+                if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+                {
+        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["faculty"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["faculty"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["faculty"]</div>
+    }
+}
 <p>
     @if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
     {
         @Html.ActionLink("Add Faculty", "Create", null, new {@class = "btn btn-success"})
     }
 </p>
+
 <div class="table-responsive">
     <table class="table table-condensed table-hover" id="faculty">
         <tr>

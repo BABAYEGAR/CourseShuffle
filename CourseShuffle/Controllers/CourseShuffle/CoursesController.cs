@@ -90,8 +90,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 courses.Semester = typeof(SemesterType).GetEnumName(int.Parse(collectedValues["Semester"]));
                 courses.DateCreated  = DateTime.Now;
                 courses.DateLastModified = DateTime.Now;
-                courses.LastModifiedBy = 1;
-                courses.CreatedBy = 1;
+                courses.LastModifiedBy = loggedinuser.AppUserId;
+                courses.CreatedBy = loggedinuser.AppUserId;
                 _db.Courses.Add(courses);
                 _db.SaveChanges();
                     TempData["course"] = "A new course has been created successfully!";
@@ -136,7 +136,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 if (loggedinuser != null)
                 {
                     courses.DateLastModified = DateTime.Now;
-                courses.LastModifiedBy = 1;
+                courses.LastModifiedBy = loggedinuser.AppUserId;
                 courses.DateCreated =Convert.ToDateTime(collectedValues["DateCreated"]);
                 _db.Entry(courses).State = EntityState.Modified;
                 _db.SaveChanges();

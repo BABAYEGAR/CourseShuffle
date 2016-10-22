@@ -51,9 +51,10 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
                 level.DateCreated = DateTime.Now;
                 level.DateLastModified = DateTime.Now;
-                level.LastModifiedBy = 1;
+                if (loggedinuser != null) level.LastModifiedBy = loggedinuser.AppUserId;
                 level.CreatedBy = 1;
                 _db.Levels.Add(level);
                 _db.SaveChanges();
@@ -87,7 +88,8 @@ namespace CourseShuffle.Controllers.CourseShuffle
         {
             if (ModelState.IsValid)
             {
-                level.LastModifiedBy = 1;
+                var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                if (loggedinuser != null) level.LastModifiedBy = loggedinuser.AppUserId;
                 level.DateLastModified = DateTime.Now;
                 _db.Entry(level).State = EntityState.Modified;
                 _db.SaveChanges();

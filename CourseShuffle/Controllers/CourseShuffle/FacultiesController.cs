@@ -51,10 +51,12 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 {
                     faculty.DateCreated = DateTime.Now;
                     faculty.DateLastModified = DateTime.Now;
-                    faculty.CreatedBy = 1;
-                    faculty.LastModifiedBy = 1;
+                    faculty.CreatedBy = loggedinuser.AppUserId;
+                    faculty.LastModifiedBy = loggedinuser.AppUserId;
                     _db.Faculties.Add(faculty);
                     _db.SaveChanges();
+                    TempData["faculty"] = "A new faculty has been created successfully!";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
                     return RedirectToAction("Index");
                 }
                 TempData["faculty"] = "Your session has expired,Login Again!";
@@ -90,6 +92,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 {
                     faculty.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
                     faculty.DateLastModified = DateTime.Now;
+                    faculty.LastModifiedBy = loggedinuser.AppUserId;
                     _db.Entry(faculty).State = EntityState.Modified;
                     _db.SaveChanges();
                     return RedirectToAction("Index");
