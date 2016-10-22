@@ -20,17 +20,15 @@
         Department first = null;
         foreach (var n in Model)
         {
-
-                first = n;
-                break;
-            
+            first = n;
+            break;
         }
     }
-    @if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString() || loggedinuser?.Role == UserType.Facilitator.ToString())
+    @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())) || (loggedinuser?.Role == UserType.Facilitator.ToString()))
     {
-        @Html.ActionLink("Create New", "Create", new { id = first.FacultyId }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Create New", "Create", new {id = first.FacultyId}, new {@class = "btn btn-success"})
     }
-   
+
 </p>
 <table class="table" id="department">
     <tr>
@@ -52,12 +50,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
+
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.DepartmentId}, new {@class = "btn btn-primary"}) |
-                @Html.ActionLink("Details", "Details", new {id = item.DepartmentId}, new {@class = "btn btn-default"}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.DepartmentId}, new {@class = "btn btn-danger"})|
+                @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())) || (loggedinuser?.Role == UserType.Facilitator.ToString()))
+                {
+                    @Html.ActionLink("Edit", "Edit", new {id = item.DepartmentId}, new {@class = "btn btn-primary"})
+                    @Html.ActionLink("Details", "Details", new {id = item.DepartmentId}, new {@class = "btn btn-default"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.DepartmentId}, new {@class = "btn btn-danger"})
+                }
                 <div class="btn-group">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-cogs"></i>
                         View Course(s) <span class="caret"></span>
                     </button>
