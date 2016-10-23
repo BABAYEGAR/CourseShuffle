@@ -8,91 +8,91 @@
 
 <
 <div class="container">
-<div class="row">
-    <div class="panel panel-flat">
+    <div class="row">
+        <div class="panel panel-flat">
 
-        <div class="panel-body">
-            <div class="col-md-12">
-                <div class="form-group col-md-12">
-                    <div class="col-md-3 detailsDiv">
-                        @Html.DisplayNameFor(model => model.CourseName)
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3 detailsDiv">
+                            @Html.DisplayNameFor(model => model.CourseName)
+                        </div>
+
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.CourseName)
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3 detailsDiv">
+                            @Html.DisplayNameFor(model => model.CourseCode)
+                        </div>
+
+                        <div class="col-md-9 ">
+                            @Html.DisplayFor(model => model.CourseCode)
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3 detailsDiv">
+                            @Html.DisplayNameFor(model => model.CreditUnit)
+                        </div>
+
+                        <div class="col-md-9 ">
+                            @Html.DisplayFor(model => model.CreditUnit)
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3 detailsDiv">
+                            @Html.DisplayNameFor(model => model.Department.Name)
+                        </div>
+
+                        <div class="col-md-9 ">
+                            @Html.DisplayFor(model => model.Department.Name)
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.DateCreated)
+                        </div>
+
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.DateCreated)
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.DateLastModified)
+                        </div>
+
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.DateLastModified)
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.CreatedBy)
+                        </div>
+
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.CreatedBy)
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="col-md-3">
+                            @Html.DisplayNameFor(model => model.LastModifiedBy)
+                        </div>
+
+                        <div class="col-md-9">
+                            @Html.DisplayFor(model => model.LastModifiedBy)
+                        </div>
                     </div>
 
-                    <div class="col-md-9">
-                        @Html.DisplayFor(model => model.CourseName)
-                    </div>
                 </div>
-                <div class="form-group col-md-12">
-                    <div class="col-md-3 detailsDiv">
-                        @Html.DisplayNameFor(model => model.CourseCode)
-                    </div>
-
-                    <div class="col-md-9 ">
-                        @Html.DisplayFor(model => model.CourseCode)
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <div class="col-md-3 detailsDiv">
-                        @Html.DisplayNameFor(model => model.CreditUnit)
-                    </div>
-
-                    <div class="col-md-9 ">
-                        @Html.DisplayFor(model => model.CreditUnit)
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <div class="col-md-3 detailsDiv">
-                        @Html.DisplayNameFor(model => model.Department.Name)
-                    </div>
-
-                    <div class="col-md-9 ">
-                        @Html.DisplayFor(model => model.Department.Name)
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <div class="col-md-3">
-                        @Html.DisplayNameFor(model => model.DateCreated)
-                    </div>
-
-                    <div class="col-md-9">
-                        @Html.DisplayFor(model => model.DateCreated)
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <div class="col-md-3">
-                        @Html.DisplayNameFor(model => model.DateLastModified)
-                    </div>
-
-                    <div class="col-md-9">
-                        @Html.DisplayFor(model => model.DateLastModified)
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <div class="col-md-3">
-                        @Html.DisplayNameFor(model => model.CreatedBy)
-                    </div>
-
-                    <div class="col-md-9">
-                        @Html.DisplayFor(model => model.CreatedBy)
-                    </div>
-                </div>
-                <div class="form-group col-md-12">
-                    <div class="col-md-3">
-                        @Html.DisplayNameFor(model => model.LastModifiedBy)
-                    </div>
-
-                    <div class="col-md-9">
-                        @Html.DisplayFor(model => model.LastModifiedBy)
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
-</div>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new {id = Model.CoursesId},new {@class = "btn btn-primary"}) |
-    @Html.ActionLink("Back to List", "Index",null,new {@class = "btn btn-default"})
-</p>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new {id = Model.CoursesId}, new {@class = "btn btn-primary"}) |
+        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
+    </p>
 </div>

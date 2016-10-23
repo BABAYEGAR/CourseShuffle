@@ -4,7 +4,9 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+}
 <h2></h2>
 @if (TempData["course"] != null)
 {
@@ -22,9 +24,10 @@
     }
 }
 <p>
-    @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
 </p>
-<table class="table">
+<table class="table table-condensed table-hover" id="datatable">
+    <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Department.Name)
@@ -43,31 +46,46 @@
         </th>
         <th>Action</th>
     </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Department.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Level.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreditUnit)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CoursesId },new {@class = "btn btn-primary"}) |
-            @Html.ActionLink("Details", "Details", new { id=item.CoursesId },new {@class = "btn btn-default"}) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CoursesId },new {@class = "btn btn-danger"})|
-            @Html.ActionLink("Manage Content", "Create","Contents", new { id=item.CoursesId },new {@class = "btn btn-success"})
-        </td>
-    </tr>
-}
-
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditUnit)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
+                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-success"})
+            </td>
+        </tr>
+    }
+    </tbody>
 </table>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#datatable').DataTable();
+                $('#datatable1').DataTable();
+            });
+
+    </script>
+}

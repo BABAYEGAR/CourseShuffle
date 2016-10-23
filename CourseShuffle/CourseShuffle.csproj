@@ -744,6 +744,11 @@
     <Content Include="Scripts\plugins\dataTables\js\jquery.dataTables.js" />
     <Content Include="Scripts\plugins\dataTables\js\jquery.dataTables.min.js" />
     <Content Include="Scripts\plugins\dataTables\js\jquery.js" />
+    <Content Include="Scripts\plugins\dataTables\resources\assets\css\bootstrap.css" />
+    <Content Include="Scripts\plugins\dataTables\resources\assets\css\main.css" />
+    <Content Include="Scripts\plugins\dataTables\resources\assets\javascript\custom-datatables.js" />
+    <Content Include="Scripts\plugins\dataTables\resources\assets\javascript\jquery.datatables.js" />
+    <Content Include="Scripts\plugins\dataTables\resources\assets\javascript\jquery.js" />
     <Content Include="Scripts\plugins\Form\css\select2.css" />
     <Content Include="Scripts\plugins\Form\css\select2.min.css" />
     <Content Include="Scripts\plugins\Form\js\i18n\ar.js" />
@@ -1284,6 +1289,7 @@
     <Content Include="Views\Shared\_LayoutMain.cshtml" />
     <Content Include="Views\Account\ProfileDetails.cshtml" />
     <Content Include="Views\AppUsers\EditProfile.cshtml" />
+    <Content Include="Scripts\plugins\dataTables\index.php" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

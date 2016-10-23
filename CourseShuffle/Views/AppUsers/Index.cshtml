@@ -6,6 +6,9 @@
 }
 
 <h2></h2>
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+}
 @if (TempData["user"] != null)
 {
     if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
@@ -22,9 +25,10 @@
     }
 }
 <p>
-    @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
 </p>
-<table class="table">
+<table class="table table-condensed table-hover" id="datatable">
+    <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Firstname)
@@ -46,33 +50,47 @@
         </th>
         <th>Action</th>
     </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Othername)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MobileNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Role)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AppUserId },new {@class = "btn btn-primary"}) |
-            @Html.ActionLink("Details", "Details", new { id=item.AppUserId},new {@class = "btn btn-default"} ) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AppUserId }, new { @class = "btn btn-danger" })
-        </td>
-    </tr>
-}
-
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Othername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.AppUserId}, new {@class = "btn btn-primary"}) |
+                @Html.ActionLink("Details", "Details", new {id = item.AppUserId}, new {@class = "btn btn-default"}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.AppUserId}, new {@class = "btn btn-danger"})
+            </td>
+        </tr>
+    }
+    </tbody>
 </table>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#datatable').DataTable();
+            });
+
+    </script>
+}

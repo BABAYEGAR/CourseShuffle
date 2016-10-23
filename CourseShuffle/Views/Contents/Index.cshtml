@@ -22,7 +22,7 @@
     }
 }
 <p>
-    @Html.ActionLink("Create New", "Create",null,new {@class = "btn btn-success"})
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
 </p>
 <table class="table">
     <tr>
@@ -44,29 +44,30 @@
         <th>Action</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Courses.CourseName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ContentType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Year.Year)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ContentsId },new {@class = "btn btn-primary"}) |
-            @Html.ActionLink("Details", "Details", new { id=item.ContentsId }, new { @class = "btn btn-default" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ContentsId }, new { @class = "btn btn-danger" })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Courses.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year.Year)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
+                @Html.ActionLink("Details", "Details", new {id = item.ContentsId}, new {@class = "btn btn-default"}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
+            </td>
+        </tr>
+    }
 
 </table>

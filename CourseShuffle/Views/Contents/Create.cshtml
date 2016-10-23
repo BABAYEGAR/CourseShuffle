@@ -18,6 +18,7 @@
 @section css{
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
 }
 @if (TempData["content"] != null)
 {
@@ -124,7 +125,8 @@
 
     <div class="tab-content">
     <div id="active" class="tab-pane fade in active">
-        <table class="table">
+        <table class="table table-condensed table-hover" id="datatable">
+            <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
@@ -138,7 +140,9 @@
 
                 <th>Action</th>
             </tr>
+            </thead>
 
+            <tbody>
             @foreach (var item in pdfContent)
             {
                 <tr>
@@ -168,11 +172,12 @@
 
                 </tr>
             }
-
+            </tbody>
         </table>
     </div>
     <div id="word" class="tab-pane fade">
-        <table class="table">
+        <table class="table table-condensed table-hover" id="datatable1">
+            <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
@@ -186,9 +191,12 @@
 
                 <th>Action</th>
             </tr>
+            </thead>
+
 
             @foreach (var item in wordContent)
             {
+                <tbody>
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
@@ -210,17 +218,19 @@
                     else
                     {
                         <td>
-                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                            <a href="../../UploadedFiles/@ContentType.WordDocuments.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
                         </td>
                     }
                 </tr>
+                </tbody>
             }
 
         </table>
 
     </div>
     <div id="audio" class="tab-pane fade">
-        <table class="table">
+        <table class="table table-condensed table-hover" id="datatable2">
+            <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
@@ -234,7 +244,9 @@
 
                 <th>Action</th>
             </tr>
+            </thead>
 
+            <tbody>
             @foreach (var item in audioContent)
             {
                 <tr>
@@ -251,25 +263,26 @@
                     {
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
                     }
                     else
                     {
                         <td>
-                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>
                         </td>
                     }
                 </tr>
             }
-
+            </tbody>
         </table>
 
     </div>
     <div id="video" class="tab-pane fade">
 
-        <table class="table">
+        <table class="table table-condensed table-hover" id="datatable3">
+            <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
@@ -283,7 +296,9 @@
 
                 <th>Action</th>
             </tr>
+            </thead>
 
+            <tbody>
             @foreach (var item in videoContent)
             {
                 <tr>
@@ -300,24 +315,25 @@
                     {
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
                     }
                     else
                     {
                         <td>
-                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>
                         </td>
                     }
                 </tr>
             }
-
+            </tbody>
         </table>
     </div>
     <div id="website" class="tab-pane fade">
 
-        <table class="table">
+        <table class="table table-condensed table-hover" id="datatable4">
+            <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
@@ -331,7 +347,9 @@
 
                 <th>Action</th>
             </tr>
+            </thead>
 
+            <tbody>
             @foreach (var item in webContent)
             {
                 <tr>
@@ -348,19 +366,19 @@
                     {
                         <td>
                             @Html.ActionLink("Edit", "Edit", new {id = item.ContentsId}, new {@class = "btn btn-primary"}) |
-                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>|
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>|
                             @Html.ActionLink("Delete", "Delete", new {id = item.ContentsId}, new {@class = "btn btn-danger"})
                         </td>
                     }
                     else
                     {
                         <td>
-                            <a href="../../UploadedFiles/@ContentType.Pdf.ToString()/@item.File" target="_blank" class="btn btn-warning">View Content</a>
+                            <a href="@item.LinkText" target="_blank" class="btn btn-warning">View Content</a>
                         </td>
                     }
                 </tr>
             }
-
+            </tbody>
         </table>
     </div>
     </div>
@@ -371,12 +389,18 @@
 @section scripts{
     <script src="~/Scripts/plugins/Form/js/select2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script>
         $(document)
             .ready(function() {
 
                 // Init select2 for dropdown select
                 $('.select-dropdown').select2();
+                $('#datatable').DataTable();
+                $('#datatable1').DataTable();
+                $('#datatable2').DataTable();
+                $('#datatable3').DataTable();
+                $('#datatable4').DataTable();
                 $(function() {
                     $('.datepicker')
                         .datepicker({

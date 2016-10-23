@@ -8,8 +8,9 @@
     var secondSemesterCourses = Model.Where(n => n.Semester == SemesterType.SecondSemester.ToString());
     var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
-
-<h2></h2>
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+}
 
 <p>
 
@@ -35,7 +36,7 @@
     {
         if (loggedinuser != null)
         {
-            @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-success" })
+            @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
         }
     }
 </p>
@@ -69,7 +70,8 @@
 
                         <div class="tab-content">
                             <div id="active" class="tab-pane fade in active">
-                                <table class="table">
+                                <table class="table table-condensed table-hover" id="datatable">
+                                    <thead>
                                     <tr>
 
                                         <th>
@@ -83,7 +85,8 @@
                                         </th>
                                         <th>Action</th>
                                     </tr>
-
+                                    </thead>
+                                    <tbody>
                                     @foreach (var item in firstSemesterCourses)
                                     {
                                         <tr>
@@ -103,23 +106,25 @@
                                                     @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
                                                     @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
                                                     @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
-                                                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning" })
+                                                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
                                                 </td>
                                             }
                                             else
                                             {
                                                 <td>
-                                                    @Html.ActionLink("View Course Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning" })
+                                                    @Html.ActionLink("View Course Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
                                                 </td>
                                             }
                                         </tr>
                                     }
+                                    </tbody>
 
                                 </table>
                             </div>
                             <div id="second" class="tab-pane fade">
 
-                                <table class="table">
+                                <table class="table table-condensed table-hover" id="datatable1">
+                                    <thead>
                                     <tr>
 
                                         <th>
@@ -133,7 +138,8 @@
                                         </th>
                                         <th>Action</th>
                                     </tr>
-
+                                    </thead>
+                                    <tbody>
                                     @foreach (var item in secondSemesterCourses)
                                     {
                                         <tr>
@@ -153,7 +159,7 @@
                                                     @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
                                                     @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
                                                     @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
-                                                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning" })
+                                                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
                                                 </td>
                                             }
                                             else
@@ -165,7 +171,7 @@
 
                                         </tr>
                                     }
-
+                                    </tbody>
                                 </table>
                             </div>
 
@@ -179,3 +185,15 @@
 
     </div>
 </div>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#datatable').DataTable();
+                $('#datatable1').DataTable();
+            });
+
+    </script>
+}

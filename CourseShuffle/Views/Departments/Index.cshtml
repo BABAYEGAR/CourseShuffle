@@ -11,6 +11,9 @@
     var levelList = levels as IList<Level> ?? levels.ToList();
     var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+}
 
 <h2></h2>
 
@@ -30,52 +33,68 @@
     }
 
 </p>
-<table class="table" id="department">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Faculty.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>Action</th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="table-responsive">
+    <table class="table table-condensed table-hover" id="datatable">
+        <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Faculty.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-
-            <td>
-                @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())) || (loggedinuser?.Role == UserType.Facilitator.ToString()))
-                {
-                    @Html.ActionLink("Edit", "Edit", new {id = item.DepartmentId}, new {@class = "btn btn-primary"})
-                    @Html.ActionLink("Details", "Details", new {id = item.DepartmentId}, new {@class = "btn btn-default"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.DepartmentId}, new {@class = "btn btn-danger"})
-                }
-                <div class="btn-group">
-                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-cogs"></i>
-                        View Course(s) <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu text-left">
-                        @foreach (var level in levelList)
-                        {
-                            <li>
-                                <a href="@Url.Action("ViewCoursesForLevel", "Courses", new {levelId = level.LevelId, departmentId = item.DepartmentId})">
-                                    <i class="fa fa-file-text-o"></i> @level.Name
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>Action</th>
         </tr>
-    }
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
 
-</table>
+                <td>
+                    @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())) || (loggedinuser?.Role == UserType.Facilitator.ToString()))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new {id = item.DepartmentId}, new {@class = "btn btn-primary"})
+                        @Html.ActionLink("Details", "Details", new {id = item.DepartmentId}, new {@class = "btn btn-default"})
+                        @Html.ActionLink("Delete", "Delete", new {id = item.DepartmentId}, new {@class = "btn btn-danger"})
+                    }
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cogs"></i>
+                            View Course(s) <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu text-left">
+                            @foreach (var level in levelList)
+                            {
+                                <li>
+                                    <a href="@Url.Action("ViewCoursesForLevel", "Courses", new {levelId = level.LevelId, departmentId = item.DepartmentId})">
+                                        <i class="fa fa-file-text-o"></i> @level.Name
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+</div>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#datatable').DataTable();
+            });
+
+    </script>
+}

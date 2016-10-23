@@ -25,8 +25,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.Hidden("CourseId",Model.CoursesId)
-    @Html.Hidden("CreatedBy",Model.CreatedBy)
+    @Html.Hidden("CourseId", Model.CoursesId)
+    @Html.Hidden("CreatedBy", Model.CreatedBy)
     @Html.Hidden("DateCreated", Model.DateCreated)
     @Html.Hidden("ContentType", Model.ContentType)
     @Html.Hidden("ContentsId", Model.ContentsId)
@@ -64,7 +64,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @Html.ActionLink("Back to List", "Index",null,new {@class = "btn btn-default"})
+                @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
                 <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </div>

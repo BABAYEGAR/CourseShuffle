@@ -1,5 +1,4 @@
 ﻿@using CourseShuffle.Data.Objects.Entities
-@using CourseShuffle.Data.Service.Encryption
 @using CourseShuffle.Data.Service.Enum
 @model CourseShuffle.Data.Objects.Entities.AppUser
 @{
@@ -43,54 +42,54 @@
                         <div class=" col-md-9 col-lg-9 ">
                             <table class="table table-user-information">
                                 <tbody>
-                                    <tr>
-                                        <td>First Nmae:</td>
-                                        <td style="font-weight: bolder">@Model.Firstname</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Last Name:</td>
-                                        <td style="font-weight: bolder">@Model.Lastname</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Role:</td>
-                                        <td style="font-weight: bolder">@Model.Role</td>
-                                    </tr>
+                                <tr>
+                                    <td>First Nmae:</td>
+                                    <td style="font-weight: bolder">@Model.Firstname</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name:</td>
+                                    <td style="font-weight: bolder">@Model.Lastname</td>
+                                </tr>
+                                <tr>
+                                    <td>Role:</td>
+                                    <td style="font-weight: bolder">@Model.Role</td>
+                                </tr>
 
+                                <tr>
                                     <tr>
-                                        <tr>
-                                            <td>Email</td>
-                                            <td style="font-weight: bolder">@Model.Email</td>
-                                        </tr>
+                                        <td>Email</td>
+                                        <td style="font-weight: bolder">@Model.Email</td>
+                                    </tr>
                                     <td>Phone Number</td>
                                     <td style="font-weight: bolder">
                                         @Model.MobileNumber
                                     </td>
 
 
-                                    </tr>
+                                </tr>
 
-                                    </tbody>
-                                </table>
-                                @if ((loggedinuser != null) && (Model.AppUserId == loggedinuser.AppUserId))
-                                {
-                                    <a href="@Url.Action("Index", "Home")" data-original-title="Return to home page" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary">
-                                        <i class="glyphicon glyphicon-backward"></i>
-                                    </a>
-                                    <span class="pull-right">
+                                </tbody>
+                            </table>
+                            @if ((loggedinuser != null) && (Model.AppUserId == loggedinuser.AppUserId))
+                            {
+                                <a href="@Url.Action("Index", "Home")" data-original-title="Return to home page" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary">
+                                    <i class="glyphicon glyphicon-backward"></i>
+                                </a>
+                                <span class="pull-right">
                                         <a href="@Url.Action("EditProfile", "AppUsers", new {Id = Model.AppUserId})" data-original-title="Edit" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
                                         <a href="@Url.Action("ChangePassword")" data-original-title="Change Password" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-lock"></i></a>
                                     </span>
-                                }
-                            </div>
+                            }
                         </div>
                     </div>
-                    <br />
                 </div>
+                <br/>
             </div>
         </div>
     </div>
-    @section scripts{
-        <script>
+</div>
+@section scripts{
+    <script>
         $(document)
             .ready(function() {
                 var panels = $('.user-infos');
@@ -119,6 +118,5 @@
 
                 $('[data-toggle="tooltip"]').tooltip();
             });
-        </script>
-    }
-
+    </script>
+}
