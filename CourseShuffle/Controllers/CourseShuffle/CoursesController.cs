@@ -33,6 +33,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
             return View("LevelCorses", courses);
         }
 
+
         // GET: Courses/Details/5
         public ActionResult Details(long? id)
         {
