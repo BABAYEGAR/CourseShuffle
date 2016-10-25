@@ -1,13 +1,17 @@
-﻿@using CourseShuffle.Data.Service.Enum
-@using CourseShuffle.Data.Objects.Entities
+﻿@using CourseShuffle.Data.Objects.Entities
+@using CourseShuffle.Data.Service.Enum
 @model IEnumerable<CourseShuffle.Data.Objects.Entities.Courses>
 
 @{
     ViewBag.Title = "Index";
     var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+    var hundredLevel = Model.Where(n => n.LevelId == 2);
+    var twoHundredLevel = Model.Where(n => n.LevelId == 3);
+    var threeHundredLevel = Model.Where(n => n.LevelId == 4);
+    var fourHundredLevel = Model.Where(n => n.LevelId == 5);
 }
 @section css{
-    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
 }
 
 
@@ -27,68 +31,272 @@
         <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["course"]</div>
     }
 }
-@if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
+
+<div class="row">
+<div class="panel-body">
+@if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
 {
     <p>
         @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
     </p>
 }
-<table class="table table-condensed table-hover" id="datatable">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Level.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CourseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreditUnit)
-        </th>
-        <th>Action</th>
-    </tr>
-    </thead>
+<div class="tabbable">
+<ul class="nav nav-tabs nav-tabs-highlight nav-justified">
+    <li class="active">
+        <a data-toggle="tab" href="#active">100 Level</a>
+    </li>
+    <li>
+        <a data-toggle="tab" href="#200">200 Level</a>
+    </li>
+    <li>
+        <a data-toggle="tab" href="#300">300 Level</a>
+    </li>
+    <li>
+        <a data-toggle="tab" href="#400">400 Level</a>
+    </li>
+</ul>
 
-    <tbody>
-    @foreach (var item in Model)
-    {
+<div class="tab-content">
+<div id="active" class="tab-pane fade in active">
+    <table class="table table-condensed table-hover" id="datatable">
+        <thead>
         <tr>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Level.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourseName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourseCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreditUnit)
-            </td>
-            <td>
-                @if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
-                {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.CoursesId }, new { @class = "btn btn-primary" })
-                }
-
-                
-                @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
-                
-                @if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
-                {
-                    @Html.ActionLink("Delete", "Delete", new { id = item.CoursesId }, new { @class = "btn btn-danger" })
-                }
-                
-                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Level.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditUnit)
+            </th>
+            <th>Action</th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+        @foreach (var item in hundredLevel)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditUnit)
+                </td>
+                <td>
+                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"})
+                    }
+
+
+                    @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+
+                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})
+                    }
+
+                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div id="200" class="tab-pane fade">
+    <table class="table table-condensed table-hover" id="datatable1">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Level.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditUnit)
+            </th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var item in twoHundredLevel)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditUnit)
+                </td>
+                <td>
+                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"})
+                    }
+
+
+                    @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+
+                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})
+                    }
+
+                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
+<div id="300" class="tab-pane fade">
+    <table class="table table-condensed table-hover" id="datatable2">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Level.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditUnit)
+            </th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var item in threeHundredLevel)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditUnit)
+                </td>
+                <td>
+                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"})
+                    }
+
+
+                    @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+
+                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})
+                    }
+
+                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
+<div id="400" class="tab-pane fade">
+
+    <table class="table table-condensed table-hover" id="datatable3">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Level.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditUnit)
+            </th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var item in fourHundredLevel)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditUnit)
+                </td>
+                <td>
+                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"})
+                    }
+
+
+                    @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
+
+                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})
+                    }
+
+                    @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+</div>
+</div>
+</div>
+</div>
 @section scripts {
 
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
@@ -97,6 +305,8 @@
             .ready(function() {
                 $('#datatable').DataTable();
                 $('#datatable1').DataTable();
+                $('#datatable2').DataTable();
+                $('#datatable3').DataTable();
             });
 
     </script>

@@ -58,7 +58,7 @@
                             </ul>
                         </li>
                     }
-                    if ((loggedinuser.Role == UserType.Administrator.ToString()))
+                    if (loggedinuser.Role == UserType.Administrator.ToString())
                     {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -73,47 +73,47 @@
                         </li>
                     }
                 }
-@if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
-{
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Departments
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="@Url.Action("Index", "Departments")">Departments</a>
-                        </li>
-                    </ul>
-                </li>
-}
-                @if (loggedinuser != null && loggedinuser.Role == UserType.Lecturer.ToString())
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
                 {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                         My Course(s)
-                             
+                            Departments
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-@if (loggedinuser != null && loggedinuser.Role == UserType.Lecturer.ToString())
-{
                             <li>
-                                <a href="@Url.Action("Index", "Courses", new { lecturerId = loggedinuser.AppUserId, departmentId = loggedinuser.DepartmentId })">My Course(s)</a>
+                                <a href="@Url.Action("Index", "Departments")">Departments</a>
                             </li>
-}
-@if (loggedinuser != null && loggedinuser.Role == UserType.Facilitator.ToString())
-{
-    <li>
-        <a href="@Url.Action("Index", "Courses", new { id= loggedinuser.DepartmentId })">Course(s)</a>
-    </li>
-}
+                        </ul>
+                    </li>
+                }
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Lecturer.ToString()))
+                {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            My Course(s)
+
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Lecturer.ToString()))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Courses", new {lecturerId = loggedinuser.AppUserId, departmentId = loggedinuser.DepartmentId})">My Course(s)</a>
+                                </li>
+                            }
+                            @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Facilitator.ToString()))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Courses", new {id = loggedinuser.DepartmentId})">Course(s)</a>
+                                </li>
+                            }
 
                         </ul>
                     </li>
                 }
 
-                
+
             </ul>
             @Html.Partial("_LoginPartial")
         </div>
