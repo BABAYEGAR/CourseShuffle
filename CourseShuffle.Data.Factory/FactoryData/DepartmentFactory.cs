@@ -23,5 +23,15 @@ namespace CourseShuffle.Data.Factory.FactoryData
             var oderedDepartments = departments.OrderByDescending(n => n.DateCreated);
             return oderedDepartments;
         }
+        /// <summary>
+        /// Get departments for a logged in user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Department GetAppUserDepartmet(long id)
+        {
+            var department = _db.Departments.Where(n => n.DepartmentId == id).FirstOrDefault();
+            return department;
+        }
     }
 }

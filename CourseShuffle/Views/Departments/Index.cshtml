@@ -27,7 +27,7 @@
             break;
         }
     }
-    @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())) || (loggedinuser?.Role == UserType.Facilitator.ToString()))
+    @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())))
     {
         @Html.ActionLink("Create New", "Create", new {id = first.FacultyId}, new {@class = "btn btn-success"})
     }
@@ -58,12 +58,15 @@
                 </td>
 
                 <td>
-                    @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())) || (loggedinuser?.Role == UserType.Facilitator.ToString()))
+                    @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())))
                     {
-                        @Html.ActionLink("Edit", "Edit", new {id = item.DepartmentId}, new {@class = "btn btn-primary"})
-                        @Html.ActionLink("Details", "Details", new {id = item.DepartmentId}, new {@class = "btn btn-default"})
-                        @Html.ActionLink("Delete", "Delete", new {id = item.DepartmentId}, new {@class = "btn btn-danger"})
+                        @Html.ActionLink("Edit", "Edit", new { id = item.DepartmentId }, new { @class = "btn btn-primary" })
                     }
+                        @Html.ActionLink("Details", "Details", new {id = item.DepartmentId}, new {@class = "btn btn-default"})
+                        @if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new {id = item.DepartmentId}, new {@class = "btn btn-danger"})
+                    }       
                     <div class="btn-group">
                         <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-cogs"></i>

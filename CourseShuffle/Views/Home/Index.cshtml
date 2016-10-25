@@ -112,13 +112,13 @@
                     @if (loggedinuser.Role == UserType.Facilitator.ToString())
                     {
                         <li>
-                            <a href="@Url.Action("Index", "Faculties")">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a>
+                            <a href="@Url.Action("GetCoursesForFacilitator", "Courses",new { departmentId = loggedinuser.DepartmentId})">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a>
                         </li>
                     }
                     @if (loggedinuser.Role == UserType.Lecturer.ToString())
                     {
                         <li>
-                            <a href="@Url.Action("Index", "Departments")">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a>
+                            <a href="@Url.Action("GetCoursesForLecturer", "Courses",new { lecturerId = loggedinuser.AppUserId , departmentId = loggedinuser.DepartmentId})">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a>
                         </li>
                     }
 

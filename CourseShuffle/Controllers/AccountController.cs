@@ -51,10 +51,15 @@ namespace CourseShuffle.Controllers
                         Session["courseshuffleloggedinuser"] = appUser;
                         return RedirectToAction("Index", "AppUsers", model);
                     }
-                    if (appUser.Role == UserType.Lecturer.ToString())
+                    if (appUser.Role == UserType.Lecturer.ToString()) 
                     {
                         Session["courseshuffleloggedinuser"] = appUser;
-                        return RedirectToAction("Index", "Departments", model);
+                        return RedirectToAction("GetCoursesForLecturer", "Courses", new { lecturerId = appUser.AppUserId, departmentId = appUser.DepartmentId });
+                    }
+                    if (appUser.Role == UserType.Facilitator.ToString())
+                    {
+                        Session["courseshuffleloggedinuser"] = appUser;
+                        return RedirectToAction("GetCoursesForFacilitator", "Courses", new { departmentId = appUser.DepartmentId });
                     }
                 }
             }
