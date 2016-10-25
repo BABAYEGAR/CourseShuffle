@@ -9,7 +9,7 @@
     var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
 @section css{
-    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
 }
 
 
@@ -26,20 +26,7 @@
             }
         }
     }
-    @if (first != null)
-    {
-        if (loggedinuser != null)
-        {
-            @Html.ActionLink("Create New", "Create", new {id = first.LevelId, departmentId = first.DepartmentId}, new {@class = "btn btn-success"})
-        }
-    }
-    else
-    {
-        if (loggedinuser != null)
-        {
-            @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
-        }
-    }
+
 </p>
 <!-- Page content -->
 <div class="page-content">
@@ -52,12 +39,24 @@
             <div class="panel panel-flat">
                 <div class="panel-heading">
 
-                    <div class="heading-elements">
-                        <h3 style="font-weight: bold"></h3>
-                    </div>
+                    @if (first != null)
+                    {
+                        if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                        {
+                            @Html.ActionLink("Create New", "Create", new {id = first.LevelId, departmentId = first.DepartmentId}, new {@class = "btn btn-success"})
+                        }
+                    }
+                    else
+                    {
+                        if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                        {
+                            @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+                        }
+                    }
                 </div>
 
                 <div class="panel-body">
+
                     <div class="tabbable">
                         <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
                             <li class="active">
@@ -104,9 +103,15 @@
                                             @if (loggedinuser != null)
                                             {
                                                 <td>
-                                                    @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                                                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                                                    {
+                                                        @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"})
+                                                    }
                                                     @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
-                                                    @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
+                                                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                                                    {
+                                                        @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})
+                                                    }
                                                     @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
                                                 </td>
                                             }
@@ -157,9 +162,15 @@
                                             @if (loggedinuser != null)
                                             {
                                                 <td>
-                                                    @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                                                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                                                    {
+                                                        @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"})
+                                                    }
                                                     @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
-                                                    @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
+                                                    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                                                    {
+                                                        @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})
+                                                    }
                                                     @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
                                                 </td>
                                             }

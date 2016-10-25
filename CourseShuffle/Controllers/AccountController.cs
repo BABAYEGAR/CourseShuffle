@@ -49,7 +49,7 @@ namespace CourseShuffle.Controllers
                     if( appUser.Role == UserType.Administrator.ToString())
                     {
                         Session["courseshuffleloggedinuser"] = appUser;
-                        return RedirectToAction("Index", "AppUsers", model);
+                        return RedirectToAction("Index", "AppUsers");
                     }
                     if (appUser.Role == UserType.Lecturer.ToString()) 
                     {

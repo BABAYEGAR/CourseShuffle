@@ -13,33 +13,40 @@
 @section css{
     <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
 }
+<div class="page-content">
 
-
-<h2></h2>
-@if (TempData["course"] != null)
-{
-    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
-    {
-        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["course"]</div>
-    }
-    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
-    {
-        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["course"]</div>
-    }
-    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
-    {
-        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["course"]</div>
-    }
-}
-
+<!-- Main content -->
+<div class="content-wrapper">
 <div class="row">
+<!-- Simple panel -->
+<!-- Table -->
+<div class="panel panel-flat">
+<div class="panel-heading">
+    @if (TempData["course"] != null)
+    {
+        if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+        {
+            <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["course"]</div>
+        }
+        else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+        {
+            <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["course"]</div>
+        }
+        else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+        {
+            <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["course"]</div>
+        }
+    }
+
+    @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+        </p>
+    }
+</div>
 <div class="panel-body">
-@if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
-{
-    <p>
-        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
-    </p>
-}
+
 <div class="tabbable">
 <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
     <li class="active">
@@ -293,6 +300,9 @@
     </table>
 </div>
 
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
