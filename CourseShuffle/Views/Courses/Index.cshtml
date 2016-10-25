@@ -1,8 +1,10 @@
 ﻿@using CourseShuffle.Data.Service.Enum
+@using CourseShuffle.Data.Objects.Entities
 @model IEnumerable<CourseShuffle.Data.Objects.Entities.Courses>
 
 @{
     ViewBag.Title = "Index";
+    var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
 @section css{
     <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -25,9 +27,12 @@
         <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["course"]</div>
     }
 }
-<p>
-    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
-</p>
+@if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+    </p>
+}
 <table class="table table-condensed table-hover" id="datatable">
     <thead>
     <tr>
@@ -70,10 +75,20 @@
                 @Html.DisplayFor(modelItem => item.CreditUnit)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.CoursesId}, new {@class = "btn btn-primary"}) |
+                @if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CoursesId }, new { @class = "btn btn-primary" })
+                }
+
+                
                 @Html.ActionLink("Details", "Details", new {id = item.CoursesId}, new {@class = "btn btn-default"}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.CoursesId}, new {@class = "btn btn-danger"})|
-                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-success"})
+                
+                @if (loggedinuser != null && loggedinuser.Role == UserType.Administrator.ToString())
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CoursesId }, new { @class = "btn btn-danger" })
+                }
+                
+                @Html.ActionLink("Manage Content", "Create", "Contents", new {id = item.CoursesId}, new {@class = "btn btn-warning"})
             </td>
         </tr>
     }

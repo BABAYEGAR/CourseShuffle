@@ -26,6 +26,12 @@ namespace CourseShuffle.Controllers.CourseShuffle
             var courses = new CourseFactory().GetAllCoursesForADepartment(id);
             return View("DeparmentCourses", courses);
         }
+        public ActionResult GetCoursesForLecturer(long lectutrerId, long departmentId)
+        {
+            var courses = new CourseFactory().GetAllCoursesForADepartment(departmentId);
+            var lecturerCourses = courses.Where(n => n.AppUserId == lectutrerId);
+            return View("Index", lecturerCourses);
+        }
 
         public ActionResult ViewCoursesForLevel(long levelId, long departmentId)
         {

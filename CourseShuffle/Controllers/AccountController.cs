@@ -46,8 +46,16 @@ namespace CourseShuffle.Controllers
                     collectedValues["Password"].Trim());
                 if (appUser != null)
                 {
-                    Session["courseshuffleloggedinuser"] = appUser;
-                    return RedirectToAction("Index", "AppUsers", model);
+                    if( appUser.Role == UserType.Administrator.ToString())
+                    {
+                        Session["courseshuffleloggedinuser"] = appUser;
+                        return RedirectToAction("Index", "AppUsers", model);
+                    }
+                    if (appUser.Role == UserType.Lecturer.ToString())
+                    {
+                        Session["courseshuffleloggedinuser"] = appUser;
+                        return RedirectToAction("Index", "Departments", model);
+                    }
                 }
             }
             return View();
