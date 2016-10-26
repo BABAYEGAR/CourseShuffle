@@ -13,14 +13,16 @@ using Microsoft.AspNet.Identity.Owin;
 namespace CourseShuffle.Controllers
 {
     [Authorize]
+
     public class AccountController : Controller
     {
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
+            FormsAuthentication.SignOut();
+            Session["courseshuffleloggedinuser"] = null;
             return View();
         }
 
