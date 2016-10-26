@@ -17,7 +17,14 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <p class="text-center">
-                                    <span class="glyphicon glyphicon-user icon-size"></span>
+                                    @if (loggedinuser.ProfilePicture == null)
+                                    {
+                                        <span class="glyphicon glyphicon-user icon-size"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="icon-size"><img src="../../UploadedFiles/ProfileImage/@loggedinuser.ProfilePicture" /></span>
+                                    }
                                 </p>
                             </div>
                             <div class="col-lg-8">
@@ -37,18 +44,18 @@
                     <a href="#">Change Password <span class="glyphicon glyphicon-cog pull-right"></span></a>
                 </li>
                 <li class="divider"></li>
-                <li>
+                @*<li>
                     <a href="#">User stats <span class="glyphicon glyphicon-stats pull-right"></span></a>
                 </li>
                 <li class="divider"></li>
                 <li>
                     <a href="#">Messages <span class="badge pull-right"> 42 </span></a>
                 </li>
-                <li class="divider"></li>
-                <li>
+                <li class="divider"></li>*@
+                @*<li>
                     <a href="#">Favourites Snippets <span class="glyphicon glyphicon-heart pull-right"></span></a>
                 </li>
-                <li class="divider"></li>
+                <li class="divider"></li>*@
                 <li>
                     <a href="@Url.Action("LogOut", "Account")">Sign Out <span class="glyphicon glyphicon-log-out pull-right"></span></a>
                 </li>

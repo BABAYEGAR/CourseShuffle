@@ -77,13 +77,20 @@
                     <strong>@loggedinuser.Firstname</strong>
                     <span class="glyphicon glyphicon-chevron-down"></span>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" style="color: white">
                     <li>
                         <div class="navbar-login">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <p class="text-center">
-                                        <span class="glyphicon glyphicon-user icon-size"></span>
+                                        @if (loggedinuser.ProfilePicture == null)
+                                        {
+                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="icon-size"><img src="../../UploadedFiles/ProfileImage/@loggedinuser.ProfilePicture" /></span>
+                                        }
                                     </p>
                                 </div>
                                 <div class="col-lg-8">
@@ -106,19 +113,19 @@
                     @if (loggedinuser.Role == UserType.Administrator.ToString())
                     {
                         <li>
-                            <a href="@Url.Action("Index", "AppUsers")">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a>
+                            <a href="@Url.Action("Index", "AppUsers")">Dashboard <span class="glyphicon glyphicon-dashboard pull-right"></span></a>
                         </li>
                     }
                     @if (loggedinuser.Role == UserType.Facilitator.ToString())
                     {
                         <li>
-                            <a href="@Url.Action("GetCoursesForFacilitator", "Courses", new {departmentId = loggedinuser.DepartmentId})">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a>
+                            <a href="@Url.Action("GetCoursesForFacilitator", "Courses", new {departmentId = loggedinuser.DepartmentId})">Dashboard <span class="glyphicon glyphicon-dashboard pull-right"></span></a>
                         </li>
                     }
                     @if (loggedinuser.Role == UserType.Lecturer.ToString())
                     {
                         <li>
-                            <a href="@Url.Action("GetCoursesForLecturer", "Courses", new {lecturerId = loggedinuser.AppUserId, departmentId = loggedinuser.DepartmentId})">Dashboard <span class="glyphicon glyphicon-stats pull-right"></span></a>
+                            <a href="@Url.Action("GetCoursesForLecturer", "Courses", new {lecturerId = loggedinuser.AppUserId, departmentId = loggedinuser.DepartmentId})">Dashboard <span class="glyphicon glyphicon-dashboard pull-right"></span></a>
                         </li>
                     }
 

@@ -1,12 +1,14 @@
-﻿@model CourseShuffle.Data.Objects.Entities.Courses
+﻿@using CourseShuffle.Data.Factory.FactoryData
+@using CourseShuffle.Data.Objects.Entities
+@using CourseShuffle.Data.Service.Enum
+@model CourseShuffle.Data.Objects.Entities.Courses
 
 @{
     ViewBag.Title = "Details";
+    var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
 
-<h2>Details</h2>
-
-<
+<h2></h2>
 <div class="container">
     <div class="row">
         <div class="panel panel-flat">
@@ -73,7 +75,7 @@
                         </div>
 
                         <div class="col-md-9">
-                            @Html.DisplayFor(model => model.CreatedBy)
+                            @(new AppUserFactory().GetAppUserById((int) Model.CreatedBy).DisplayName)
                         </div>
                     </div>
                     <div class="form-group col-md-12">
@@ -82,7 +84,7 @@
                         </div>
 
                         <div class="col-md-9">
-                            @Html.DisplayFor(model => model.LastModifiedBy)
+                            @(new AppUserFactory().GetAppUserById((int) Model.LastModifiedBy).DisplayName)
                         </div>
                     </div>
 
@@ -93,6 +95,14 @@
 
     <p>
         @Html.ActionLink("Edit", "Edit", new {id = Model.CoursesId}, new {@class = "btn btn-primary"}) |
-        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
+        @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Facilitator.ToString()))
+        {
+            @Html.ActionLink("Back to List", "GetCoursesForFacilitator", "Courses", new {departmentId = loggedinuser.DepartmentId}, new {@class = "btn btn-default"})
+        }
+        @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Lecturer.ToString()))
+        {
+            @Html.ActionLink("Back to List", "GetCoursesForLecturer", "Courses", new {lecturerId = loggedinuser.AppUserId, departmentId = loggedinuser.DepartmentId}, new {@class = "btn btn-default"})
+        }
+
     </p>
 </div>

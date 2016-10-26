@@ -1,7 +1,11 @@
-﻿@model CourseShuffle.Data.Objects.Entities.Department
+﻿@using CourseShuffle.Data.Factory.FactoryData
+@using CourseShuffle.Data.Objects.Entities
+@using CourseShuffle.Data.Service.Enum
+@model CourseShuffle.Data.Objects.Entities.Department
 
 @{
     ViewBag.Title = "Details";
+    var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
 }
 
 <h2>Details</h2>
@@ -58,7 +62,7 @@
                             </div>
 
                             <div class="col-md-9">
-                                @Html.DisplayFor(model => model.CreatedBy)
+                                @(new AppUserFactory().GetAppUserById((int)Model.CreatedBy).DisplayName)
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -67,7 +71,7 @@
                             </div>
 
                             <div class="col-md-9">
-                                @Html.DisplayFor(model => model.LastModifiedBy)
+                                @(new AppUserFactory().GetAppUserById((int)Model.LastModifiedBy).DisplayName)
                             </div>
                         </div>
                     </div>
@@ -78,6 +82,7 @@
     </div>
     <p>
         @Html.ActionLink("Edit", "Edit", new {id = Model.DepartmentId}, new {@class = "btn btn-primary"}) |
-        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+      
     </p>
 </div>

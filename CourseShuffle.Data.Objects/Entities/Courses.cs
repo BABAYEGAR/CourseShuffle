@@ -22,6 +22,7 @@ namespace CourseShuffle.Data.Objects.Entities
         [DisplayName("Lecturer")]
         public long AppUserId { get; set; }
         [ForeignKey("AppUserId")]
+        [DisplayName("Lecturer")]
         public virtual AppUser AppUser { get; set; }
         [DisplayName("Level")]
         public long LevelId { get; set; }
