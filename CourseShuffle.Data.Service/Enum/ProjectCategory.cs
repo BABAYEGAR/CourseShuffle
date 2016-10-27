@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace CourseShuffle.Data.Service.Enum
 {
-    public enum UploadType
+    public enum ProjectCategory
     {
-       ProfileImage,
-       ProjectDocument
-
+        Web,
+        Graphics,
+        AI,
+        Cloud
     }
 }
