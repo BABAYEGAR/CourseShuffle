@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Contents.cs" />
     <Compile Include="Entities\Courses.cs" />
     <Compile Include="Entities\Department.cs" />

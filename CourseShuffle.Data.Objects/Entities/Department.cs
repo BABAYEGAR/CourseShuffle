@@ -24,5 +24,9 @@ namespace CourseShuffle.Data.Objects.Entities
         public IEnumerable<Courses> Courses { get; set; }
         public IEnumerable<AppUser> AppUsers { get; set; }
         public IEnumerable<Project> Projects { get; set; }
+        public IEnumerable<Category> Category { get; set; }
+        public DateTime SubscriptionStartDate { get; set; }
+        public DateTime SubscriptionEndDate { get; set; }
+        public String SubscriptionType { get; set; }
     }
 }

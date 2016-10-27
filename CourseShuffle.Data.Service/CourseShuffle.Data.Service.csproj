@@ -49,6 +49,7 @@
     <Compile Include="Enum\ProjectCategory.cs" />
     <Compile Include="Enum\NotificationType .cs" />
     <Compile Include="Enum\SemesterType.cs" />
+    <Compile Include="Enum\SubscriptionType.cs" />
     <Compile Include="Enum\UploadType.cs" />
     <Compile Include="Enum\ContentType.cs" />
     <Compile Include="Enum\UserType.cs" />
