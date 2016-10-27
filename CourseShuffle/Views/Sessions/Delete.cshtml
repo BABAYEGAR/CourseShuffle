@@ -1,0 +1,99 @@
+﻿@using CourseShuffle.Data.Factory.FactoryData
+@model CourseShuffle.Data.Objects.Entities.Session
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Session</h4>
+    <hr/>
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-flat">
+
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-12">
+                            <div class="col-md-3 detailsDiv">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </div>
+
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.Name)
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-3 detailsDiv">
+                                @Html.DisplayNameFor(model => model.StartDate)
+                            </div>
+
+                            <div class="col-md-9 ">
+                                @Html.DisplayFor(model => model.StartDate)
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-3 detailsDiv">
+                                @Html.DisplayNameFor(model => model.EndDate)
+                            </div>
+
+                            <div class="col-md-9 ">
+                                @Html.DisplayFor(model => model.EndDate)
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.DateCreated)
+                            </div>
+
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.DateCreated)
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.DateLastModified)
+                            </div>
+
+                            <div class="col-md-9">
+                                @Html.DisplayFor(model => model.DateLastModified)
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </div>
+
+                            <div class="col-md-9">
+                                @(new AppUserFactory().GetAppUserById((int) Model.CreatedBy).DisplayName)
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-3">
+                                @Html.DisplayNameFor(model => model.LastModifiedBy)
+                            </div>
+
+                            <div class="col-md-9">
+                                @(new AppUserFactory().GetAppUserById((int) Model.LastModifiedBy).DisplayName)
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger"/> |
+                @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
+            </div>
+        }
+    </div>
+</div>

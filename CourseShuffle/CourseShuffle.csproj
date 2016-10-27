@@ -203,6 +203,8 @@
     <Compile Include="Controllers\CourseShuffle\DepartmentsController.cs" />
     <Compile Include="Controllers\CourseShuffle\FacultiesController.cs" />
     <Compile Include="Controllers\CourseShuffle\LevelsController.cs" />
+    <Compile Include="Controllers\CourseShuffle\ProjectsController.cs" />
+    <Compile Include="Controllers\CourseShuffle\SessionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1183,6 +1185,11 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="UploadedFiles\Pdf\131213482667502324.jpg" />
     <Content Include="UploadedFiles\Pdf\131213679887110766.jpg" />
+    <Content Include="UploadedFiles\Pdf\131213896580747117.jpg" />
+    <Content Include="UploadedFiles\Pdf\131215253334921992.jpg" />
+    <Content Include="UploadedFiles\Pdf\131215352080238233.jpg" />
+    <Content Include="UploadedFiles\Pdf\131216485402833565.png" />
+    <Content Include="UploadedFiles\Pdf\131218741722814660.jpg" />
     <Content Include="UploadedFiles\ProfileImage\131213965160928941.jpg" />
     <Content Include="UploadedFiles\ProfileImage\131213967644318056.jpg" />
     <Content Include="UploadedFiles\ProfileImage\131213968495771653.jpg" />
@@ -1290,6 +1297,26 @@
     <Content Include="Views\Account\ProfileDetails.cshtml" />
     <Content Include="Views\AppUsers\EditProfile.cshtml" />
     <Content Include="Scripts\plugins\dataTables\index.php" />
+    <Content Include="Views\Sessions\Create.cshtml" />
+    <Content Include="Views\Sessions\Delete.cshtml" />
+    <Content Include="Views\Sessions\Details.cshtml" />
+    <Content Include="Views\Sessions\Edit.cshtml" />
+    <Content Include="Views\Sessions\Index.cshtml" />
+    <Content Include="Views\Projects\Create.cshtml" />
+    <Content Include="Views\Projects\Delete.cshtml" />
+    <Content Include="Views\Projects\Details.cshtml" />
+    <Content Include="Views\Projects\Edit.cshtml" />
+    <Content Include="Views\Projects\Index.cshtml" />
+    <Content Include="UploadedFiles\Pdf\131214042054997762.pdf" />
+    <Content Include="UploadedFiles\Pdf\131215174489121465.pdf" />
+    <Content Include="UploadedFiles\Pdf\131215513002621297.pdf" />
+    <Content Include="UploadedFiles\Pdf\131215627360804281.pdf" />
+    <Content Include="UploadedFiles\Pdf\131216307564774247.pdf" />
+    <Content Include="UploadedFiles\Pdf\131218279536264163.pdf" />
+    <Content Include="UploadedFiles\Pdf\131219553252560208.pdf" />
+    <Content Include="UploadedFiles\Pdf\131220405389186777.pdf" />
+    <Content Include="UploadedFiles\ProjectDocument\131220794967855805.pdf" />
+    <Content Include="UploadedFiles\ProjectDocument\131220798992745457.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

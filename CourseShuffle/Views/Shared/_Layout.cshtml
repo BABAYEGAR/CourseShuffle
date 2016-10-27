@@ -96,13 +96,13 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Lecturer.ToString()))
+                            @if (loggedinuser.Role == UserType.Lecturer.ToString())
                             {
                                 <li>
                                     <a href="@Url.Action("Index", "Courses", new {lecturerId = loggedinuser.AppUserId, departmentId = loggedinuser.DepartmentId})">My Course(s)</a>
                                 </li>
                             }
-                            @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Facilitator.ToString()))
+                            @if (loggedinuser.Role == UserType.Facilitator.ToString())
                             {
                                 <li>
                                     <a href="@Url.Action("Index", "Courses", new {id = loggedinuser.DepartmentId})">Course(s)</a>
@@ -112,7 +112,18 @@
                         </ul>
                     </li>
                 }
-
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "Sessions")">Session Management</a>
+                    </li>
+                }
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "Projects")">Project Management</a>
+                    </li>
+                }
 
             </ul>
             @Html.Partial("_LoginPartial")

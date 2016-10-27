@@ -1,0 +1,113 @@
+﻿@using CourseShuffle.Data.Factory.FactoryData
+@using CourseShuffle.Data.Objects.Entities
+@using CourseShuffle.Data.Service.Enum
+@model IEnumerable<CourseShuffle.Data.Objects.Entities.Project>
+
+@{
+    ViewBag.Title = "Index";
+    var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+}
+
+
+<h2></h2>
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+}
+@if (TempData["project"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["project"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["project"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["project"]</div>
+    }
+}
+<p>
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+</p>
+<table class="table table-condensed table-hover" id="datatable">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Session)
+        </th>
+
+        <th>Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @item.StartDate.ToShortDateString()
+            </td>
+            <td>
+                @item.EndDate.ToShortDateString()
+            </td>
+            <td>
+                @(new DepartmentFactory().GetAppUserDepartmet((int) item.DepartmentId).Name)
+            </td>
+
+            <td>
+                @(new SessionFactory().GetSessionById((int) item.SessionId).Name)
+            </td>
+
+            <td>
+                @if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
+                {
+                    @Html.ActionLink("Edit", "Edit", new {id = item.ProjectId}, new {@class = "btn btn-primary"})
+                    @Html.ActionLink("Details", "Details", new {id = item.ProjectId}, new {@class = "btn btn-default"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.ProjectId}, new {@class = "btn btn-danger"})
+                }
+                <a href="../../UploadedFiles/ProjectDocument/@item.Document" target="_blank" class="btn btn-warning">Preview Project</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#datatable').DataTable();
+            });
+
+    </script>
+}

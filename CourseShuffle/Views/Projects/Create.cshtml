@@ -1,0 +1,109 @@
+﻿@using CourseShuffle.Data.Service.Enum
+@model CourseShuffle.Data.Objects.Entities.Project
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2></h2>
+@section css{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
+}
+@using (Html.BeginForm("Create", "Projects", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4></h4>
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.Title, new {@class = "control-label col-md-3"})
+            <div class="col-sm-6 col-md-9">
+                @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.Author, new {@class = "control-label col-md-3"})
+            <div class="col-sm-6 col-md-9">
+                @Html.EditorFor(model => model.Author, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Author, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.StartDate, new {@class = "control-label col-md-3"})
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control datepicker"}})
+                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.EndDate, new {@class = "control-label col-md-3"})
+            <div class="col-sm-6 col-md-9">
+                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "form-control datepicker"}})
+                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.Category, new {@class = "control-label col-md-3"})
+            <div class="col-sm-6 col-md-9">
+                @Html.DropDownList("Category", EnumHelper.GetSelectList(typeof(ProjectCategory)), "select your project category", new {@class = "form-control select-dropdown", id = "role"})
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.DepartmentId, "DepartmentId", new {@class = "control-label col-md-3"})
+            <div class="col-sm-6 col-md-9">
+                @Html.DropDownList("DepartmentId", null, new {@class = "form-control select-dropdown"})
+                @Html.ValidationMessageFor(model => model.SessionId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.SessionId, "SessionId", new {@class = "control-label col-md-3"})
+            <div class="col-sm-6 col-md-9">
+                @Html.DropDownList("SessionId", null, new {@class = "form-control select-dropdown"})
+                @Html.ValidationMessageFor(model => model.SessionId, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.Document, new {@class = "control-label col-md-3"})
+            <div class="col-sm-6 col-md-9">
+                <input type="file" name="document" id="document" style="width: 100%;"/>
+                @Html.ValidationMessageFor(model => model.Document, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default pull-left"})
+                <input type="submit" value="Create" class="btn btn-primary pull-right"/>
+            </div>
+        </div>
+    </div>
+}
+@section scripts{
+    <script src="~/Scripts/plugins/Form/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+
+                // Init select2 for dropdown select
+                $('.select-dropdown').select2();
+                $(function() {
+                    $('.datepicker')
+                        .datepicker({
+                            format: 'yyyy',
+                            viewMode: 'years',
+                            minViewMode: 'years',
+                            endDate: new Date()
+                        });
+                });
+            })
+    </script>
+}

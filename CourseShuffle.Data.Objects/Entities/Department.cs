@@ -11,6 +11,7 @@ namespace CourseShuffle.Data.Objects.Entities
 {
     public class Department : TransportObjects
     {
+        [Key]
         public long DepartmentId { get; set; }
         [Required]
         public string Name { get; set; }
