@@ -68,6 +68,12 @@ namespace CourseShuffle.Controllers.CourseShuffle
                     {
                         contents.LinkText = collectedValues["LinkText"];
                     }
+                    if ((file != null) && (file.FileName == "") && (contents.LinkText == null))
+                    {
+                        TempData["content"] = "Please make sure you upload a file or link text!";
+                        TempData["notificationtype"] = NotificationType.Danger.ToString();
+                        return View(contents);
+                    }
                     _db.Contents.Add(contents);
                     _db.SaveChanges();
                     TempData["content"] = "A new content has been added to " +

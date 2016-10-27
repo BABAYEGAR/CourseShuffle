@@ -1,4 +1,5 @@
-﻿@model CourseShuffle.Data.Objects.Entities.Department
+﻿@using CourseShuffle.Data.Factory.FactoryData
+@model CourseShuffle.Data.Objects.Entities.Department
 
 @{
     ViewBag.Title = "Delete";
@@ -59,7 +60,7 @@
                             </div>
 
                             <div class="col-md-9">
-                                @Html.DisplayFor(model => model.CreatedBy)
+                                @(new AppUserFactory().GetAppUserById((int) Model.CreatedBy).DisplayName)
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -68,7 +69,7 @@
                             </div>
 
                             <div class="col-md-9">
-                                @Html.DisplayFor(model => model.LastModifiedBy)
+                                @(new AppUserFactory().GetAppUserById((int) Model.LastModifiedBy).DisplayName)
                             </div>
                         </div>
                     </div>

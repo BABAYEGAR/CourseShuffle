@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
     <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 }
 @if (TempData["content"] != null)
 {
@@ -47,7 +48,7 @@
     {
         <div class="row">
             <div class="form-horizontal">
-                <h4>Contents</h4>
+                <h4></h4>
                 <hr/>
                 @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                 <div class="form-group col-md-12">
@@ -73,7 +74,7 @@
                 </div>
 
                 <div class="form-group col-md-12">
-                    @Html.LabelFor(model => model.Year, new {@class = "control-label col-md-3"})
+                    @Html.Label("Date", new {@class = "control-label col-md-3"})
                     <div class="col-sm-6 col-md-9">
                         @Html.EditorFor(model => model.Year, new {htmlAttributes = new {@class = "form-control datepicker"}})
                         @Html.ValidationMessageFor(model => model.Year, "", new {@class = "text-danger"})
@@ -90,13 +91,14 @@
                 <div class="form-group col-md-12" id="linkText">
                     @Html.LabelFor(model => model.LinkText, new {@class = "control-label col-md-3"})
                     <div class="col-sm-6 col-md-9">
-                        @Html.TextBoxFor(model => model.LinkText,new {@class = "form-control datepicker"})
+                        @Html.TextBoxFor(model => model.LinkText, new {@class = "form-control datepicker"})
                         @Html.ValidationMessageFor(model => model.LinkText, "", new {@class = "text-danger"})
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="submit" value="Create" class="btn btn-primary pull-right"/>
+
+                        <input type="submit" value="Create" class="btn btn-primary pull-right btn-sm"/>
                     </div>
                 </div>
             </div>
@@ -107,19 +109,19 @@
     <div class="tabbable">
     <ul class="nav nav-tabs nav-tabs-highlight nav-justified">
         <li class="active">
-            <a data-toggle="tab" href="#active">Pdf</a>
+            <a data-toggle="tab" style="color: red" href="#active">Pdf</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#word">Word Document</a>
+            <a data-toggle="tab" style="color: blue" href="#word">Word Document</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#audio">Audio</a>
+            <a data-toggle="tab" style="color: darkgreen" href="#audio">Audio</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#video">Video</a>
+            <a data-toggle="tab" style="color: yellowgreen" href="#video">Video</a>
         </li>
         <li>
-            <a data-toggle="tab" href="#website">Website</a>
+            <a data-toggle="tab" style="color: seagreen" href="#website">Website</a>
         </li>
     </ul>
 
@@ -135,7 +137,7 @@
                     @Html.DisplayNameFor(model => model.Author)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Year)
+                    @Html.DisplayName("Date")
                 </th>
 
                 <th>Action</th>
@@ -186,7 +188,7 @@
                     @Html.DisplayNameFor(model => model.Author)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Year)
+                    @Html.DisplayName("Date")
                 </th>
 
                 <th>Action</th>
@@ -239,7 +241,7 @@
                     @Html.DisplayNameFor(model => model.Author)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Year)
+                    @Html.DisplayName("Date")
                 </th>
 
                 <th>Action</th>
@@ -291,7 +293,7 @@
                     @Html.DisplayNameFor(model => model.Author)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Year)
+                    @Html.DisplayName("Date")
                 </th>
 
                 <th>Action</th>
@@ -309,7 +311,7 @@
                         @Html.DisplayFor(modelItem => item.Author)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Year)
+                        @Html.DisplayName("Date")
                     </td>
                     @if (loggedinuser != null)
                     {
@@ -342,7 +344,7 @@
                     @Html.DisplayNameFor(model => model.Author)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Year)
+                    @Html.DisplayName("Date")
                 </th>
 
                 <th>Action</th>
@@ -390,11 +392,6 @@
     <script src="~/Scripts/plugins/Form/js/select2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-<style>
-    .ui-datepicker-calendar {
-        display: none;
-    }
-</style>
     <script>
         $(document)
             .ready(function() {
@@ -406,13 +403,14 @@
                 $('#datatable2').DataTable();
                 $('#datatable3').DataTable();
                 $('#datatable4').DataTable();
-                $(function () {
-                    $('.datepicker').datepicker({
-                        format: 'yyyy',
-                        viewMode: 'years',
-                        minViewMode: 'years',
-                        endDate: new Date()
-                    });
+                $(function() {
+                    $('.datepicker')
+                        .datepicker({
+                            format: 'yyyy',
+                            viewMode: 'years',
+                            minViewMode: 'years',
+                            endDate: new Date()
+                        });
                 });
                 $("#file").hide(0);
                 $("#linkText").hide(0);

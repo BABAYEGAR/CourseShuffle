@@ -59,6 +59,12 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
                 if ((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString()))
                 {
+                    if (collectedValues["Role"] == null)
+                    {
+                        TempData["user"] = "Please select a user role and try again!";
+                        TempData["notificationtype"] = NotificationType.Danger.ToString();
+                        return View(appUser);
+                    }
                     var profileImage = Request.Files["avatar-2"];
                     appUser.DateCreated = DateTime.Now;
                     appUser.DateLastModified = DateTime.Now;

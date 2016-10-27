@@ -42,13 +42,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th></th>
+            <th>Action</th>
         </tr>
         </thead>
 
@@ -61,12 +55,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new {id = item.FacultyId}, new {@class = "btn btn-default"}) |
