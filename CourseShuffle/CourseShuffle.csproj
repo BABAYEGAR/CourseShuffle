@@ -198,6 +198,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseShuffle\AppUsersController.cs" />
+    <Compile Include="Controllers\CourseShuffle\CategoriesController.cs" />
     <Compile Include="Controllers\CourseShuffle\ContentsController.cs" />
     <Compile Include="Controllers\CourseShuffle\CoursesController.cs" />
     <Compile Include="Controllers\CourseShuffle\DepartmentsController.cs" />
@@ -1193,6 +1194,7 @@
     <Content Include="UploadedFiles\ProfileImage\131213965160928941.jpg" />
     <Content Include="UploadedFiles\ProfileImage\131213967644318056.jpg" />
     <Content Include="UploadedFiles\ProfileImage\131213968495771653.jpg" />
+    <Content Include="UploadedFiles\unnamed.png" />
     <Content Include="UploadedFiles\WordDocuments\131213689500449763.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1317,6 +1319,12 @@
     <Content Include="UploadedFiles\Pdf\131220405389186777.pdf" />
     <Content Include="UploadedFiles\ProjectDocument\131220794967855805.pdf" />
     <Content Include="UploadedFiles\ProjectDocument\131220798992745457.pdf" />
+    <Content Include="Views\Categories\Create.cshtml" />
+    <Content Include="Views\Categories\Delete.cshtml" />
+    <Content Include="Views\Categories\Details.cshtml" />
+    <Content Include="Views\Categories\Edit.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Home\SubscriptionPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

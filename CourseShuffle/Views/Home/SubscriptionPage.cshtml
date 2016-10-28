@@ -1,0 +1,263 @@
+﻿@model CourseShuffle.Data.Objects.Entities.Department
+@{
+    ViewBag.Title = "SubscriptionPage";
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Subcription</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="http://fonts.googleapis.com/css?family=Fenix" rel="stylesheet" type="text/css">
+<style>
+        /*
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+*/
+/* reset */
+    html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+        border: 0;
+        font: inherit;
+        font-size: 100%;
+        margin: 0;
+        padding: 0;
+        vertical-align: baseline;
+    }
+
+    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+    ol, ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    blockquote, q { quotes: none; }
+
+    blockquote:before, blockquote:after, q:before, q:after {
+        content: '';
+        content: none;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    /* start editing from here */
+
+    a { text-decoration: none; }
+
+    .txt-rt { text-align: right; }
+
+    /* text align right */
+
+    .txt-lt { text-align: left; }
+
+    /* text align left */
+
+    .txt-center { text-align: center; }
+
+    /* text align center */
+
+    .float-rt { float: right; }
+
+    /* float right */
+
+    .float-lt { float: left; }
+
+    /* float left */
+
+    .clear { clear: both; }
+
+    /* clear float */
+
+    .pos-relative { position: relative; }
+
+    /* Position Relative */
+
+    .pos-absolute { position: absolute; }
+
+    /* Position Absolute */
+
+    .vertical-base { vertical-align: baseline; }
+
+    /* vertical align baseline */
+
+    .vertical-top { vertical-align: top; }
+
+    /* vertical align top */
+
+    .underline {
+        border-bottom: 1px solid #eee;
+        margin: 0 0 20px 0;
+        padding-bottom: 5px;
+    }
+
+    /* Add 5px bottom padding and a underline */
+
+    nav.vertical ul li { display: block; }
+
+    /* vertical menu */
+
+    nav.horizontal ul li { display: inline-block; }
+
+    /* horizontal menu */
+
+    img { max-width: 100%; }
+
+    /*end reset*/
+
+    body {
+        background: url(../images/bg2.png);
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .wrap {
+        margin: 0 auto;
+        width: 1000px;
+    }
+
+    .main {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(102, 102, 102, 0.31);
+        border-radius: 5px;
+        color: #FFF;
+        font-weight: bold;
+        margin-top: 160px;
+        text-align: center;
+    }
+
+    .main h3 {
+        font-size: 16px;
+        padding: 30px 30px;
+        text-align: left;
+    }
+
+    .main h1 {
+        color: #184391;
+        font-family: 'Fenix', serif;
+        font-size: 60px;
+        margin-top: 15px;
+        text-transform: uppercase;
+    }
+
+    .main p {
+        font-size: 20px;
+        line-height: 1.6em;
+        margin-top: 15px;
+    }
+
+    .main span.error {
+        color: #48C8D3;
+        font-size: 18px;
+    }
+
+    .main p span {
+        color: #24817A;
+        font-size: 14px;
+    }
+
+    .search {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        background: rgba(156, 156, 156, 0.12);
+        border: 1px solid rgba(173, 173, 173, 0);
+        border-radius: 5px;
+        box-shadow: inset 0px -1px 5px rgba(94, 94, 94, 0.19);
+        margin-left: 320px;
+        margin-top: 20px;
+        position: relative;
+        width: 390px;
+    }
+
+    form input[type="text"] {
+        background: rgba(255, 255, 255, 0);
+        border: none;
+        color: #A2A2A2;
+        font-size: 12px;
+        outline: none;
+        padding: 8px;
+        width: 289px;
+    }
+
+    form input[type="submit"] {
+        background: none;
+        background: #174242;
+        border: none;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+        box-shadow: inset 1px -2px 8px rgba(0, 0, 0, 0.33);
+        color: #EEE;
+        cursor: pointer;
+        font-size: 13px;
+        margin: 0;
+        padding: 10px 20px;
+    }
+
+    form input[type="submit"]:hover {
+        box-shadow: inset 0px 0px 4px #222;
+        color: #FFF;
+    }
+
+    .icons {
+        padding-bottom: 20px;
+        text-align: right;
+    }
+
+    .icons p {
+        color: #D5CECE;
+        cursor: pointer;
+        font-size: 13px;
+        padding-right: 130px;
+    }
+
+    .icons p:hover { text-decoration: underline; }
+
+    .icons ul { padding-right: 20px; }
+
+    .icons li {
+        display: inline-block;
+        padding-top: 10px;
+    }
+
+    .icons li a { margin: 2px; }
+
+    .footer {
+        padding-top: 10px;
+        text-align: right;
+    }
+
+    .footer p {
+        color: #DDD;
+        font-size: 12px;
+    }
+
+    .footer p a {
+        color: #076161;
+        font-size: 13px;
+    }
+
+    .footer p a:hover { color: #0C7C7C; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="main">
+        <h3>Course Shuffle</h3>
+        <h1>@Model.Name department has not suscribed for this service!</h1>
+        <p>
+            <span>Don't waste your time enjoying the look of it</span>
+        </p>
+        <div class="search">
+            <form style="color: goldenrod">
+                <a href="@Url.Action("Index")"> Click on the link to go back to Course Shuffle</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

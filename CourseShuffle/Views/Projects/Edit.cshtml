@@ -1,5 +1,4 @@
-﻿@using CourseShuffle.Data.Service.Enum
-@model CourseShuffle.Data.Objects.Entities.Project
+﻿@model CourseShuffle.Data.Objects.Entities.Project
 
 @{
     ViewBag.Title = "Edit";
@@ -23,6 +22,7 @@
         @Html.HiddenFor(model => model.LastModifiedBy)
         @Html.HiddenFor(model => model.DepartmentId)
         @Html.HiddenFor(model => model.Document)
+        @Html.HiddenFor(model => model.DateCreated)
 
         <div class="form-group col-md-12">
             @Html.LabelFor(model => model.Title, new {@class = "control-label col-md-3"})
@@ -55,11 +55,17 @@
                 @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
             </div>
         </div>
-
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.DepartmentId, "Department", new {@class = "control-label col-md-3"})
+            <div class="col-sm-6 col-md-9">
+                @Html.DropDownListFor(model => model.Category.CategoryId, (SelectList) ViewBag.DepartmentId, new {@class = "form-control select-dropdown", id = "department"})
+                @Html.ValidationMessageFor(model => model.DepartmentId, "", new {@class = "text-danger"})
+            </div>
+        </div>
         <div class="form-group col-md-12">
             @Html.LabelFor(model => model.Category, new {@class = "control-label col-md-3"})
             <div class="col-sm-6 col-md-9">
-                @Html.DropDownList("Category", EnumHelper.GetSelectList(typeof(ProjectCategory)), "select your project category", new {@class = "form-control select-dropdown", id = "role"})
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(string.Empty, "Value", "Text"), new {@class = "form-control select-dropdown", id = "category"})
             </div>
         </div>
         <div class="form-group col-md-12">
@@ -95,6 +101,41 @@
                             endDate: new Date()
                         });
                 });
+                //checks if the state has a value before displaying assigned lga
+                if ($('#department').val() != '') {
+                    getCategoriesForDepartment();
+                }
+
+                //loads assigned lga for state on change/select
+                $('#department').on('change', function() { getCategoriesForDepartment(); });
+
+                //Ajax call for Lga assigned to state
+                function getCategoriesForDepartment() {
+
+                    $("#category").empty();
+                    $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("GetCategoryForDepartment", "Categories")',
+                        dataType: 'json',
+                        data: { id: $("#department").val() },
+                        success: function(category) {
+
+                            $.each(category,
+                                function(i, category) {
+                                    $("#category")
+                                        .append('<option value="' +
+                                            category.CategoryId +
+                                            '">' +
+                                            category.Name +
+                                            '</option>');
+                                });
+                            console.log($("#category").val());
+                        },
+                        error: function(ex) {
+                            alert('Failed to retrieve category.' + ex);
+                        }
+                    });
+                }
             })
     </script>
 }

@@ -23,6 +23,12 @@ namespace CourseShuffle.Controllers.CourseShuffle
             var projects = _db.Projects.Include(p => p.Session);
             return View(projects.ToList());
         }
+        // GET: Projects
+        public ActionResult GetProjectsForDepartment(long departmentId)
+        {
+            var projects = _db.Projects.Include(p => p.Session).Where(n=>n.DepartmentId == departmentId );
+            return View("Index",projects.ToList());
+        }
 
         // GET: Projects/Details/5
         public ActionResult Details(long? id)
@@ -52,7 +58,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProjectId,Title,Author,StartDate,EndDate,Category,SessionId,DepartmentId")] Project project,FormCollection collectedValues)
+        public ActionResult Create([Bind(Include = "ProjectId,Title,Author,StartDate,EndDate,CategoryId,SessionId,DepartmentId")] Project project,FormCollection collectedValues)
         {
             var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -66,7 +72,6 @@ namespace CourseShuffle.Controllers.CourseShuffle
                     project.DateLastModified = DateTime.Now;
                     project.CreatedBy = loggedinuser.AppUserId;
                     project.LastModifiedBy = loggedinuser.AppUserId;
-                    project.Category = typeof(ProjectCategory).GetEnumName(int.Parse(collectedValues["Category"]));
                     _db.Projects.Add(project);
                     _db.SaveChanges();
                     return RedirectToAction("Index");
@@ -77,6 +82,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
             }
 
             ViewBag.SessionId = new SelectList(_db.Sessions, "SessionId", "Name", project.SessionId);
+            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", project.DepartmentId);
             return View(project);
         }
 
@@ -93,7 +99,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                 return HttpNotFound();
             }
             ViewBag.SessionId = new SelectList(_db.Sessions, "SessionId", "Name", project.SessionId);
-            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
+            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name",project.DepartmentId);
             return View(project);
         }
 
@@ -102,16 +108,18 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProjectId,Title,Author,StartDate,EndDate,Category,Document,SessionId,CreatedBy,DateCreated")] Project project)
+        public ActionResult Edit([Bind(Include = "ProjectId,Title,Author,CategoryId,DepartmentId,Document,SessionId,CreatedBy")] Project project,FormCollection collectedValues)
         {
             var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 if (loggedinuser != null)
                 {
+                    project.StartDate = Convert.ToDateTime(collectedValues["StartDate"]);
+                    project.EndDate = Convert.ToDateTime(collectedValues["EndDate"]);
+                    project.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
                     project.DateLastModified = DateTime.Now;
                     project.LastModifiedBy = loggedinuser.AppUserId;
-                    project.DateLastModified = DateTime.Now;
                     _db.Entry(project).State = EntityState.Modified;
                     _db.SaveChanges();
                     return RedirectToAction("Index");
@@ -122,7 +130,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
             }
     
                 ViewBag.SessionId = new SelectList(_db.Sessions, "SessionId", "Name", project.SessionId);
-            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
+            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name", project.DepartmentId);
             return View(project);
         }
 

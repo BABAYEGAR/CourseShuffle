@@ -8,6 +8,7 @@ namespace CourseShuffle.Data.Service.Enum
 {
     public enum SubscriptionType
     {
+        None,
         SingleSemester,
         CompleteSession
     }

@@ -117,6 +117,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                     _db.Entry(contents).State = EntityState.Modified;
                     _db.SaveChanges();
                     TempData["content"] = "The Course content has been modified successfully";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
                     return RedirectToAction("Index");
                 }
                 TempData["content"] = "Your session has expired,Login Again!";

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CourseShuffle.Data.Objects.Entities
 {
-    public class Faculty : TransportObjects, IEnumerable
+    public class Faculty : TransportObjects
     {
         public long FacultyId { get; set; }
         [Required]
@@ -17,9 +17,5 @@ namespace CourseShuffle.Data.Objects.Entities
         public string Description { get; set; }
 
         public IEnumerable<Department> Department;
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

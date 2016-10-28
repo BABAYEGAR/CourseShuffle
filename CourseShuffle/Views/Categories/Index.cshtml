@@ -1,0 +1,73 @@
+﻿@using CourseShuffle.Data.Factory.FactoryData
+@using CourseShuffle.Data.Service.Enum
+@model IEnumerable<CourseShuffle.Data.Objects.Entities.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+<h3></h3>
+
+@section css{
+    <link href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet"/>
+}
+@if (TempData["category"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable" style="height: 30px">@TempData["category"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Danger.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable" style="height: 30px">@TempData["category"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["category"]</div>
+    }
+}
+<p>
+    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+</p>
+<table class="table table-condensed table-hover" id="datatable">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Department)
+        </th>
+        <th>Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @(new DepartmentFactory().GetAppUserDepartmet(item.DepartmentId).Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.CategoryId}, new {@class = "btn btn-primary"}) |
+                @Html.ActionLink("Details", "Details", new {id = item.CategoryId}, new {@class = "btn btn-default"}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.CategoryId}, new {@class = "btn btn-danger"})
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+@section scripts {
+
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $('#datatable').DataTable();
+            });
+
+    </script>
+}

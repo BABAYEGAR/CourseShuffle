@@ -1,12 +1,13 @@
 ﻿@using CourseShuffle.Data.Factory.FactoryData
-@model CourseShuffle.Data.Objects.Entities.AppUser
+@model CourseShuffle.Data.Objects.Entities.Category
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Delete";
 }
 
-<h2></h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div class="container">
     <div class="row">
         <div class="panel panel-flat">
@@ -15,42 +16,11 @@
                 <div class="col-md-12">
                     <div class="form-group col-md-12">
                         <div class="col-md-3 detailsDiv">
-                            @Html.DisplayNameFor(model => model.Firstname)
+                            @Html.DisplayNameFor(model => model.Name)
                         </div>
 
                         <div class="col-md-9">
-                            @Html.DisplayFor(model => model.Firstname)
-                        </div>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <div class="col-md-3 detailsDiv">
-                            @Html.DisplayNameFor(model => model.Lastname)
-                        </div>
-
-                        <div class="col-md-9 ">
-                            @Html.DisplayFor(model => model.Lastname)
-                        </div>
-                    </div>
-                    @if (Model.Othername != null)
-                    {
-                        <div class="form-group col-md-12">
-                            <div class="col-md-3 detailsDiv">
-                                @Html.DisplayNameFor(model => model.Othername)
-                            </div>
-
-                            <div class="col-md-9 ">
-                                @Html.DisplayFor(model => model.Othername)
-                            </div>
-                        </div>
-                    }
-
-                    <div class="form-group col-md-12">
-                        <div class="col-md-3 detailsDiv">
-                            @Html.DisplayNameFor(model => model.Role)
-                        </div>
-
-                        <div class="col-md-9 ">
-                            @Html.DisplayFor(model => model.Role)
+                            @Html.DisplayFor(model => model.Name)
                         </div>
                     </div>
                     <div class="form-group col-md-12">
@@ -104,8 +74,13 @@
         </div>
     </div>
 
-    <p>
-        @Html.ActionLink("Edit", "Edit", new {id = Model.AppUserId}, new {@class = "btn btn-primary"}) |
-        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
-    </p>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger"/> |
+            @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
+        </div>
+    }
 </div>

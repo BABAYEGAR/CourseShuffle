@@ -38,5 +38,9 @@ namespace CourseShuffle.Data.Service.DateTimeHelper
                 return "just now";
             return string.Empty;
         }
+        public  int MonthDifference(DateTime lValue, DateTime rValue)
+        {
+            return Math.Abs((lValue.Month - rValue.Month) + 12 * (lValue.Year - rValue.Year));
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CourseShuffle.Data.Factory.FactoryData;
 
 namespace CourseShuffle.Controllers
 {
@@ -11,6 +12,11 @@ namespace CourseShuffle.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult SubscriptionPage(long departmentId)
+        {
+            var department = new DepartmentFactory().GetAppUserDepartmet(departmentId);
+            return View(department);
         }
 
         public ActionResult About()

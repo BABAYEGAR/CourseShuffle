@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using CoureShuffle.Data.DataContext.DataContext;
 using CourseShuffle.Data.Factory.FactoryData;
@@ -15,7 +12,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
 {
     public class DepartmentsController : Controller
     {
-        private DepartmentDataContext _db = new DepartmentDataContext();
+        private readonly DepartmentDataContext _db = new DepartmentDataContext();
 
         // GET: Departments
         public ActionResult Index()
@@ -28,16 +25,13 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Department department = _db.Departments.Find(id);
+            var department = _db.Departments.Find(id);
             if (department == null)
-            {
                 return HttpNotFound();
-            }
             return View(department);
         }
+
         public ActionResult ViewDepartmentForFaculty(long id)
         {
             var departments = new DepartmentFactory().GetAllDepartmentsForAFaculty(id);
@@ -48,9 +42,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Create(long? id)
         {
             if (id <= 0)
-            {
                 id = 0;
-            }
             ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name");
             ViewBag.Faculty = id ?? 0;
 
@@ -62,17 +54,35 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DepartmentId,Name,Description")] Department department,FormCollection collectedValues)
+        public ActionResult Create([Bind(Include = "DepartmentId,Name,Description")] Department department,
+            FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
+                var type = typeof(SubscriptionType).GetEnumName(int.Parse(collectedValues["Type"]));
                 if (loggedinuser != null)
                 {
                     var facultyId = Convert.ToInt64(collectedValues["FacultyId"]);
                     if (collectedValues["FacultyId"] == null)
-                    {
                         facultyId = Convert.ToInt64(collectedValues["Faculty"]);
+                    if (type == SubscriptionType.None.ToString())
+                    {
+                        department.SubscriptionStartDate = null;
+                        department.SubscriptionEndDate = null;
+                        department.SubscriptionType = type;
+                    }
+                    if (type == SubscriptionType.SingleSemester.ToString())
+                    {
+                        department.SubscriptionStartDate = DateTime.Now;
+                        department.SubscriptionEndDate = DateTime.Now.AddMonths(6);
+                        department.SubscriptionType = type;
+                    }
+                    if (type == SubscriptionType.CompleteSession.ToString())
+                    {
+                        department.SubscriptionStartDate = DateTime.Now;
+                        department.SubscriptionEndDate = DateTime.Now.AddMonths(12);
+                        department.SubscriptionType = type;
                     }
 
                     department.FacultyId = facultyId;
@@ -83,7 +93,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
                     department.LastModifiedBy = loggedinuser.AppUserId;
                     _db.Departments.Add(department);
                     _db.SaveChanges();
-                    TempData["user"] = "A new department has been created successfully!";
+                    TempData["department"] = "A new department has been created successfully!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Index");
                 }
@@ -99,14 +109,10 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Department department = _db.Departments.Find(id);
+            var department = _db.Departments.Find(id);
             if (department == null)
-            {
                 return HttpNotFound();
-            }
             ViewBag.FacultyId = new SelectList(_db.Faculties, "FacultyId", "Name", department.FacultyId);
             return View(department);
         }
@@ -116,20 +122,44 @@ namespace CourseShuffle.Controllers.CourseShuffle
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DepartmentId,Name,Description,FacultyId,CreatedBy")] Department department,FormCollection collectedValues)
+        public ActionResult Edit(
+            [Bind(Include = "DepartmentId,Name,Description,FacultyId,CreatedBy,SubscriptionStartDate,SubscriptionEndDate,SubscriptionType")] Department department,
+            FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
-
+                var type = typeof(SubscriptionType).GetEnumName(int.Parse(collectedValues["Type"]));
                 var loggedinuser = Session["courseshuffleloggedinuser"] as AppUser;
                 if (loggedinuser != null)
                 {
+                    if (DateTime.Now > department.SubscriptionEndDate)
+                    {
+                        if (type == SubscriptionType.None.ToString())
+                        {
+                            department.SubscriptionStartDate = null;
+                            department.SubscriptionEndDate = null;
+                            department.SubscriptionType = type;
+                        }
+                        if (type == SubscriptionType.SingleSemester.ToString())
+                        {
+                            department.SubscriptionStartDate = DateTime.Now;
+                            department.SubscriptionEndDate = DateTime.Now.AddMonths(6);
+                            department.SubscriptionType = type;
+                        }
+                        if (type == SubscriptionType.CompleteSession.ToString())
+                        {
+                            department.SubscriptionStartDate = DateTime.Now;
+                            department.SubscriptionEndDate = DateTime.Now.AddMonths(12);
+                            department.SubscriptionType = type;
+                        }
+                    }
+
                     department.DateCreated = Convert.ToDateTime(collectedValues["DateCreated"]);
-                department.DateLastModified = DateTime.Now;
+                    department.DateLastModified = DateTime.Now;
                     department.LastModifiedBy = loggedinuser.AppUserId;
-                _db.Entry(department).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+                    _db.Entry(department).State = EntityState.Modified;
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 TempData["department"] = "Your session has expired,Login Again!";
                 TempData["notificationtype"] = NotificationType.Info.ToString();
@@ -142,23 +172,20 @@ namespace CourseShuffle.Controllers.CourseShuffle
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Department department = _db.Departments.Find(id);
+            var department = _db.Departments.Find(id);
             if (department == null)
-            {
                 return HttpNotFound();
-            }
             return View(department);
         }
 
         // POST: Departments/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Department department = _db.Departments.Find(id);
+            var department = _db.Departments.Find(id);
             _db.Departments.Remove(department);
             _db.SaveChanges();
             TempData["department"] = "A department has been deleted successfully!";
@@ -169,9 +196,7 @@ namespace CourseShuffle.Controllers.CourseShuffle
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 _db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

@@ -12,7 +12,9 @@ namespace CourseShuffle.Data.Objects.Entities
         public string Author { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Category { get; set; }
+        public long? CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public virtual Category Category { get; set; }
         public string Document { get; set; }
         public long SessionId { get; set; }
         [ForeignKey("SessionId")]

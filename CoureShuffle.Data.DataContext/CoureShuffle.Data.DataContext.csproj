@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\CategoryDataContext.cs" />
     <Compile Include="DataContext\SessionDataContext.cs" />
     <Compile Include="DataContext\ProjectDataContext.cs" />
     <Compile Include="DataContext\AppUserDataContext.cs" />
@@ -87,6 +88,10 @@
     <Compile Include="Migrations\201610271418389_SixthMigrations.Designer.cs">
       <DependentUpon>201610271418389_SixthMigrations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610272342572_SeventhMigration.cs" />
+    <Compile Include="Migrations\201610272342572_SeventhMigration.Designer.cs">
+      <DependentUpon>201610272342572_SeventhMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -121,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610271418389_SixthMigrations.resx">
       <DependentUpon>201610271418389_SixthMigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610272342572_SeventhMigration.resx">
+      <DependentUpon>201610272342572_SeventhMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

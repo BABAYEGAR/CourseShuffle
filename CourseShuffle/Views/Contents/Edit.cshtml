@@ -6,7 +6,9 @@
 }
 
 <h2></h2>
-
+@section css{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+}
 @if (TempData["content"] != null)
 {
     if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
@@ -57,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Year, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Year, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.EditorFor(model => model.Year, new {htmlAttributes = new {@class = "form-control datepicker"}})
                 @Html.ValidationMessageFor(model => model.Year, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -69,4 +71,23 @@
             </div>
         </div>
     </div>
+}
+@section scripts{
+    <script src="~/Scripts/plugins/Form/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
+                $(function() {
+                    $('.datepicker')
+                        .datepicker({
+                            format: 'yyyy',
+                            viewMode: 'years',
+                            minViewMode: 'years',
+                            endDate: new Date()
+                        });
+                });
+            })
+    </script>
 }

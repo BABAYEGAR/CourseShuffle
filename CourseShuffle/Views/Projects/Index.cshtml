@@ -28,9 +28,12 @@
         <div class="alert alert-info alert-dismissable" style="height: 30px">@TempData["project"]</div>
     }
 }
-<p>
-    @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
-</p>
+@if (((loggedinuser != null) && (loggedinuser.Role == UserType.Administrator.ToString())) || (loggedinuser?.Role == UserType.Facilitator.ToString()))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create", null, new {@class = "btn btn-success"})
+    </p>
+}
 <table class="table table-condensed table-hover" id="datatable">
     <thead>
     <tr>
@@ -71,7 +74,7 @@
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category)
+                @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
                 @item.StartDate.ToShortDateString()

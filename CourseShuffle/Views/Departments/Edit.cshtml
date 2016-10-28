@@ -5,8 +5,10 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
-
+<h2></h2>
+@section css{
+    <link href="~/Scripts/plugins/Form/css/select2.css" rel="stylesheet"/>
+}
 @if (TempData["department"] != null)
 {
     if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
@@ -33,34 +35,50 @@
         @Html.HiddenFor(model => model.DepartmentId)
         @Html.HiddenFor(model => model.DateCreated)
         @Html.HiddenFor(model => model.CreatedBy)
+        @Html.HiddenFor(model => model.SubscriptionEndDate)
+        @Html.HiddenFor(model => model.SubscriptionType)
+        @Html.HiddenFor(model => model.SubscriptionStartDate)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.Name, new {@class = "control-label col-md-3"})
+            <div class="col-md-9">
                 @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.Description, new {@class = "control-label col-md-3"})
+            <div class="col-md-9">
                 @Html.EditorFor(model => model.Description, new {htmlAttributes = new {@class = "form-control"}})
                 @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
             </div>
         </div>
+        @if (DateTime.Now > Model.SubscriptionEndDate)
+        {
+            <div class="form-group col-md-12">
+                @Html.LabelFor(model => model.SubscriptionType, new {@class = "control-label col-md-3"})
+                <div class="col-sm-6 col-md-9">
+                    @Html.DropDownList("Type", EnumHelper.GetSelectList(typeof(SubscriptionType)), "select a subsciption Type", new {@class = "form-control select-dropdown", id = "role"})
+                </div>
+            </div>
+        }
         <div class="row">
             <div class="col-md-12">
+                @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
                 <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </div>
     </div>
 }
+@section scripts{
+    <script src="~/Scripts/plugins/Form/js/select2.min.js"></script>
+    <script>
+        $(document)
+            .ready(function() {
 
-<div>
-    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+                // Init select2 for dropdown select
+                $('.select-dropdown').select2();
+            })
+    </script>
 }
