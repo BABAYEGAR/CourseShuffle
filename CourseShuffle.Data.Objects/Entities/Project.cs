@@ -8,7 +8,9 @@ namespace CourseShuffle.Data.Objects.Entities
     {
         [Key]
         public long ProjectId { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Author { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

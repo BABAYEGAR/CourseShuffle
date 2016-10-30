@@ -14,6 +14,7 @@ namespace CourseShuffle.Data.Objects.Entities
         public  string Lastname { get; set; }
         public  string Othername { get; set; }
         [Required]
+        [EmailAddress(ErrorMessage = "Invalid Email")]
         public  string Email { get; set; }
         public  string Password { get; set; }
         [DisplayName("Mobile Number")]

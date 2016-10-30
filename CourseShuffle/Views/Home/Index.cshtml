@@ -34,7 +34,7 @@
 <ul class="main-navigation">
 
     <li style="margin-left: 80px;">
-        <a href="#">@*<img src="../../UploadedFiles/unnamed.png"/>*@</a>
+        <a href="@Url.Action("Index")"><img src="../../UploadedFiles/courseshufflefinal.png" width="110px" height="40px"/></a>
     </li>
     <li>
         <a href="#">Faculty</a>
@@ -92,13 +92,13 @@
                                         @if (department.SubscriptionType != SubscriptionType.None.ToString())
                                         {
                                             <li class="slim">
-                                                <a href="@Url.Action("GetProjectsForDepartment", "Projects", new {departmentId = department.DepartmentId})">@department.Name Project</a>
+                                                <a href="@Url.Action("GetProjectsForDepartment", "Projects", new {departmentId = department.DepartmentId})">@department.Name Projects</a>
                                             </li>
                                         }
                                         else
                                         {
                                             <li class="slim">
-                                                <a href="@Url.Action("SubscriptionPage", "Home", new {departmentId = department.DepartmentId})">@department.Name Project</a>
+                                                <a href="@Url.Action("SubscriptionPage", "Home", new {departmentId = department.DepartmentId})">@department.Name Projects</a>
                                             </li>
                                         }
                                     </ul>

@@ -262,6 +262,7 @@
     <Content Include="AppTheme\images\a2.jpg" />
     <Content Include="AppTheme\images\abt_pic.jpg" />
     <Content Include="AppTheme\images\avatar.jpg" />
+    <Content Include="AppTheme\images\bg2.png" />
     <Content Include="AppTheme\images\bhulogo.jpg" />
     <Content Include="AppTheme\images\default_avatar_male.jpg" />
     <Content Include="AppTheme\images\ep1.jpg" />
@@ -1184,6 +1185,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UploadedFiles\courseshufflefinal.png" />
+    <Content Include="UploadedFiles\cousesufflelogo %281%29.png" />
+    <Content Include="UploadedFiles\cousesufflelogo %282%29.png" />
     <Content Include="UploadedFiles\Pdf\131213482667502324.jpg" />
     <Content Include="UploadedFiles\Pdf\131213679887110766.jpg" />
     <Content Include="UploadedFiles\Pdf\131213896580747117.jpg" />

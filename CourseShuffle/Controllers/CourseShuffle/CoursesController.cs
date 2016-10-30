@@ -26,10 +26,10 @@ namespace CourseShuffle.Controllers.CourseShuffle
             var courses = new CourseFactory().GetAllCoursesForADepartment(id);
             return View("DeparmentCourses", courses);
         }
-        public ActionResult GetCoursesForLecturer(long lectutrerId, long departmentId)
+        public ActionResult GetCoursesForLecturer(long lecturerId, long departmentId)
         {
             var courses = new CourseFactory().GetAllCoursesForADepartment(departmentId);
-            var lecturerCourses = courses.Where(n => n.AppUserId == lectutrerId);
+            var lecturerCourses = courses.Where(n => n.AppUserId == lecturerId);
             return View("Index", lecturerCourses);
         }
         public ActionResult GetCoursesForFacilitator(long departmentId)

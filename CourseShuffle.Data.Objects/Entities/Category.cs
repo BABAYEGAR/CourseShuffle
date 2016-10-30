@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace CourseShuffle.Data.Objects.Entities
     public class Category :TransportObjects
     {
         public long CategoryId { get; set; }
+        [Required]
         public string Name { get; set; }
         public long DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
